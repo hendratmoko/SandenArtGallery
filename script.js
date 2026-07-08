@@ -26,12 +26,24 @@ window.dataSdk = (function () {
   }
 
   async function fetchFromGas() {
+  console.log("URL =", CFG.GAS_URL);
+  const res = await fetch(CFG.GAS_URL);
+  console.log("status =", res.status);
+  console.log("ok =", res.ok);
+  const text = await res.text();
+  console.log(text);
+  const json = JSON.parse(text);
+  if (!json.isOk)
+      throw new Error(json.error);
+  return json.data || [];
+}
+/*  async function fetchFromGas() {
     const res = await fetch(CFG.GAS_URL, { method: 'GET' });
     const json = await res.json();
     if (!json.isOk) throw new Error(json.error || 'Gagal memuat data dari server');
     return json.data || [];
   }
-
+*/
   async function fetchFromLocal() {
     const res = await fetch(CFG.LOCAL_DATA_PATH || 'data.json');
     if (!res.ok) throw new Error('data.json tidak ditemukan');
