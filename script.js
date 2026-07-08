@@ -166,7 +166,45 @@ function getRank(score) {
   return null;
 }
 
-const dataHandler = { onDataChanged(data) { allData = data; renderGallery(); renderChart(); renderTabs(); } };
+const dataHandler = {onDataChanged(data) {
+        // Menyimpan seluruh data
+        allData = data;
+        /* ===========================
+           DASHBOARD STATISTIK
+        =========================== */
+        const totalKarya = allData.length;
+        const totalGuru =allData.filter(x => x.status === "Guru").length;
+        const totalSiswa =allData.filter(x => x.status === "Siswa").length;
+        const totalMateri =allData.filter(x => x.status === "Guru").length;
+        const totalKaryaSiswa =allData.filter(x => x.status === "Siswa").length;
+        const totalKontributor =new Set(allData.map(x => x.name)).size;
+        const totalBintang =allData.reduce((a, b) => a + Number(b.stars || 0), 0);
+        const totalSertifikat =allData.filter(x => x.certified === true).length;
+        const rataQuiz =allData.length
+                ? (
+                    allData.reduce((a, b) => a + Number(b.quiz_score || 0), 0)
+                    / allData.length
+                  ).toFixed(1)
+                : 0;
+        document.getElementById("totalKarya").textContent = totalKarya;
+        document.getElementById("totalGuru").textContent = totalGuru;
+        document.getElementById("totalSiswa").textContent = totalSiswa;
+        document.getElementById("totalMateri").textContent = totalMateri;
+        document.getElementById("totalKaryaSiswa").textContent = totalKaryaSiswa;
+        document.getElementById("totalKontributor").textContent = totalKontributor;
+        // Jika nanti ditambahkan di HTML
+        if(document.getElementById("totalBintang"))
+            document.getElementById("totalBintang").textContent = totalBintang;
+        if(document.getElementById("totalSertifikat"))
+            document.getElementById("totalSertifikat").textContent = totalSertifikat;
+        if(document.getElementById("rataQuiz"))
+            document.getElementById("rataQuiz").textContent = rataQuiz;
+        /* ===========================
+           RENDER WEBSITE
+        =========================== */
+        renderGallery();
+        renderChart();
+        renderTabs();}};
 
 async function initApp() {
   const r = await window.dataSdk.init(dataHandler);
