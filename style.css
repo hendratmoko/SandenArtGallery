@@ -65,6 +65,20 @@ body{margin:0;font-family:'Libre Franklin',sans-serif;background:var(--bg);color
 .hero-content h1{font-size: clamp(2rem, 4vw, 3.5rem);font-weight: 800;text-align: center;}
 @keyframes zoom{from{transform:scale(1);}to{transform:scale(1.15);}}
 
+.chart-summary{
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+    gap:25px;
+    margin-top:15px;
+    padding:12px 0;
+    border-top:1px solid rgba(255,255,255,.15);
+    font-size:15px;
+    color:var(--muted);
+}
+.chart-summary span{white-space:nowrap;}
+.chart-summary b{color:var(--text);font-size:17px;}
+
 /* utilities dasar yang dipakai markup */
 .fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}
 .inset-0{inset:0}.right-4{right:1rem}.top-0{top:0}.top-4{top:1rem}.right-3{right:.75rem}.top-3{top:.75rem}
