@@ -125,4 +125,6 @@ button,input,select,textarea{font-family:inherit;font-size:100%}
 .dashboard-stats{grid-template-columns:repeat(2,1fr);gap:10px;}
 .stat-box{padding:12px;border-radius:12px;}
 .stat-box h2{font-size:22px;margin:5px 0;}
-.stat-box p{font-size:12px;}}
+.stat-box p{font-size:12px;}
+.stat-box{transition:.25s;}
+.stat-box:hover{transform:translateY(-5px) scale(1.03);}}
