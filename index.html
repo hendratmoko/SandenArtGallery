@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galeri Karya SMKN 1 Sanden</title>
+
+<!-- Font (pengganti index_data/css2.css) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Ikon (pengganti index_data/lucide.min.js) -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+<style>
+  :root{--bg:#f0f4f8;--surface:#ffffff;--surface-glass:rgba(255,255,255,0.72);--text:#1a2332;--muted:#5a6a7a;--border:#e0e7ef;--accent:#2563eb;--accent-light:#dbeafe;--accent-dark:#1d4ed8;--warm:#f59e0b}
+  .dark{--bg:#0c1222;--surface:#1a2744;--surface-glass:rgba(26,39,68,0.8);--text:#e8edf5;--muted:#8a9bb5;--border:#2a3f5f;--accent:#60a5fa;--accent-light:#1e3a5f;--accent-dark:#93c5fd;--warm:#fbbf24}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Libre Franklin',sans-serif;background:var(--bg);color:var(--text);transition:background .4s,color .4s;min-height:100vh}
+  .heading-display{font-family:'Playfair Display',serif;font-weight:800;letter-spacing:-0.02em}
+  .surface-card{background:var(--surface-glass);backdrop-filter:blur(12px);border:1px solid var(--border)}
+  .card-hover{transition:transform .25s,box-shadow .25s}.card-hover:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,0.12)}
+  .dark .card-hover:hover{box-shadow:0 20px 50px rgba(0,0,0,0.4)}
+  .modal-overlay{background:rgba(0,0,0,0.5);backdrop-filter:blur(8px)}
+  .btn-primary{background:var(--accent);color:#fff;border:none;transition:background .2s,transform .1s;cursor:pointer}.btn-primary:hover{background:var(--accent-dark);transform:scale(1.02)}
+  .input-field{background:var(--bg);color:var(--text);border:1px solid var(--border);transition:border-color .2s}.input-field:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light)}
+  .hero-gradient{background:linear-gradient(135deg,rgba(37,99,235,0.15),rgba(245,158,11,0.10))}.dark .hero-gradient{background:linear-gradient(135deg,rgba(96,165,250,0.18),rgba(251,191,36,0.08))}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}.fade-up{animation:fadeUp .5s ease forwards}
+  .tab-active{border-bottom:3px solid var(--accent);color:var(--accent);font-weight:700}
+  .tab-btn{padding:0.5rem 1rem;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;background:none;color:var(--muted);font-weight:600}
+  .rank-bronze{background:linear-gradient(135deg,#cd7f32,#a0522d)}.rank-silver{background:linear-gradient(135deg,#c0c0c0,#808080)}.rank-gold{background:linear-gradient(135deg,#ffd700,#daa520)}.rank-diamond{background:linear-gradient(135deg,#b9f2ff,#4fc3f7)}
+
+  /* utilities dasar yang dipakai markup */
+  .fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}
+  .inset-0{inset:0}.right-4{right:1rem}.top-0{top:0}.top-4{top:1rem}.right-3{right:.75rem}.top-3{top:.75rem}
+  .z-40{z-index:40}.z-50{z-index:50}.col-span-full{grid-column:1/-1}
+  .mx-auto{margin-left:auto;margin-right:auto}.mb-1{margin-bottom:.25rem}.mb-1\.5{margin-bottom:.375rem}
+  .mb-3{margin-bottom:.75rem}.mb-4{margin-bottom:1rem}.mb-5{margin-bottom:1.25rem}.mb-2{margin-bottom:.5rem}
+  .mt-1{margin-top:.25rem}.mt-1\.5{margin-top:.375rem}.mt-2{margin-top:.5rem}.mt-3{margin-top:.75rem}.mt-5{margin-top:1.25rem}
+  .block{display:block}.flex{display:flex}.grid{display:grid}.hidden{display:none!important}
+  .aspect-video{aspect-ratio:16/9}.h-full{height:100%}.min-h-screen{min-height:100vh}.w-full{width:100%}
+  .min-w-\[200px\]{min-width:200px}.max-w-7xl{max-width:80rem}.max-w-lg{max-width:32rem}.max-w-md{max-width:28rem}
+  .flex-1{flex:1 1 0%}.cursor-pointer{cursor:pointer}
+  .grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}.grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .flex-wrap{flex-wrap:wrap}.items-center{align-items:center}.justify-center{justify-content:center}.justify-between{justify-content:space-between}
+  .gap-1{gap:.25rem}.gap-3{gap:.75rem}.gap-4{gap:1rem}.gap-5{gap:1.25rem}.gap-2{gap:.5rem}
+  .space-y-3>*+*{margin-top:.75rem}.space-y-4>*+*{margin-top:1rem}
+  .overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.overflow-y-auto{overflow-y:auto}
+  .truncate{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .rounded{border-radius:.25rem}.rounded-2xl{border-radius:1rem}.rounded-3xl{border-radius:1.5rem}.rounded-full{border-radius:9999px}.rounded-xl{border-radius:.75rem}
+  .border{border-width:1px;border-style:solid;border-color:var(--border)}.border-b{border-bottom-width:1px;border-bottom-style:solid;border-color:var(--border)}
+  .object-cover{object-fit:cover}
+  .p-1\.5{padding:.375rem}.p-2\.5{padding:.625rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-7{padding:1.75rem}
+  .px-3{padding-left:.75rem;padding-right:.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}
+  .px-6{padding-left:1.5rem;padding-right:1.5rem}.px-8{padding-left:2rem;padding-right:2rem}
+  .py-1\.5{padding-top:.375rem;padding-bottom:.375rem}.py-2\.5{padding-top:.625rem;padding-bottom:.625rem}
+  .py-20{padding-top:5rem;padding-bottom:5rem}.py-3{padding-top:.75rem;padding-bottom:.75rem}
+  .py-4{padding-top:1rem;padding-bottom:1rem}.py-5{padding-top:1.25rem;padding-bottom:1.25rem}.py-8{padding-top:2rem;padding-bottom:2rem}
+  .px-2\.5{padding-left:.625rem;padding-right:.625rem}.py-1{padding-top:.25rem;padding-bottom:.25rem}
+  .pb-16{padding-bottom:4rem}.pb-2{padding-bottom:.5rem}.pb-4{padding-bottom:1rem}.pt-6{padding-top:1.5rem}.pt-8{padding-top:2rem}
+  .text-center{text-align:center}.text-4xl{font-size:2.25rem;line-height:2.5rem}.text-5xl{font-size:3rem;line-height:1}
+  .text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}
+  .text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:.75rem;line-height:1rem}
+  .font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}
+  .uppercase{text-transform:uppercase}.leading-relaxed{line-height:1.625}.tracking-tight{letter-spacing:-.025em}.tracking-widest{letter-spacing:.1em}
+  .text-gray-800{color:#1f2937}.text-red-500{color:#ef4444}.text-white{color:#fff}.text-yellow-500{color:#eab308}
+  .accent-blue-600{accent-color:#2563eb}.opacity-70{opacity:.7}
+  .shadow-lg{box-shadow:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -4px rgba(0,0,0,.1)}
+  button,input,select,textarea{font-family:inherit;font-size:100%}
+  .hover\:bg-black\/10:hover{background-color:rgba(0,0,0,.1)}.hover\:bg-black\/5:hover{background-color:rgba(0,0,0,.05)}
+  .hover\:underline:hover{text-decoration:underline}
+  @media (min-width:640px){.sm\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  @media (min-width:768px){.md\:h-72{height:18rem}}
+  @media (min-width:1024px){.lg\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr))}.lg\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}}
+  @media (min-width:1280px){.xl\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))}}
+  .h-56{height:14rem}
+  #loading-banner{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;padding:8px 18px;border-radius:999px;font-size:13px;font-weight:600;z-index:60;box-shadow:0 8px 20px rgba(0,0,0,.25)}
+</style>
+</head>
+<body class="min-h-screen dark">
+
+<!-- ====================================================================
+     KONFIGURASI — GANTI URL DI BAWAH INI dengan URL Web App Apps Script
+     kamu (hasil Deploy > New deployment, diakhiri dengan /exec)
+     ==================================================================== -->
+<script>
+  const GAS_URL = 'GANTI_DENGAN_URL_WEB_APP_APPS_SCRIPT_ANDA';
+</script>
+
+<header class="sticky top-0 z-40 surface-card">
+  <div class="max-w-7xl mx-auto px-5 py-4 flex items-center justify-between flex-wrap gap-3">
+    <h1 class="heading-display tracking-tight" style="color:var(--accent-dark);font-size:2rem">GALERI KARYA SMK NEGERI 1 SANDEN</h1>
+    <div id="clock" class="text-sm font-medium" style="color:var(--muted)"></div>
+    <nav class="flex items-center gap-1">
+      <button onclick="showHelp()" class="p-2.5 rounded-xl hover:bg-black/5" title="Help"><i data-lucide="help-circle" style="width:20px;height:20px"></i></button>
+      <button onclick="toggleTheme()" class="p-2.5 rounded-xl hover:bg-black/5" title="Theme"><i data-lucide="sun" style="width:20px;height:20px"></i></button>
+      <button onclick="toggleLang()" class="p-2.5 rounded-xl hover:bg-black/5 font-bold text-xs border" style="min-width:36px" id="lang-btn">ID</button>
+      <button onclick="showModal('register')" class="p-2.5 rounded-xl hover:bg-black/5" title="Register"><i data-lucide="user-plus" style="width:20px;height:20px"></i></button>
+      <button onclick="showModal('upload')" class="p-2.5 rounded-xl hover:bg-black/5" title="Upload"><i data-lucide="upload" style="width:20px;height:20px"></i></button>
+    </nav>
+  </div>
+</header>
+
+<section class="relative overflow-hidden hero-gradient">
+  <div class="h-56 md:h-72"></div>
+  <div class="absolute inset-0 flex items-center justify-center">
+    <p class="text-center px-6 heading-display" style="color:var(--accent-dark);font-size:1.75rem">Unjuk Kerja &amp; Portofolio Digital Siswa dan Guru</p>
+  </div>
+</section>
+
+<section class="max-w-7xl mx-auto px-5 pt-8 pb-4">
+  <h2 class="heading-display mb-4" style="font-size:1.5rem">📊 Grafik Unjuk Kerja Bulanan</h2>
+  <div class="surface-card rounded-2xl p-5 overflow-x-auto">
+    <canvas id="perf-chart" width="700" height="200" style="width:100%;max-height:200px"></canvas>
+  </div>
+</section>
+
+<section class="max-w-7xl mx-auto px-5 pt-6 pb-2">
+  <div class="flex border-b">
+    <button class="tab-btn tab-active" id="tab-terbaru" onclick="switchTab('terbaru')"><span id="tab-terbaru-label">🆕 Terbaru Bulan Ini</span></button>
+    <button class="tab-btn" id="tab-terpopuler" onclick="switchTab('terpopuler')"><span id="tab-terpopuler-label">🔥 Terpopuler Bulan Ini</span></button>
+  </div>
+  <div id="tab-content" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 py-5"></div>
+</section>
+
+<div class="max-w-7xl mx-auto px-5 py-5">
+  <div class="flex flex-wrap gap-3 items-center">
+    <input id="search-input" type="text" placeholder="Cari nama/judul..." class="input-field rounded-xl px-4 py-2.5 text-sm flex-1 min-w-[200px]" oninput="filterGallery()">
+    <select id="filter-status" class="input-field rounded-xl px-4 py-2.5 text-sm" onchange="filterGallery()">
+      <option value="">Semua Status</option><option value="Siswa">Siswa</option><option value="Guru">Guru</option>
+    </select>
+    <select id="filter-category" class="input-field rounded-xl px-4 py-2.5 text-sm" onchange="filterGallery()">
+      <option value="">Semua Kategori</option><option value="Video">Video</option><option value="PDF">PDF</option>
+      <option value="PPTX">PPTX</option><option value="Word">Word</option><option value="Image">Gambar</option>
+      <option value="MP3">Audio</option><option value="App">Aplikasi</option>
+    </select>
+    <select id="filter-year" class="input-field rounded-xl px-4 py-2.5 text-sm" onchange="filterGallery()">
+      <option value="">Semua Tahun</option><option value="2026">2026</option><option value="2025">2025</option><option value="2024">2024</option>
+    </select>
+  </div>
+</div>
+
+<main class="max-w-7xl mx-auto px-5 pb-16">
+  <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+    <p id="empty-gallery" class="col-span-full text-center py-20 hidden" style="color:var(--muted);font-style:italic">Belum ada karya. Jadilah yang pertama mengupload!</p>
+  </div>
+</main>
+
+<!-- Register Modal -->
+<div id="modal-register" class="fixed inset-0 z-50 hidden modal-overlay flex items-center justify-center p-4">
+  <div class="surface-card rounded-3xl w-full max-w-md p-7 relative max-h-[90vh] overflow-y-auto fade-up" style="max-height:90vh">
+    <button onclick="hideModal('register')" class="absolute top-4 right-4 p-1.5 rounded-full hover:bg-black/10"><i data-lucide="x" style="width:20px;height:20px"></i></button>
+    <h2 class="heading-display mb-5" style="font-size:1.5rem">Registrasi Akun</h2>
+    <form id="register-form" onsubmit="handleRegister(event)" class="space-y-4">
+      <div><label class="text-sm font-medium block mb-1.5" for="reg-name">Nama Lengkap</label><input id="reg-name" required class="input-field w-full rounded-xl px-4 py-2.5 text-sm"></div>
+      <div><label class="text-sm font-medium block mb-1.5" for="reg-status">Status</label>
+        <select id="reg-status" required class="input-field w-full rounded-xl px-4 py-2.5 text-sm"><option value="Siswa">Siswa</option><option value="Guru">Guru</option></select>
+      </div>
+      <div><label class="text-sm font-medium block mb-1.5" for="reg-dept">Jurusan / Mata Pelajaran</label><input id="reg-dept" required class="input-field w-full rounded-xl px-4 py-2.5 text-sm"></div>
+      <div><label class="text-sm font-medium block mb-1.5" for="reg-contact">Email / No. HP</label><input id="reg-contact" required class="input-field w-full rounded-xl px-4 py-2.5 text-sm"></div>
+      <label class="flex items-center gap-3 text-sm cursor-pointer"><input type="checkbox" id="reg-consent" class="accent-blue-600"><span>Saya setuju karya saya dipublikasikan di galeri ini</span></label>
+      <button type="submit" class="w-full py-3 rounded-xl font-semibold btn-primary">Daftar &amp; Dapatkan Kode Akses</button>
+    </form>
+    <div id="reg-result" class="hidden mt-5 p-5 rounded-2xl text-center" style="background:var(--bg)">
+      <p class="text-sm mb-1" style="color:var(--muted)">Kode Akses Anda:</p>
+      <p id="reg-code" class="text-4xl font-bold tracking-widest" style="color:var(--accent)"></p>
+      <p class="text-xs mt-2" style="color:var(--muted)">Simpan kode ini untuk upload karya</p>
+    </div>
+  </div>
+</div>
+
+<!-- Upload Modal -->
+<div id="modal-upload" class="fixed inset-0 z-50 hidden modal-overlay flex items-center justify-center p-4">
+  <div class="surface-card rounded-3xl w-full max-w-lg p-7 relative max-h-[90vh] overflow-y-auto fade-up" style="max-height:90vh">
+    <button onclick="hideModal('upload')" class="absolute top-4 right-4 p-1.5 rounded-full hover:bg-black/10"><i data-lucide="x" style="width:20px;height:20px"></i></button>
+    <div id="upload-login">
+      <h2 class="heading-display mb-5" style="font-size:1.5rem">Masuk dengan Kode Akses</h2>
+      <form onsubmit="handleUploadLogin(event)" class="space-y-4">
+        <div><label class="text-sm font-medium block mb-1.5" for="upload-code">Kode Akses</label><input id="upload-code" required class="input-field w-full rounded-xl px-4 py-2.5 text-sm uppercase tracking-widest" maxlength="6"></div>
+        <p id="code-error" class="text-red-500 text-xs hidden">Kode tidak valid</p>
+        <button type="submit" class="w-full py-3 rounded-xl font-semibold btn-primary">Verifikasi</button>
+      </form>
+    </div>
+    <div id="upload-form-wrap" class="hidden">
+      <h2 class="text-xl font-bold heading-display mb-1">Upload Karya</h2>
+      <p id="upload-user-name" class="text-sm mb-5" style="color:var(--muted)"></p>
+      <form id="upload-form" onsubmit="handleUpload(event)" class="space-y-4">
+        <input id="up-title" required placeholder="Judul Karya" class="input-field w-full rounded-xl px-4 py-2.5 text-sm">
+        <textarea id="up-desc" required placeholder="Deskripsi lengkap..." rows="4" class="input-field w-full rounded-xl px-4 py-2.5 text-sm"></textarea>
+        <div class="grid grid-cols-2 gap-3">
+          <select id="up-category" required class="input-field rounded-xl px-4 py-2.5 text-sm">
+            <option value="">Kategori</option><option>Video</option><option>PDF</option><option>PPTX</option>
+            <option>Word</option><option>Image</option><option>MP3</option><option>App</option><option>Other</option>
+          </select>
+          <input id="up-class" placeholder="Kelas" class="input-field rounded-xl px-4 py-2.5 text-sm">
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <input id="up-year" placeholder="Tahun" class="input-field rounded-xl px-4 py-2.5 text-sm">
+          <input id="up-link" required placeholder="Link karya (YouTube/Drive)" class="input-field rounded-xl px-4 py-2.5 text-sm">
+        </div>
+        <label class="flex items-center gap-3 text-sm cursor-pointer"><input type="checkbox" id="up-quiz" class="accent-blue-600"><span>Ikuti Quiz untuk Sertifikat Skill Passport ⭐</span></label>
+        <button type="submit" class="w-full py-3 rounded-xl font-semibold btn-primary" style="background:#10b981">Upload Karya</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Quiz Modal -->
+<div id="modal-quiz" class="fixed inset-0 z-50 hidden modal-overlay flex items-center justify-center p-4">
+  <div class="surface-card rounded-3xl w-full max-w-lg p-7 relative max-h-[90vh] overflow-y-auto fade-up" style="max-height:90vh">
+    <h2 class="text-xl font-bold heading-display mb-3">🎯 Skill Passport Quiz</h2>
+    <div class="w-full rounded-full" style="background:var(--border);height:10px">
+      <div id="quiz-bar" style="width:10%;background:var(--accent);height:10px;border-radius:9999px;transition:width .3s"></div>
+    </div>
+    <p id="quiz-counter" class="text-sm mb-3 mt-3" style="color:var(--muted)">Soal 1/10</p>
+    <p id="quiz-question" class="font-semibold text-lg mb-5"></p>
+    <div id="quiz-options" class="space-y-3"></div>
+    <div id="quiz-result" class="hidden text-center py-8">
+      <p class="text-5xl mb-3" id="quiz-stars"></p>
+      <p class="text-xl font-bold" id="quiz-score-text"></p>
+      <p class="text-sm mt-2" style="color:var(--muted)" id="quiz-cert-msg"></p>
+      <button onclick="hideModal('quiz')" class="mt-5 px-8 py-2.5 rounded-xl font-semibold btn-primary">Selesai</button>
+    </div>
+  </div>
+</div>
+
+<!-- Help Modal -->
+<div id="modal-help" class="fixed inset-0 z-50 hidden modal-overlay flex items-center justify-center p-4">
+  <div class="surface-card rounded-3xl w-full max-w-md p-7 relative fade-up">
+    <button onclick="hideModal('help')" class="absolute top-4 right-4 p-1.5 rounded-full hover:bg-black/10"><i data-lucide="x" style="width:20px;height:20px"></i></button>
+    <h2 class="heading-display mb-4" style="font-size:1.5rem">Bantuan</h2>
+    <div class="text-sm leading-relaxed" style="color:var(--muted)">1. Klik ikon Daftar untuk mendapatkan Kode Akses. 2. Gunakan Kode Akses untuk upload karya. 3. Pilih ikut Quiz untuk mendapatkan Sertifikat Skill Passport. 4. Karya akan tampil di galeri publik setelah disubmit. 5. Klik lencana untuk melihat sistem pangkat. 6. Klik nama author untuk lihat profil.</div>
+  </div>
+</div>
+
+<!-- Rank Modal -->
+<div id="modal-rank" class="fixed inset-0 z-50 hidden modal-overlay flex items-center justify-center p-4">
+  <div class="surface-card rounded-3xl w-full max-w-md p-7 relative fade-up max-h-[90vh] overflow-y-auto" style="max-height:90vh">
+    <button onclick="hideModal('rank')" class="absolute top-4 right-4 p-1.5 rounded-full hover:bg-black/10"><i data-lucide="x" style="width:20px;height:20px"></i></button>
+    <h2 class="heading-display mb-5" style="font-size:1.5rem">🏅 Sistem Pangkat</h2>
+    <div class="space-y-4">
+      <div class="flex items-center gap-4 p-4 rounded-xl" style="background:var(--bg)"><span class="rank-bronze text-white text-xs px-3 py-1.5 rounded-full font-bold">Bronze</span><div><p class="font-semibold text-sm">Bronze</p><p class="text-xs" style="color:var(--muted)">Quiz Score 1-2 ⭐</p></div></div>
+      <div class="flex items-center gap-4 p-4 rounded-xl" style="background:var(--bg)"><span class="rank-silver text-white text-xs px-3 py-1.5 rounded-full font-bold">Silver</span><div><p class="font-semibold text-sm">Silver</p><p class="text-xs" style="color:var(--muted)">Quiz Score 3-5 ⭐</p></div></div>
+      <div class="flex items-center gap-4 p-4 rounded-xl" style="background:var(--bg)"><span class="rank-gold text-white text-xs px-3 py-1.5 rounded-full font-bold">Gold</span><div><p class="font-semibold text-sm">Gold</p><p class="text-xs" style="color:var(--muted)">Quiz Score 6-8 ⭐</p></div></div>
+      <div class="flex items-center gap-4 p-4 rounded-xl" style="background:var(--bg)"><span class="rank-diamond text-gray-800 text-xs px-3 py-1.5 rounded-full font-bold">Diamond</span><div><p class="font-semibold text-sm">Diamond</p><p class="text-xs" style="color:var(--muted)">Quiz Score 9-10 ⭐</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Profile Modal -->
+<div id="modal-profile" class="fixed inset-0 z-50 hidden modal-overlay flex items-center justify-center p-4">
+  <div class="surface-card rounded-3xl w-full max-w-lg p-7 relative fade-up max-h-[90vh] overflow-y-auto" style="max-height:90vh">
+    <button onclick="hideModal('profile')" class="absolute top-4 right-4 p-1.5 rounded-full hover:bg-black/10"><i data-lucide="x" style="width:20px;height:20px"></i></button>
+    <div id="profile-content"></div>
+  </div>
+</div>
+
+<template id="card-template">
+  <article class="card-hover rounded-2xl overflow-hidden surface-card">
+    <div class="aspect-video flex items-center justify-center relative overflow-hidden" style="background:#1e293b">
+      <div class="card-media w-full h-full flex items-center justify-center"></div>
+      <div class="absolute top-3 right-3 flex gap-1">
+        <button class="card-badge-btn hidden text-white text-xs px-2.5 py-1 rounded-full font-bold shadow-lg cursor-pointer" onclick="event.stopPropagation();showModal('rank')"></button>
+      </div>
+    </div>
+    <div class="p-4">
+      <h3 class="font-semibold text-sm truncate card-title"></h3>
+      <p class="text-xs mt-1 card-author cursor-pointer hover:underline" style="color:var(--muted)"></p>
+      <p class="text-xs truncate card-desc mt-1.5" style="color:var(--muted)"></p>
+      <div class="flex items-center justify-between mt-3">
+        <span class="card-stars text-yellow-500 text-sm"></span>
+        <span class="card-category text-xs px-2.5 py-1 rounded-full font-medium" style="background:var(--accent-light);color:var(--accent)"></span>
+      </div>
+    </div>
+  </article>
+</template>
+
+<div id="loading-banner" class="hidden">Memuat data...</div>
+
+<script>
+/* ============================================================
+ *  ADAPTER: window.dataSdk versi Google Apps Script + Sheets
+ *  (menggantikan window.dataSdk bawaan Canva)
+ * ============================================================ */
+window.dataSdk = (function () {
+  let listener = null;
+
+  async function fetchAll() {
+    const res = await fetch(GAS_URL, { method: 'GET' });
+    const json = await res.json();
+    if (!json.isOk) throw new Error(json.error || 'Gagal memuat data');
+    return json.data || [];
+  }
+
+  async function init(handler) {
+    listener = handler;
+    try {
+      showLoading(true);
+      const data = await fetchAll();
+      listener.onDataChanged(data);
+      showLoading(false);
+      return { isOk: true };
+    } catch (err) {
+      showLoading(false);
+      console.error('dataSdk.init error:', err);
+      return { isOk: false, error: err.message };
+    }
+  }
+
+  async function create(record) {
+    try {
+      showLoading(true);
+      const res = await fetch(GAS_URL, {
+        method: 'POST',
+        // text/plain menghindari CORS preflight yang tidak didukung Apps Script
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ action: 'create', record })
+      });
+      const json = await res.json();
+      if (!json.isOk) throw new Error(json.error || 'Gagal menyimpan data');
+
+      // muat ulang seluruh data supaya tampilan tetap sinkron dengan sheet
+      const data = await fetchAll();
+      if (listener) listener.onDataChanged(data);
+      showLoading(false);
+      return { isOk: true, data: json.data };
+    } catch (err) {
+      showLoading(false);
+      console.error('dataSdk.create error:', err);
+      alert('Gagal menyimpan data: ' + err.message);
+      return { isOk: false, error: err.message };
+    }
+  }
+
+  function showLoading(on) {
+    const el = document.getElementById('loading-banner');
+    if (!el) return;
+    el.classList.toggle('hidden', !on);
+  }
+
+  return { init, create };
+})();
+
+/* ============================================================
+ *  LOGIKA GALERI (tetap sama seperti versi asli)
+ * ============================================================ */
+let allData=[], currentUser=null, quizData=[], quizIndex=0, quizCorrect=0, pendingWork=null, lang='id', currentTab='terbaru';
+
+const i18n={id:{empty:'Belum ada karya. Jadilah yang pertama mengupload!',search:'Cari nama/judul...'},en:{empty:'No works yet. Be the first to upload!',search:'Search name/title...'}};
+
+function updateClock(){const n=new Date();document.getElementById('clock').textContent=n.toLocaleDateString('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+' • '+n.toLocaleTimeString('id-ID')}
+setInterval(updateClock,1000);updateClock();
+
+function toggleTheme(){document.body.classList.toggle('dark');localStorage.setItem('theme',document.body.classList.contains('dark')?'dark':'light')}
+if(localStorage.getItem('theme')!=='light')document.body.classList.add('dark');
+
+function toggleLang(){lang=lang==='id'?'en':'id';document.getElementById('lang-btn').textContent=lang.toUpperCase();document.getElementById('search-input').placeholder=i18n[lang].search;renderGallery();renderTabs()}
+
+function showModal(n){document.getElementById('modal-'+n).classList.remove('hidden')}
+function hideModal(n){document.getElementById('modal-'+n).classList.add('hidden')}
+function showHelp(){showModal('help')}
+
+function generateCode(name){const l=name.replace(/[^a-zA-Z]/g,'').substring(0,3).toUpperCase()||'USR';return l+String(Math.floor(Math.random()*900)+100)}
+
+function getRank(score){
+  if(score>=9)return{label:'Diamond',cls:'rank-diamond',textCls:'text-gray-800'};
+  if(score>=6)return{label:'Gold',cls:'rank-gold',textCls:'text-white'};
+  if(score>=3)return{label:'Silver',cls:'rank-silver',textCls:'text-white'};
+  if(score>=1)return{label:'Bronze',cls:'rank-bronze',textCls:'text-white'};
+  return null;
+}
+
+const dataHandler={onDataChanged(data){allData=data;renderGallery();renderChart();renderTabs()}};
+
+async function initApp(){
+  if(!GAS_URL || GAS_URL.indexOf('GANTI_DENGAN') === 0){
+    alert('GAS_URL belum diisi. Buka index.html, isi variabel GAS_URL dengan URL Web App Apps Script kamu.');
+  }
+  const r=await window.dataSdk.init(dataHandler);
+  if(!r.isOk)console.error('SDK init failed:', r.error);
+  if(window.lucide) lucide.createIcons();
+}
+initApp();
+
+// Chart
+function renderChart(){
+  const works=allData.filter(d=>d.work_type==='work'&&d.submitted_at);
+  const months={};
+  works.forEach(w=>{const d=new Date(w.submitted_at);const k=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');months[k]=(months[k]||0)+1});
+  const sorted=Object.entries(months).sort((a,b)=>a[0].localeCompare(b[0])).slice(-12);
+  const canvas=document.getElementById('perf-chart');
+  const ctx=canvas.getContext('2d');
+  const dpr=window.devicePixelRatio||1;
+  canvas.width=700*dpr;canvas.height=200*dpr;ctx.setTransform(1,0,0,1,0,0);ctx.scale(dpr,dpr);
+  ctx.clearRect(0,0,700,200);
+  if(sorted.length===0)return;
+  const max=Math.max(...sorted.map(s=>s[1]),1);
+  const barW=Math.min(40,600/sorted.length-8);
+  const startX=50;
+  const isDark=document.body.classList.contains('dark');
+  ctx.fillStyle=isDark?'#8a9bb5':'#5a6a7a';ctx.font='11px Libre Franklin';
+  sorted.forEach(([label,val],i)=>{
+    const x=startX+i*(barW+8);
+    const h=(val/max)*150;
+    ctx.fillStyle=isDark?'#60a5fa':'#2563eb';
+    ctx.fillRect(x,180-h,barW,h);
+    ctx.fillStyle=isDark?'#8a9bb5':'#5a6a7a';
+    ctx.fillText(label.slice(5),x,195);
+    ctx.fillText(val,x+barW/2-4,175-h);
+  });
+}
+
+// Tabs
+function switchTab(tab){
+  currentTab=tab;
+  document.getElementById('tab-terbaru').classList.toggle('tab-active',tab==='terbaru');
+  document.getElementById('tab-terpopuler').classList.toggle('tab-active',tab==='terpopuler');
+  renderTabs();
+}
+
+function renderTabs(){
+  const works=allData.filter(d=>d.work_type==='work');
+  const now=new Date();const curMonth=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
+  let list;
+  if(currentTab==='terbaru'){
+    list=[...works].filter(w=>{if(!w.submitted_at)return false;return w.submitted_at.startsWith(curMonth)}).sort((a,b)=>b.submitted_at.localeCompare(a.submitted_at)).slice(0,4);
+  } else {
+    list=[...works].filter(w=>{if(!w.submitted_at)return false;return w.submitted_at.startsWith(curMonth)}).sort((a,b)=>(b.stars||0)-(a.stars||0)).slice(0,4);
+  }
+  const container=document.getElementById('tab-content');
+  container.innerHTML='';
+  if(list.length===0){container.innerHTML='<p class="col-span-full text-center text-sm py-8" style="color:var(--muted)">Belum ada data bulan ini</p>';return}
+  list.forEach(w=>{
+    const rank=getRank(w.quiz_score||0);
+    const el=document.createElement('div');
+    el.className='surface-card rounded-xl p-4 card-hover cursor-pointer';
+    el.innerHTML=`<div class="flex items-center gap-2 mb-2">${rank?`<span class="${rank.cls} ${rank.textCls} text-xs px-2 py-0.5 rounded-full font-bold">${rank.label}</span>`:''}<span class="text-xs" style="color:var(--muted)">${w.work_category}</span></div><h4 class="font-semibold text-sm truncate">${w.work_title}</h4><p class="text-xs mt-1" style="color:var(--muted)">${w.name} • ${'⭐'.repeat(w.stars||0)}</p>`;
+    el.onclick=()=>openWork(w);
+    container.appendChild(el);
+  });
+}
+
+function openWork(w){
+  if(w.work_link){window.open(w.work_link,'_blank','noopener,noreferrer')}
+}
+
+// Profile
+function showProfile(name){
+  const userWorks=allData.filter(d=>d.name===name&&d.work_type==='work');
+  const reg=allData.find(d=>d.name===name&&d.work_type==='registration');
+  const bestScore=Math.max(0,...userWorks.map(w=>w.quiz_score||0));
+  const rank=getRank(bestScore);
+  const el=document.getElementById('profile-content');
+  el.innerHTML=`
+    <div class="text-center mb-6">
+      <div class="w-20 h-20 rounded-full mx-auto mb-3 flex items-center justify-center text-3xl" style="background:var(--accent-light);width:80px;height:80px">👤</div>
+      <h3 class="text-xl font-bold heading-display">${name}</h3>
+      <p class="text-sm" style="color:var(--muted)">${reg?reg.status+' • '+reg.department:'Siswa'}</p>
+      ${rank?`<span class="${rank.cls} ${rank.textCls} text-xs px-3 py-1 rounded-full font-bold inline-block mt-2">${rank.label}</span>`:''}
+      <p class="text-xs mt-2" style="color:var(--muted)">Total Karya: ${userWorks.length} • Best Score: ${bestScore}/10</p>
+    </div>
+    <h4 class="font-bold text-sm mb-3">Karya</h4>
+    <div class="space-y-3">${userWorks.length===0?'<p class="text-sm" style="color:var(--muted)">Belum ada karya</p>':userWorks.map(w=>`
+      <div class="p-3 rounded-xl cursor-pointer" style="background:var(--bg)" onclick='openWork(${JSON.stringify({work_link:w.work_link})})'>
+        <p class="font-semibold text-sm">${w.work_title}</p>
+        <p class="text-xs" style="color:var(--muted)">${w.work_category} • ${'⭐'.repeat(w.stars||0)}</p>
+      </div>`).join('')}</div>`;
+  showModal('profile');
+}
+
+// Gallery
+function renderGallery(){
+  const works=allData.filter(d=>d.work_type==='work');
+  const grid=document.getElementById('gallery-grid');
+  const empty=document.getElementById('empty-gallery');
+  if(works.length===0){empty.classList.remove('hidden');empty.textContent=i18n[lang].empty;removeCards();return}
+  empty.classList.add('hidden');
+  const filtered=filterWorks(works);
+  removeCards();
+  const tpl=document.getElementById('card-template');
+  filtered.forEach(w=>{
+    const clone=tpl.content.cloneNode(true);
+    const card=clone.querySelector('article');
+    card.querySelector('.card-title').textContent=w.work_title;
+    const authorEl=card.querySelector('.card-author');
+    authorEl.textContent=w.name+' • '+w.status;
+    authorEl.onclick=(e)=>{e.stopPropagation();showProfile(w.name)};
+    card.querySelector('.card-desc').textContent=(w.work_description||'').substring(0,80);
+    card.querySelector('.card-stars').textContent='⭐'.repeat(w.stars||0);
+    card.querySelector('.card-category').textContent=w.work_category;
+    const rank=getRank(w.quiz_score||0);
+    if(rank){
+      const badge=card.querySelector('.card-badge-btn');
+      badge.classList.remove('hidden');
+      badge.classList.add(rank.cls,rank.textCls);
+      badge.textContent=rank.label;
+    }
+    const media=card.querySelector('.card-media');
+    const link=w.work_link||'';
+    if(link.includes('youtu')){const vid=extractYT(link);if(vid)media.innerHTML=`<img src="https://img.youtube.com/vi/${vid}/mqdefault.jpg" class="w-full h-full object-cover" loading="lazy">`;else media.innerHTML='<i data-lucide="play-circle" style="width:48px;height:48px;color:#fff"></i>';}
+    else{const icon=getCategoryIcon(w.work_category);media.innerHTML=`<div class="text-center text-white"><div class="text-4xl mb-1">${icon}</div><p class="text-xs opacity-70">${w.work_category}</p></div>`}
+    card.style.cursor='pointer';
+    card.onclick=()=>openWork(w);
+    grid.appendChild(clone);
+  });
+  if(window.lucide) lucide.createIcons();
+}
+
+function removeCards(){document.querySelectorAll('#gallery-grid article').forEach(el=>el.remove())}
+function filterWorks(works){const s=document.getElementById('search-input').value.toLowerCase();const st=document.getElementById('filter-status').value;const cat=document.getElementById('filter-category').value;const yr=document.getElementById('filter-year').value;return works.filter(w=>{if(s&&!w.work_title.toLowerCase().includes(s)&&!w.name.toLowerCase().includes(s))return false;if(st&&w.status!==st)return false;if(cat&&w.work_category!==cat)return false;if(yr&&w.work_year!==yr)return false;return true})}
+function filterGallery(){renderGallery()}
+function extractYT(url){const m=url.match(/(?:youtu\.be\/|v=)([a-zA-Z0-9_-]{11})/);return m?m[1]:null}
+function getCategoryIcon(cat){return{Video:'🎬',PDF:'📄',PPTX:'📊',Word:'📝',Image:'🖼️',MP3:'🎵',App:'💻',Other:'📁'}[cat]||'📁'}
+
+// Register
+async function handleRegister(e){
+  e.preventDefault();
+  const name=document.getElementById('reg-name').value.trim();
+  const code=generateCode(name);
+  const record={name,status:document.getElementById('reg-status').value,department:document.getElementById('reg-dept').value.trim(),contact:document.getElementById('reg-contact').value.trim(),access_code:code,publish_consent:document.getElementById('reg-consent').checked,registered_at:new Date().toISOString(),work_title:'',work_description:'',work_category:'',work_class:'',work_year:'',work_link:'',work_type:'registration',stars:0,certified:false,quiz_score:0,submitted_at:''};
+  const res=await window.dataSdk.create(record);
+  if(res.isOk){document.getElementById('reg-result').classList.remove('hidden');document.getElementById('reg-code').textContent=code;document.getElementById('register-form').classList.add('hidden')}
+}
+
+function handleUploadLogin(e){
+  e.preventDefault();
+  const code=document.getElementById('upload-code').value.trim().toUpperCase();
+  const user=allData.find(d=>d.access_code===code&&d.work_type==='registration');
+  if(!user){document.getElementById('code-error').classList.remove('hidden');return}
+  document.getElementById('code-error').classList.add('hidden');
+  currentUser=user;
+  document.getElementById('upload-login').classList.add('hidden');
+  document.getElementById('upload-form-wrap').classList.remove('hidden');
+  document.getElementById('upload-user-name').textContent='👋 '+user.name+' ('+user.status+')';
+}
+
+async function handleUpload(e){
+  e.preventDefault();
+  const wantQuiz=document.getElementById('up-quiz').checked;
+  const work={name:currentUser.name,status:currentUser.status,department:currentUser.department,contact:currentUser.contact,access_code:currentUser.access_code,publish_consent:currentUser.publish_consent,registered_at:currentUser.registered_at,work_title:document.getElementById('up-title').value.trim(),work_description:document.getElementById('up-desc').value.trim(),work_category:document.getElementById('up-category').value,work_class:document.getElementById('up-class').value.trim(),work_year:document.getElementById('up-year').value.trim(),work_link:document.getElementById('up-link').value.trim(),work_type:'work',stars:0,certified:false,quiz_score:0,submitted_at:new Date().toISOString()};
+  if(wantQuiz){pendingWork=work;startQuiz(work.work_category)}else{await submitWork(work)}
+}
+
+async function submitWork(work){const res=await window.dataSdk.create(work);if(res.isOk){hideModal('upload');resetUploadForm()}}
+function resetUploadForm(){document.getElementById('upload-form').reset();document.getElementById('upload-login').classList.remove('hidden');document.getElementById('upload-form-wrap').classList.add('hidden');currentUser=null}
+
+// Quiz
+function startQuiz(category){hideModal('upload');quizIndex=0;quizCorrect=0;quizData=generateQuizQuestions();document.getElementById('quiz-result').classList.add('hidden');document.getElementById('quiz-counter').classList.remove('hidden');document.getElementById('quiz-question').classList.remove('hidden');document.getElementById('quiz-options').classList.remove('hidden');showModal('quiz');renderQuizQuestion()}
+
+function generateQuizQuestions(){return[{q:'Apa prinsip utama desain visual yang baik?',o:['Keseimbangan & kontras','Warna acak','Tanpa margin','Font besar'],a:0},{q:'Format file apa yang mendukung transparansi?',o:['PNG','JPG','BMP','TIFF'],a:0},{q:'Apa kepanjangan dari PDF?',o:['Portable Document Format','Print Data File','Page Design Format','Public Doc File'],a:0},{q:'Resolusi standar video HD adalah?',o:['1920x1080','800x600','1280x720','640x480'],a:0},{q:'Software editing video profesional adalah?',o:['Adobe Premiere Pro','Microsoft Word','Google Sheets','Notepad'],a:0},{q:'Apa fungsi metadata dalam file digital?',o:['Menyimpan informasi tentang file','Menghapus file','Mengenkripsi konten','Memperbesar ukuran'],a:0},{q:'Codec audio yang paling umum digunakan?',o:['MP3/AAC','BMP','TIFF','RAW'],a:0},{q:'Prinsip KISS dalam desain berarti?',o:['Keep It Simple, Stupid','Keep It Super Smart','Keep In Same Style','Kill Irrelevant Stupid Stuff'],a:0},{q:'Apa itu responsive design?',o:['Desain yang menyesuaikan layar','Desain yang cepat','Desain yang mahal','Desain 3D'],a:0},{q:'Version control berguna untuk?',o:['Melacak perubahan kode/file','Mempercepat internet','Menghapus virus','Membuat backup otomatis'],a:0}].sort(()=>Math.random()-0.5)}
+
+function renderQuizQuestion(){if(quizIndex>=10){finishQuiz();return}const q=quizData[quizIndex];document.getElementById('quiz-bar').style.width=((quizIndex+1)*10)+'%';document.getElementById('quiz-counter').textContent=`Soal ${quizIndex+1}/10`;document.getElementById('quiz-question').textContent=q.q;const opts=document.getElementById('quiz-options');opts.innerHTML='';q.o.forEach((opt,i)=>{const btn=document.createElement('button');btn.type='button';btn.className='w-full text-left px-5 py-3.5 rounded-xl text-sm font-medium input-field';btn.style.display='block';btn.textContent=opt;btn.onclick=()=>answerQuiz(i);opts.appendChild(btn)})}
+
+function answerQuiz(idx){if(idx===quizData[quizIndex].a)quizCorrect++;quizIndex++;renderQuizQuestion()}
+
+async function finishQuiz(){document.getElementById('quiz-counter').classList.add('hidden');document.getElementById('quiz-question').classList.add('hidden');document.getElementById('quiz-options').classList.add('hidden');document.getElementById('quiz-result').classList.remove('hidden');document.getElementById('quiz-stars').textContent='⭐'.repeat(quizCorrect);document.getElementById('quiz-score-text').textContent=`Skor: ${quizCorrect}/10`;document.getElementById('quiz-cert-msg').textContent=quizCorrect>0?'Selamat! Anda mendapatkan Sertifikat Skill Passport':'Coba lagi lain waktu';if(pendingWork){pendingWork.stars=quizCorrect;pendingWork.certified=quizCorrect>0;pendingWork.quiz_score=quizCorrect;await submitWork(pendingWork);pendingWork=null}}
+</script>
+</body>
+</html>
