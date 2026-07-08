@@ -61,7 +61,9 @@ body{margin:0;font-family:'Libre Franklin',sans-serif;background:var(--bg);color
 
 .overlay{position:absolute;inset:0;background:rgba(0,0,0,.45);}
 .hero-content{position:relative;z-index:10;height:100%;display:flex;justify-content:center;align-items:center;flex-direction:column;color:white;text-align:center;}
-.hero-content h1{font-size:4rem;font-weight:800;}@keyframes zoom{from{transform:scale(1);}to{transform:scale(1.15);}}
+/* Tulisan Unjuk Kerja dan Portofolio digital */
+.hero-content h1{font-size: clamp(2rem, 4vw, 3.5rem);font-weight: 800;text-align: center;}
+@keyframes zoom{from{transform:scale(1);}to{transform:scale(1.15);}}
 
 /* utilities dasar yang dipakai markup */
 .fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}
