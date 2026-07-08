@@ -9,8 +9,18 @@ body{margin:0;font-family:'Libre Franklin',sans-serif;background:var(--bg);color
 .modal-overlay{background:rgba(0,0,0,0.5);backdrop-filter:blur(8px)}
 .btn-primary{background:var(--accent);color:#fff;border:none;transition:background .2s,transform .1s;cursor:pointer}.btn-primary:hover{background:var(--accent-dark);transform:scale(1.02)}
 .input-field{background:var(--bg);color:var(--text);border:1px solid var(--border);transition:border-color .2s}.input-field:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light)}
+
 .hero-gradient{background:linear-gradient(135deg,rgba(37,99,235,0.15),rgba(245,158,11,0.10))}.dark .hero-gradient{background:linear-gradient(135deg,rgba(96,165,250,0.18),rgba(251,191,36,0.08))}
+/*Zoom in 
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}.fade-up{animation:fadeUp .5s ease forwards}
+/*gambar bergerak dari kanan ke kiri
+@keyframes slideBackground{0%{transform:translateX(5%) scale(1.10);}100%{transform:translateX(-5%) scale(1.10);}}
+/* kanan → kiri + zoom (lebih sinematik) */
+@keyframes slideBackground{0%{transform:translateX(10%)scale(1);}50%{transform:translateX(0)scale(1.08);}100%{transform:translateX(-10%)scale(1.15);}}
+/*seperti video drone
+@keyframes slideBackground{0%{transform:translate(8%,0)scale(1.25);}100%{transform:translate(-8%,0)scale(1.25);}}
+*/
+
 .tab-active{border-bottom:3px solid var(--accent);color:var(--accent);font-weight:700}
 .tab-btn{padding:0.5rem 1rem;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;background:none;color:var(--muted);font-weight:600}
 .rank-bronze{background:linear-gradient(135deg,#cd7f32,#a0522d)}.rank-silver{background:linear-gradient(135deg,#c0c0c0,#808080)}.rank-gold{background:linear-gradient(135deg,#ffd700,#daa520)}.rank-diamond{background:linear-gradient(135deg,#b9f2ff,#4fc3f7)}
@@ -19,12 +29,33 @@ body{margin:0;font-family:'Libre Franklin',sans-serif;background:var(--bg);color
 .hero-slider{position:absolute;inset:0;}
 .slide{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 2s ease;transform:scale(1);animation:zoom 12s linear infinite;}
 .slide.active{opacity:1;}
+
 .slide:nth-child(1){background-image:url(images/hero001.jpg);}
 .slide:nth-child(2){background-image:url(images/hero002.jpg);}
 .slide:nth-child(3){background-image:url(images/hero003.jpg);}
+.slide:nth-child(4){background-image:url(images/hero004.jpg);}
+.slide:nth-child(5){background-image:url(images/hero005.jpg);}
+.slide:nth-child(6){background-image:url(images/hero006.jpg);}
+.slide:nth-child(7){background-image:url(images/hero007.jpg);}
+.slide:nth-child(8){background-image:url(images/hero008.jpg);}
+.slide:nth-child(9){background-image:url(images/hero009.jpg);}
+.slide:nth-child(10){background-image:url(images/hero010.jpg);}
+.slide:nth-child(11){background-image:url(images/hero011.jpg);}
+.slide:nth-child(12){background-image:url(images/hero012.jpg);}
+.slide:nth-child(13){background-image:url(images/hero013.jpg);}
+.slide:nth-child(14){background-image:url(images/hero014.jpg);}
+.slide:nth-child(15){background-image:url(images/hero015.jpg);}
+.slide:nth-child(16){background-image:url(images/hero016.jpg);}
+.slide:nth-child(17){background-image:url(images/hero017.jpg);}
+.slide:nth-child(18){background-image:url(images/hero018.jpg);}
+.slide:nth-child(19){background-image:url(images/hero019.jpg);}
+.slide:nth-child(20){background-image:url(images/hero020.jpg);}
+.slide:nth-child(21){background-image:url(images/hero021.jpg);}
+
 .overlay{position:absolute;inset:0;background:rgba(0,0,0,.45);}
 .hero-content{position:relative;z-index:10;height:100%;display:flex;justify-content:center;align-items:center;flex-direction:column;color:white;text-align:center;}
 .hero-content h1{font-size:4rem;font-weight:800;}@keyframes zoom{from{transform:scale(1);}to{transform:scale(1.15);}}
+
 /* utilities dasar yang dipakai markup */
 .fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}
 .inset-0{inset:0}.right-4{right:1rem}.top-0{top:0}.top-4{top:1rem}.right-3{right:.75rem}.top-3{top:.75rem}
