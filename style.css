@@ -147,7 +147,7 @@ button,input,select,textarea{font-family:inherit;font-size:100%}
 */
 /* ==========================================================
    FOOTER
-========================================================== */
+========================================================== 
 footer{
     background: var(--surface, #1f2937);
     color: var(--text, #ffffff);
@@ -181,6 +181,38 @@ footer .bi{
 footer .text-center{
     font-size:.9rem;
     color:var(--muted, #cbd5e1);}
+*/
+
+/*==========================
+FOOTER
+==========================*/
+.footer{
+background:var(--card);
+border-top:1px solid var(--border);
+margin-top:80px;
+}
+
+.footer h4,
+.footer h5{
+font-weight:700;
+margin-bottom:15px;
+}
+
+.footer p,
+.footer li,
+.footer a{
+color:var(--text2);
+line-height:1.8;
+transition:.3s;
+}
+
+.footer a:hover{
+color:var(--primary);
+}
+
+.footer hr{
+border-color:var(--border);
+}
 
 /* ===========================
    Tampilan HP
