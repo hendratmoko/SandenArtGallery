@@ -493,7 +493,7 @@ setInterval(()=>{
 
 /*=========================
 BACK TO TOP
-=========================*/
+=========================
 const backToTop = document.getElementById("backToTop");
 window.addEventListener("scroll",()=>{
     if(window.scrollY>350){
@@ -508,3 +508,4 @@ backToTop.addEventListener("click",()=>{
         behavior:"smooth"
     });
 });
+*/
