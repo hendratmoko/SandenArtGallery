@@ -145,6 +145,43 @@ button,input,select,textarea{font-family:inherit;font-size:100%}
 #backToTop.show{opacity:1;visibility:visible;}
 #backToTop:hover{transform:translateY(-6px);}
 */
+/* ==========================================================
+   FOOTER
+========================================================== */
+footer{
+    background: var(--surface, #1f2937);
+    color: var(--text, #ffffff);
+    border-top: 1px solid rgba(255,255,255,.08);}
+footer h5{
+    color: var(--text, #ffffff);
+    font-weight:700;
+    margin-bottom:1rem;}
+footer p{
+    color: var(--muted, #cbd5e1);
+    line-height:1.8;
+    font-size:.95rem;}
+footer ul{
+    padding-left:0;
+    margin-bottom:0;}
+footer ul li{
+    margin-bottom:.5rem;}
+footer a{
+    color: var(--muted, #cbd5e1);
+    transition:.3s;}
+footer a:hover{
+    color:#38bdf8;
+    text-decoration:none;
+    padding-left:5px;}
+footer hr{
+    opacity:.15;
+    margin:2rem 0 1rem;}
+footer .bi{
+    margin-right:6px;
+    color:#38bdf8;}
+footer .text-center{
+    font-size:.9rem;
+    color:var(--muted, #cbd5e1);}
+
 /* ===========================
    Tampilan HP
 =========================== */
