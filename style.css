@@ -58,7 +58,10 @@ body{margin:0;font-family:'Libre Franklin',sans-serif;background:var(--bg);color
 .slide:nth-child(19){background-image:url(images/hero019.jpg);}
 .slide:nth-child(20){background-image:url(images/hero020.jpg);}
 .slide:nth-child(21){background-image:url(images/hero021.jpg);}
-
+.slide:nth-child(22){background-image:url(images/hero022.jpg);}
+.slide:nth-child(23){background-image:url(images/hero023.jpg);}
+.slide:nth-child(24){background-image:url(images/hero024.jpg);}
+.slide:nth-child(25){background-image:url(images/hero025.jpg);}
 .overlay{position:absolute;inset:0;background:rgba(0,0,0,.45);}
 .hero-content{position:relative;z-index:10;height:100%;display:flex;justify-content:center;align-items:center;flex-direction:column;color:white;text-align:center;}
 /* Tulisan Unjuk Kerja dan Portofolio digital */
