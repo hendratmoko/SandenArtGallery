@@ -121,6 +121,28 @@ button,input,select,textarea{font-family:inherit;font-size:100%}
 
 #loading-banner{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;padding:8px 18px;border-radius:999px;font-size:13px;font-weight:600;z-index:60;box-shadow:0 8px 20px rgba(0,0,0,.25)}
 #offline-banner{position:fixed;top:0;left:0;right:0;background:var(--warm);color:#1a2332;text-align:center;font-size:13px;font-weight:700;padding:6px;z-index:70}
+#backToTop{
+    position:fixed;
+    right:25px;
+    bottom:25px;
+    width:55px;
+    height:55px;
+    border:none;
+    border-radius:50%;
+    background:linear-gradient(135deg,#2563eb,#1d4ed8);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:22px;
+    cursor:pointer;
+   opacity:0;
+   visibility:hidden;
+   transition:.35s;
+   z-index:9999;
+   box-shadow:0 10px 25px rgba(0,0,0,.25);}
+#backToTop.show{opacity:1;visibility:visible;}
+#backToTop:hover{transform:translateY(-6px);}
 /* ===========================
    Tampilan HP
 =========================== */
