@@ -229,6 +229,54 @@
   </div>
 </div>
 -->
+<!-- Rank Modal 
+<div id="modal-rank" class="fixed inset-0 z-50 hidden modal-overlay flex items-center justify-center p-4">
+  <div class="surface-card rounded-3xl w-full max-w-md p-7 relative fade-up" style="max-height:90vh;overflow-y:auto">
+    <button onclick="hideModal('rank')" class="absolute top-4 right-4 p-1.5 rounded-full hover:bg-black/10"><i data-lucide="x" style="width:20px;height:20px"></i></button>
+    <h2 class="heading-display mb-5" style="font-size:1.5rem">🏅 Sistem Pangkat</h2>
+    <div class="space-y-4">
+      <div class="flex items-center gap-4 p-4 rounded-xl" style="background:var(--bg)"><span class="rank-bronze text-white text-xs px-3 py-1.5 rounded-full font-bold">Bronze</span><div><p class="font-semibold text-sm">Bronze</p><p class="text-xs" style="color:var(--muted)">Quiz Score 1-2 ⭐</p></div></div>
+      <div class="flex items-center gap-4 p-4 rounded-xl" style="background:var(--bg)"><span class="rank-silver text-white text-xs px-3 py-1.5 rounded-full font-bold">Silver</span><div><p class="font-semibold text-sm">Silver</p><p class="text-xs" style="color:var(--muted)">Quiz Score 3-5 ⭐</p></div></div>
+      <div class="flex items-center gap-4 p-4 rounded-xl" style="background:var(--bg)"><span class="rank-gold text-white text-xs px-3 py-1.5 rounded-full font-bold">Gold</span><div><p class="font-semibold text-sm">Gold</p><p class="text-xs" style="color:var(--muted)">Quiz Score 6-8 ⭐</p></div></div>
+      <div class="flex items-center gap-4 p-4 rounded-xl" style="background:var(--bg)"><span class="rank-diamond text-gray-800 text-xs px-3 py-1.5 rounded-full font-bold">Diamond</span><div><p class="font-semibold text-sm">Diamond</p><p class="text-xs" style="color:var(--muted)">Quiz Score 9-10 ⭐</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Profile Modal 
+<div id="modal-profile" class="fixed inset-0 z-50 hidden modal-overlay flex items-center justify-center p-4">
+  <div class="surface-card rounded-3xl w-full max-w-lg p-7 relative fade-up" style="max-height:90vh;overflow-y:auto">
+    <button onclick="hideModal('profile')" class="absolute top-4 right-4 p-1.5 rounded-full hover:bg-black/10"><i data-lucide="x" style="width:20px;height:20px"></i></button>
+    <div id="profile-content"></div>
+  </div>
+</div>
+
+<template id="card-template">
+  <article class="card-hover rounded-2xl overflow-hidden surface-card">
+    <div class="aspect-video flex items-center justify-center relative overflow-hidden" style="background:#1e293b">
+      <div class="card-media w-full h-full flex items-center justify-center"></div>
+      <div class="absolute top-3 right-3 flex gap-1">
+        <button class="card-badge-btn hidden text-white text-xs px-2.5 py-1 rounded-full font-bold shadow-lg cursor-pointer" onclick="event.stopPropagation();showModal('rank')"></button>
+      </div>
+    </div>
+    <div class="p-4">
+      <h3 class="font-semibold text-sm truncate card-title"></h3>
+      <p class="text-xs mt-1 card-author cursor-pointer hover:underline" style="color:var(--muted)"></p>
+      <p class="text-xs truncate card-desc mt-1.5" style="color:var(--muted)"></p>
+      <div class="flex items-center justify-between mt-3">
+        <span class="card-stars text-yellow-500 text-sm"></span>
+        <span class="card-category text-xs px-2.5 py-1 rounded-full font-medium" style="background:var(--accent-light);color:var(--accent)"></span>
+      </div>
+    </div>
+  </article>
+</template>
+
+<div id="loading-banner" class="hidden">Memuat data...</div>
+<!--
+    <button id="backToTop" aria-label="Kembali ke atas">
+    <i data-lucide="arrow-up"></i>
+</button>
+-->
 <!-- Rank Modal -->
 <div id="modal-rank" class="fixed inset-0 z-50 hidden modal-overlay flex items-center justify-center p-4">
   <div class="surface-card rounded-3xl w-full max-w-md p-7 relative fade-up" style="max-height:90vh;overflow-y:auto">
@@ -272,11 +320,8 @@
 </template>
 
 <div id="loading-banner" class="hidden">Memuat data...</div>
-<!--
-    <button id="backToTop" aria-label="Kembali ke atas">
-    <i data-lucide="arrow-up"></i>
-</button>
--->
+
+
 <!-- Logika aplikasi -->
 <script src="config.js"></script>
 <script src="script.js"></script>
