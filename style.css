@@ -39,10 +39,10 @@ body{margin:0;font-family:'Libre Franklin',sans-serif;background:var(--bg);color
 
 .slide:nth-child(1){background-image:url(images/hero001.jpg);}
 .slide:nth-child(2){background-image:url(images/hero002.jpg);}
-.slide:nth-child(3){background-image:url(images/hero003.jpg);}
-.slide:nth-child(4){background-image:url(images/hero004.jpg);}
-.slide:nth-child(5){background-image:url(images/hero005.jpg);}
-.slide:nth-child(6){background-image:url(images/hero006.jpg);}
+.slide:nth-child(3){background-image:url(images/hero003.png);}
+.slide:nth-child(4){background-image:url(images/hero004.png);}
+.slide:nth-child(5){background-image:url(images/hero005.png);}
+.slide:nth-child(6){background-image:url(images/hero006.png);}
 .slide:nth-child(7){background-image:url(images/hero007.jpg);}
 .slide:nth-child(8){background-image:url(images/hero008.jpg);}
 .slide:nth-child(9){background-image:url(images/hero009.jpg);}
