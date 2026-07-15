@@ -12,10 +12,10 @@ body{margin:0;font-family:'Libre Franklin',sans-serif;background:var(--bg);color
 
 .category-icon{
     width: 80px;
-    height: 80px;
+    height: 60px;
     object-fit: contain;
     display: block;
-    margin: 0 auto;
+  /*  margin: 0 auto;*/
 }
 /*Anda juga bisa mengubah ukurannya:
 32px → kecil
