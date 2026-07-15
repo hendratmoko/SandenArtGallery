@@ -372,7 +372,7 @@ async function handleRegister(e) {
     contact: document.getElementById('reg-contact').value.trim(), access_code: code,
     publish_consent: document.getElementById('reg-consent').checked, registered_at: new Date().toISOString(),
     work_title: '', work_description: '', work_category: '', work_class: '', work_year: '', work_link: '',
-    work_type: 'registration', stars: 0, certified: false, quiz_score: 0, submitted_at: ''
+    work_type: 'registration', stars: 0, certified: false, quiz_score: 0, submitted_at: '', gambar: '', guru: ''
   };
   const res = await window.dataSdk.create(record);
   if (res.isOk) {
