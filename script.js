@@ -360,7 +360,7 @@ function filterWorks(works) {
 }
 function filterGallery() { renderGallery(); }
 function extractYT(url) { const m = url.match(/(?:youtu\.be\/|v=)([a-zA-Z0-9_-]{11})/); return m ? m[1] : null; }
-function getCategoryIcon(cat) { return { Video: '🎬', PDF: '📄', PPTX: '📊', Word: '📝', Image: '🖼️', MP3: '🎵', App: '💻', Other: '📁' }[cat] || '📁'; }
+function getCategoryIcon(cat) { return { Video: '🎬', PDF: '📄', PPTX: '📊', Word: '📝', Image: '🖼️', MP3: '🎵', App: '💻', Website: '💻', Game: '💻', Other: '📁' }[cat] || '📁'; }
 
 // Register
 async function handleRegister(e) {
