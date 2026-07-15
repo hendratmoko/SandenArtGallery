@@ -361,7 +361,32 @@ function filterWorks(works) {
 function filterGallery() { renderGallery(); }
 function extractYT(url) { const m = url.match(/(?:youtu\.be\/|v=)([a-zA-Z0-9_-]{11})/); return m ? m[1] : null; }
 //function getCategoryIcon(cat) { return { Video: '🎬', PDF: '📄', PPTX: '📊', Word: '📝', Image: '🖼️', MP3: '🎵', App: '💻', Website: '💻', Game: '💻', Other: '📁' }[cat] || '📁'; }
-
+function getCategoryIcon(cat){
+    const BASE="https://hendratmoko.github.io/SandenArtGallery/icons/";
+    return {
+        Video: BASE+"video.png",
+        PDF: BASE+"pdf.png",
+        PPTX: BASE+"ppt.png",
+        Word: BASE+"word.png",
+        Text: BASE+"text.png",
+        Image: BASE+"image.png",
+        MP3: BASE+"mp3.png",
+        App: BASE+"app.png",
+        Website: BASE+"website.png",
+        Game: BASE+"game.png",
+        Android: BASE+"android.svg",
+        Canva: BASE+"canva.svg",
+        Scratch: BASE+"scratch.svg",
+        Unity: BASE+"unity.svg",
+        Python: BASE+"python.svg",
+        HTML: BASE+"html.svg",
+        CSS: BASE+"css.svg",
+        JavaScript: BASE+"javascript.svg",
+        Laravel: BASE+"laravel.svg",
+        GitHub: BASE+"github.svg",
+        Other: BASE+"folder.png"
+    }[cat] || BASE+"📁";
+}
 // Register
 async function handleRegister(e) {
   e.preventDefault();
