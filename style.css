@@ -11,12 +11,17 @@ body{margin:0;font-family:'Libre Franklin',sans-serif;background:var(--bg);color
 .input-field{background:var(--bg);color:var(--text);border:1px solid var(--border);transition:border-color .2s}.input-field:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light)}
 
 .category-icon{
-    width:64px;
-    height:64px;
+    width:32px;
+    height:32px;
     object-fit:contain;
     display:block;
 }
-
+/*Anda juga bisa mengubah ukurannya:
+32px → kecil
+48px → sedang
+64px → seperti icon aplikasi
+96px → besar
+*/
 /* HELP */
 .help-list{list-style:none;padding:0;margin:0;}
 .help-list li{padding:10px 0;border-bottom:1px solid rgba(255,255,255,.08);line-height:1.6;}
