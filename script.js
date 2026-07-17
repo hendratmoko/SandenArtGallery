@@ -385,6 +385,7 @@ function getCategoryIcon(cat){
         JavaScript: BASE+"Javascript.png",
         Laravel: BASE+"Laravel.png",
         GitHub: BASE+"Github.png",
+        Quis: BASE+"Quis.png",
         Other: BASE+"Folder.png"
     }[cat] || BASE+"Folder";
 }
