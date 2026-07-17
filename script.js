@@ -364,28 +364,29 @@ function extractYT(url) { const m = url.match(/(?:youtu\.be\/|v=)([a-zA-Z0-9_-]{
 function getCategoryIcon(cat){
     const BASE="https://hendratmoko.github.io/SandenArtGallery/icons/";
     return {
-        Video: BASE+"video.png",
-        PDF: BASE+"pdf.png",
-        PPTX: BASE+"ppt.png",
-        Word: BASE+"word.png",
-        Text: BASE+"text.png",
-        Image: BASE+"image.png",
-        MP3: BASE+"mp3.png",
-        App: BASE+"app.png",
-        Website: BASE+"website.png",
-        Game: BASE+"game.png",
-        Android: BASE+"android.png",
-        Canva: BASE+"canva.png",
-        Scratch: BASE+"scratch.png",
-        Unity: BASE+"unity.png",
-        Python: BASE+"python.png",
-        HTML: BASE+"html.png",
-        CSS: BASE+"css.png",
-        JavaScript: BASE+"javascript.png",
-        Laravel: BASE+"laravel.png",
-        GitHub: BASE+"github.png",
-        Other: BASE+"folder.png"
-    }[cat] || BASE+"📁";
+        Video: BASE+"Video.png",
+        PDF: BASE+"PDF.png",
+        PPTX: BASE+"PPTX.png",
+        Word: BASE+"Word.png",
+        Word: BASE+"Excel.png",
+        Text: BASE+"Text.png",
+        Image: BASE+"Image.png",
+        MP3: BASE+"MP3.png",
+        App: BASE+"App.png",
+        Website: BASE+"Website.png",
+        Game: BASE+"Game.png",
+        Android: BASE+"Android.png",
+        Canva: BASE+"Canva.png",
+        Scratch: BASE+"Scratch.png",
+        Unity: BASE+"Unity.png",
+        Python: BASE+"Phyton.png",
+        HTML: BASE+"Html.png",
+        CSS: BASE+"CSS.png",
+        JavaScript: BASE+"Javascript.png",
+        Laravel: BASE+"Laravel.png",
+        GitHub: BASE+"Github.png",
+        Other: BASE+"Folder.png"
+    }[cat] || BASE+"Folder";
 }
 // Register
 async function handleRegister(e) {
