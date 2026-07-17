@@ -368,7 +368,7 @@ function getCategoryIcon(cat){
         PDF: BASE+"PDF.png",
         PPTX: BASE+"PPTX.png",
         Word: BASE+"Word.png",
-        Word: BASE+"Excel.png",
+        Excel: BASE+"Excel.png",
         Text: BASE+"Text.png",
         Image: BASE+"Image.png",
         MP3: BASE+"MP3.png",
