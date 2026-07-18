@@ -432,6 +432,29 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
         </svg>
     </button>
+<script>
+    const backToTopBtn = document.getElementById('backToTop');
+
+    // Deteksi scroll untuk memunculkan tombol
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.remove('opacity-0', 'invisible', 'translate-y-2');
+            backToTopBtn.classList.add('opacity-100', 'visible', 'translate-y-0');
+        } else {
+            backToTopBtn.classList.remove('opacity-100', 'visible', 'translate-y-0');
+            backToTopBtn.classList.add('opacity-0', 'invisible', 'translate-y-2');
+        }
+    });
+
+    // Aksi klik untuk kembali ke atas dengan smooth scroll
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+</script
+  >
 
   
 </footer>
@@ -609,29 +632,6 @@ FOOTER
     </div>
 </footer>
 -->
-<script>
-    const backToTopBtn = document.getElementById('backToTop');
-
-    // Deteksi scroll untuk memunculkan tombol
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 300) {
-            backToTopBtn.classList.remove('opacity-0', 'invisible', 'translate-y-2');
-            backToTopBtn.classList.add('opacity-100', 'visible', 'translate-y-0');
-        } else {
-            backToTopBtn.classList.remove('opacity-100', 'visible', 'translate-y-0');
-            backToTopBtn.classList.add('opacity-0', 'invisible', 'translate-y-2');
-        }
-    });
-
-    // Aksi klik untuk kembali ke atas dengan smooth scroll
-    backToTopBtn.addEventListener('click', () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    });
-</script>
-
 
   
 <!-- Logika aplikasi -->
