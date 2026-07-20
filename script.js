@@ -214,6 +214,110 @@ async function initApp() {
 initApp();
 
 // Chart
+
+let uploadChart = null;
+function renderChart() {
+    const works = allData.filter(item =>
+        item.work_type === "work" &&
+        item.submitted_at
+    );
+    const labels = [];
+    const values = [];
+    for (let i = 29; i >= 0; i--) {
+        const day = new Date();
+        day.setHours(0,0,0,0);
+        day.setDate(day.getDate()-i);
+        labels.push(
+            day.toLocaleDateString("id-ID",{
+                day:"2-digit",
+                month:"short"
+            })
+        );
+        let total = 0;
+        works.forEach(work=>{
+            const upload = new Date(work.submitted_at);
+            upload.setHours(0,0,0,0);
+            if(upload.getTime()===day.getTime()){
+                total++;
+            }
+        });
+        values.push(total);
+    }
+    //---------------------------------------------------
+    const ctx = document
+        .getElementById("perf-chart")
+        .getContext("2d");
+    if(uploadChart){
+        uploadChart.destroy();
+    }
+    const dark = document.body.classList.contains("dark");
+    uploadChart = new Chart(ctx,{
+        type:"line",
+        data:{
+            labels,
+            datasets:[{
+                label:"Jumlah Upload",
+                data:values,
+                borderColor:"#2563eb",
+                backgroundColor:"rgba(37,99,235,.18)",
+                borderWidth:3,
+                pointRadius:4,
+                pointHoverRadius:6,
+                tension:0.35,
+                fill:true
+            }]
+        },
+        options:{
+            responsive:true,
+            maintainAspectRatio:false,
+            interaction:{
+                intersect:false,
+                mode:"index"
+            },
+            plugins:{
+                title:{
+                    display:true,
+                    text:"📈 Upload Karya 30 Hari Terakhir",
+                    font:{
+                        size:20,
+                        weight:"bold"
+                    }
+                },
+                legend:{
+                    display:false
+                }
+            },
+            scales:{
+                x:{
+                    ticks:{
+                        color:dark?"#cbd5e1":"#475569"
+                    },
+                    grid:{
+                        color:dark?
+                        "rgba(255,255,255,.08)"
+                        :
+                        "#e5e7eb"
+                    }
+                },
+                y:{
+                    beginAtZero:true,
+                    ticks:{
+                        precision:0,
+                        color:dark?"#cbd5e1":"#475569"
+                    },
+                    grid:{
+                        color:dark?
+                        "rgba(255,255,255,.08)"
+                        :
+                        "#e5e7eb"
+                    }
+                }
+            }
+        }
+    });
+}
+
+/*
 function renderChart() {
     // hanya karya
     const works = allData.filter(
@@ -316,7 +420,7 @@ function renderChart() {
         300,
 18);
 }
-/*
+
 function renderChart() {
   const works = allData.filter(d => d.work_type === 'work' && d.submitted_at);
   const months = {};
