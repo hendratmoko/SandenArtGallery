@@ -217,6 +217,129 @@ initApp();
 
 let uploadChart = null;
 function renderChart() {
+    const works = allData.filter(item =>
+        item.work_type === "work" &&
+        item.submitted_at &&
+        item.work_class
+    );
+    //---------------------------------------------------
+    // Membuat label 30 hari terakhir
+    //---------------------------------------------------
+    const labels = [];
+    const dates = [];
+    for(let i=29;i>=0;i--){
+        const d = new Date();
+        d.setHours(0,0,0,0);
+        d.setDate(d.getDate()-i);
+        dates.push(new Date(d));
+        labels.push(
+            d.toLocaleDateString("id-ID",{
+                day:"2-digit",
+                month:"short"
+            })
+        );
+    }
+    //---------------------------------------------------
+    // Daftar kelas
+    //---------------------------------------------------
+    const classes = [...new Set(
+        works.map(item=>item.work_class)
+    )].sort();
+    //---------------------------------------------------
+    // Warna tiap kelas
+    //---------------------------------------------------
+    const colors = [
+        "#2563eb",
+        "#16a34a",
+        "#dc2626",
+        "#ea580c",
+        "#9333ea",
+        "#0891b2",
+        "#ca8a04",
+        "#be185d",
+        "#0f766e",
+        "#7c3aed",
+        "#65a30d",
+        "#1d4ed8"
+    ];
+    //---------------------------------------------------
+    // Dataset
+    //---------------------------------------------------
+    const datasets = classes.map((kelas,index)=>{
+        const values = [];
+        dates.forEach(day=>{
+            let total = 0;
+            works.forEach(work=>{
+                if(work.work_class!==kelas) return;
+                const upload=new Date(work.submitted_at);
+                upload.setHours(0,0,0,0);
+                if(upload.getTime()===day.getTime()){
+                    total++;
+                }
+            });
+            values.push(total);
+        });
+        return{
+            label:kelas,
+            data:values,
+            borderColor:colors[index%colors.length],
+            backgroundColor:colors[index%colors.length],
+            borderWidth:3,
+            tension:.35,
+            pointRadius:3,
+            pointHoverRadius:6,
+            fill:false
+        };
+    });
+    //---------------------------------------------------
+    const ctx=document
+        .getElementById("perf-chart")
+        .getContext("2d");
+    if(uploadChart){
+        uploadChart.destroy();
+    }
+    uploadChart=new Chart(ctx,{
+        type:"line",
+        data:{
+            labels,
+            datasets
+        },
+        options:{
+            responsive:true,
+            maintainAspectRatio:false,
+            interaction:{
+                mode:"nearest",
+                intersect:false
+            },
+            plugins:{
+                title:{
+                    display:true,
+                    text:"📈 Upload Karya Semua Kelas (30 Hari Terakhir)",
+                    font:{
+                        size:20,
+                        weight:"bold"
+                    }
+                },
+                legend:{
+                    position:"bottom"
+                }
+            },
+            scales:{
+                y:{
+                    beginAtZero:true,
+                    ticks:{
+                        precision:0
+                    }
+                }
+            }
+        }
+    });
+}
+
+
+/* CHART
+let uploadChart = null;
+function renderChart() {
 
   const kelasDipilih =
     document.getElementById("chart-class-filter")?.value || "ALL";
