@@ -316,6 +316,23 @@ function renderChart() {
         }
     });
 }
+//dropdown chart secara otomatis
+function populateClassFilter(){
+    const select = document.getElementById("chart-class-filter");
+    if(!select) return;
+    const classes = [...new Set(
+        allData
+        .map(item => item.work_class)
+        .filter(Boolean)
+    )].sort();
+    classes.forEach(kelas=>{
+        const option = document.createElement("option");
+        option.value = kelas;
+        option.textContent = kelas;
+        select.appendChild(option);
+    });
+    select.addEventListener("change",renderChart);
+}
 
 /*
 function renderChart() {
