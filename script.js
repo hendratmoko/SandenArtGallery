@@ -215,6 +215,109 @@ initApp();
 
 // Chart
 function renderChart() {
+    // hanya karya
+    const works = allData.filter(
+        d => d.work_type === "work" && d.submitted_at
+    );
+    // Membuat 30 hari terakhir
+    const labels = [];
+    const values = [];
+    for (let i = 29; i >= 0; i--) {
+        const day = new Date();
+        day.setHours(0,0,0,0);
+        day.setDate(day.getDate() - i);
+        labels.push(
+            day.toLocaleDateString("id-ID",{
+                day:"2-digit",
+                month:"short"
+            })
+        );
+        let total = 0;
+        works.forEach(work=>{
+            const upload = new Date(work.submitted_at);
+            upload.setHours(0,0,0,0);
+            if(upload.getTime()===day.getTime()){
+                total++;
+            }
+        });
+        values.push(total);
+    }
+    //----------------------------------
+    const canvas=document.getElementById("perf-chart");
+    const ctx=canvas.getContext("2d");
+    const dpr=window.devicePixelRatio||1;
+    canvas.width=1000*dpr;
+    canvas.height=260*dpr;
+    ctx.setTransform(1,0,0,1,0,0);
+    ctx.scale(dpr,dpr);
+    ctx.clearRect(0,0,1000,260);
+    //----------------------------------
+    const chartWidth=900;
+    const chartHeight=170;
+    const startX=55;
+    const startY=210;
+    const max=Math.max(...values,1);
+    const step=chartWidth/30;
+    const isDark=document.body.classList.contains("dark");
+    //----------------------------------
+    // Garis sumbu
+    ctx.strokeStyle=isDark?"#64748b":"#cbd5e1";
+    ctx.beginPath();
+    ctx.moveTo(startX,20);
+    ctx.lineTo(startX,startY);
+    ctx.lineTo(startX+chartWidth,startY);
+    ctx.stroke();
+    //----------------------------------
+    // Garis grafik
+    ctx.beginPath();
+    ctx.strokeStyle=isDark?"#60a5fa":"#2563eb";
+    ctx.lineWidth=3;
+    values.forEach((v,i)=>{
+        const x=startX+i*step;
+        const y=startY-(v/max)*150;
+        if(i===0){
+            ctx.moveTo(x,y);
+        }else{
+            ctx.lineTo(x,y);
+        }
+    });
+    ctx.stroke();
+    //----------------------------------
+    // Titik
+    values.forEach((v,i)=>{
+        const x=startX+i*step;
+        const y=startY-(v/max)*150;
+        ctx.beginPath();
+        ctx.fillStyle="#3b82f6";
+        ctx.arc(x,y,3,0,Math.PI*2);
+        ctx.fill();
+        ctx.fillStyle=isDark?"#cbd5e1":"#475569";
+        ctx.font="10px Arial";
+        ctx.fillText(v,x-3,y-8);
+    });
+    //----------------------------------
+    // Tanggal
+    labels.forEach((l,i)=>{
+        const x=startX+i*step;
+        ctx.save();
+        ctx.translate(x,startY+10);
+        ctx.rotate(-Math.PI/4);
+        ctx.fillStyle=isDark?"#94a3b8":"#64748b";
+        ctx.font="10px Arial";
+        ctx.fillText(l,0,0);
+        ctx.restore();
+    });
+    //----------------------------------
+    // Judul
+    ctx.fillStyle=isDark?"white":"#111827";
+    ctx.font="bold 16px Arial";
+    ctx.fillText(
+        "📈 Upload Karya 30 Hari Terakhir",
+        300,
+18);
+}
+/*
+function renderChart() {
   const works = allData.filter(d => d.work_type === 'work' && d.submitted_at);
   const months = {};
   works.forEach(w => { const d = new Date(w.submitted_at); const k = d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0'); months[k] = (months[k] || 0) + 1; });
@@ -240,6 +343,8 @@ function renderChart() {
     ctx.fillText(val, x + barW / 2 - 4, 175 - h);
   });
 }
+*/
+
 
 // Tabs
 function switchTab(tab) {
