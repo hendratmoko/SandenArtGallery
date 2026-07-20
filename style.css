@@ -158,6 +158,8 @@ button,input,select,textarea{font-family:inherit;font-size:100%}
 #backToTop.show{opacity:1;visibility:visible;}
 #backToTop:hover{transform:translateY(-6px);}
 
+#histats_counter{display:flex;justify-content:center;align-items:center;margin:20px auto;}
+
 /* ==========================================================
    FOOTER
 ========================================================== 
