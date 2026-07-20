@@ -84,26 +84,27 @@
 -->
 <section class="max-w-7xl mx-auto px-5 pt-8 pb-4">
   <div class="surface-card rounded-2xl p-5 overflow-x-auto">
+    <!-- Grafik -->
   <div style="height:320px">
-    
-  <div class="flex items-center gap-3 mb-4">
-    <label for="chart-class-filter" class="font-medium">
+          <canvas id="perf-chart"></canvas>
+    </div>
+  <canvas id="perf-chart"></canvas></div>
+       <!-- Filter Kelas -->
+    <div style="height:320px">
+    <div class="flex items-center gap-3 mb-4">
+       <label for="chart-class-filter" class="font-medium">
         Kelas:
-    </label>
+       </label>
     <select id="chart-class-filter"
       class="border rounded-lg px-3 py-2">
         <option value="ALL">Semua Kelas</option>
+        <option value="ALL">XIIRPL1</option>
         </select>
         </div>
     
-    <div style="height:320px">
-          <canvas id="perf-chart"></canvas>
-    </div>
-    
-  <canvas id="perf-chart"></canvas></div>
+  
 
-   <!-- Histats.com  (div with counter) --><div id="histats_counter"></div>
-
+<!-- Histats.com  (div with counter) --><div id="histats_counter"></div>
 <!-- Histats.com  START  (aync)-->
 <script type="text/javascript">var _Hasync= _Hasync|| [];
 _Hasync.push(['Histats.start', '1,5039688,4,408,270,55,00011111']);
