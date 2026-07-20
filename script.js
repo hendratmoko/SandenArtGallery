@@ -314,7 +314,7 @@ function renderChart() {
             plugins:{
                 title:{
                     display:true,
-                    text:"📈 Upload Karya Semua Kelas (30 Hari Terakhir)",
+                  //  text:"📈 Upload Karya Semua Kelas (30 Hari Terakhir)",
                     font:{
                         size:20,
                         weight:"bold"
