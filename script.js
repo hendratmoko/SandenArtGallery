@@ -217,10 +217,19 @@ initApp();
 
 let uploadChart = null;
 function renderChart() {
-    const works = allData.filter(item =>
-        item.work_type === "work" &&
-        item.submitted_at
-    );
+
+  const kelasDipilih =
+    document.getElementById("chart-class-filter")?.value || "ALL";
+const works = allData.filter(item => {
+    if(item.work_type !== "work") return false;
+    if(!item.submitted_at) return false;
+    if(kelasDipilih !== "ALL" &&
+       item.work_class !== kelasDipilih){
+        return false;
+    }
+    return true;
+});
+  
     const labels = [];
     const values = [];
     for (let i = 29; i >= 0; i--) {
