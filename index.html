@@ -278,7 +278,93 @@ hs.src = ('//s10.histats.com/js15_as.js');
             <option>Folder</option>
             <option>Other</option>
           </select>
-          <input id="up-class" placeholder="Kelas" class="input-field rounded-xl px-4 py-2.5 text-sm">
+        <!--   <input id="up-class" placeholder="Kelas" class="input-field rounded-xl px-4 py-2.5 text-sm"> -->
+          <div>
+    <label for="up-class" class="block text-sm font-medium mb-2">
+        Kelas
+    </label>
+
+    <select
+        id="up-class"
+        required
+        class="w-full rounded-xl border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-4 py-3">
+
+        <option value="">-- Pilih Kelas --</option>
+
+        <!-- NKPI -->
+        <optgroup label="NKPI">
+            <option value="XNKPI-1">XNKPI-1</option>
+            <option value="XNKPI-2">XNKPI-2</option>
+            <option value="XINKPI-1">XINKPI-1</option>
+            <option value="XINKPI-2">XINKPI-2</option>
+            <option value="XIINKPI-1">XIINKPI-1</option>
+            <option value="XIINKPI-2">XIINKPI-2</option>
+        </optgroup>
+
+        <!-- TKPI -->
+        <optgroup label="TKPI">
+            <option value="XTKPI-1">XTKPI-1</option>
+            <option value="XTKPI-2">XTKPI-2</option>
+            <option value="XITKPI-1">XITKPI-1</option>
+            <option value="XITKPI-2">XITKPI-2</option>
+            <option value="XIITKPI-1">XIITKPI-1</option>
+            <option value="XIITKPI-2">XIITKPI-2</option>
+        </optgroup>
+
+        <!-- APHPI -->
+        <optgroup label="APHPI">
+            <option value="XAPHPI-1">XAPHPI-1</option>
+            <option value="XAPHPI-2">XAPHPI-2</option>
+            <option value="XIAPHPI-1">XIAPHPI-1</option>
+            <option value="XIAPHPI-2">XIAPHPI-2</option>
+            <option value="XIIAPHPI-1">XIIAPHPI-1</option>
+            <option value="XIIAPHPI-2">XIIAPHPI-2</option>
+        </optgroup>
+
+        <!-- APAT -->
+        <optgroup label="APAT">
+            <option value="XAPAT-1">XAPAT-1</option>
+            <option value="XAPAT-2">XAPAT-2</option>
+            <option value="XIAPAT-1">XIAPAT-1</option>
+            <option value="XIAPAT-2">XIAPAT-2</option>
+            <option value="XIIAPAT-1">XIIAPAT-1</option>
+            <option value="XIIAPAT-2">XIIAPAT-2</option>
+        </optgroup>
+
+        <!-- RPL -->
+        <optgroup label="RPL">
+            <option value="XRPL-1">XRPL-1</option>
+            <option value="XRPL-2">XRPL-2</option>
+            <option value="XIRPL-1">XIRPL-1</option>
+            <option value="XIRPL-2">XIRPL-2</option>
+            <option value="XIIRPL-1">XIIRPL-1</option>
+            <option value="XIIRPL-2">XIIRPL-2</option>
+        </optgroup>
+
+        <!-- TKRO -->
+        <optgroup label="TKRO">
+            <option value="XTKRO-1">XTKRO-1</option>
+            <option value="XTKRO-2">XTKRO-2</option>
+            <option value="XITKRO-1">XITKRO-1</option>
+            <option value="XITKRO-2">XITKRO-2</option>
+            <option value="XIITKRO-1">XIITKRO-1</option>
+            <option value="XIITKRO-2">XIITKRO-2</option>
+        </optgroup>
+
+        <!-- TBO -->
+        <optgroup label="TBO">
+            <option value="XTBO-1">XTBO-1</option>
+            <option value="XTBO-2">XTBO-2</option>
+            <option value="XITBO-1">XITBO-1</option>
+            <option value="XITBO-2">XITBO-2</option>
+            <option value="XIITBO-1">XIITBO-1</option>
+            <option value="XIITBO-2">XIITBO-2</option>
+        </optgroup>
+
+    </select>
+</div>
+
+          
         </div>
         <div class="grid grid-cols-2 gap-3">
           <input id="up-year" placeholder="Tahun Pembuatan" class="input-field rounded-xl px-4 py-2.5 text-sm">
