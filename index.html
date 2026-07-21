@@ -542,6 +542,28 @@ box-shadow:0 0 20px rgba(34,197,94,.5);
 ">
 ⬆
 </button>
+
+<script>
+const btn = document.getElementById("backToTop");
+window.onscroll = function () {
+    if (
+        document.documentElement.scrollTop > 300 ||
+        document.body.scrollTop > 300
+    ) {
+        btn.style.display = "flex";
+        btn.style.alignItems = "center";
+        btn.style.justifyContent = "center";
+    } else {
+        btn.style.display = "none";
+    }
+};
+btn.onclick = function () {
+    window.scrollTo({
+        top:0,
+        behavior:"smooth"
+    });
+};
+</script>
   
 </body>
 </html>
