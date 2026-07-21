@@ -522,62 +522,26 @@ hs.src = ('//s10.histats.com/js15_as.js');
 BACK TO TOP
 ======================================================= -->
 
-<button id="backToTop"
-class="fixed bottom-6 right-6 z-[9999]
-w-14 h-14 rounded-full
-bg-gradient-to-br
-from-green-400
-via-green-500
-to-emerald-700
-shadow-2xl
-shadow-green-500/50
-text-white
-flex items-center
-justify-center
-opacity-0
-pointer-events-none
-translate-y-8
-transition-all
-duration-500
-hover:scale-110
-hover:rotate-6
-hover:shadow-green-400/80
-active:scale-95">
-<svg xmlns="http://www.w3.org/2000/svg"
-fill="none"
-viewBox="0 0 24 24"
-stroke-width="2.5"
-stroke="currentColor"
-class="w-7 h-7">
-<path stroke-linecap="round"
-stroke-linejoin="round"
-d="M5 15l7-7 7 7"/>
-</svg>
+<button
+id="backToTop"
+style="
+position:fixed;
+right:25px;
+bottom:25px;
+width:60px;
+height:60px;
+border:none;
+border-radius:50%;
+background:linear-gradient(135deg,#22c55e,#16a34a);
+color:white;
+font-size:28px;
+cursor:pointer;
+z-index:999999;
+display:none;
+box-shadow:0 0 20px rgba(34,197,94,.5);
+">
+⬆
 </button>
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const btn = document.getElementById("backToTop");
-    if (!btn) return;
-    function toggleButton() {
-        if (window.scrollY > 300) {
-            btn.classList.remove("opacity-0", "pointer-events-none", "translate-y-8");
-            btn.classList.add("opacity-100", "translate-y-0");
-        } else {
-            btn.classList.add("opacity-0", "pointer-events-none", "translate-y-8");
-            btn.classList.remove("opacity-100", "translate-y-0");
-        }
-    }
-
-    toggleButton();
-    window.addEventListener("scroll", toggleButton);
-    btn.addEventListener("click", function () {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-    });
-});
-</script>
   
 </body>
 </html>
