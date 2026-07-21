@@ -11,13 +11,10 @@ body{margin:0;font-family:'Libre Franklin',sans-serif;background:var(--bg);color
 .input-field{background:var(--bg);color:var(--text);border:1px solid var(--border);transition:border-color .2s}.input-field:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light)}
 
 .category-icon{
-    max-width: 150%;
-    max-height: 90%;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    display: block;
-    margin: auto;
+    width:100%;
+    aspect-ratio:16/9;
+    object-fit:cover;
+    border-radius:12px 12px 0 0;
 }
 
 /*
