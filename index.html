@@ -839,7 +839,30 @@ stroke-linejoin="round"
 d="M5 15l7-7 7 7"/>
 </svg>
 </button>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const btn = document.getElementById("backToTop");
+    if (!btn) return;
+    function toggleButton() {
+        if (window.scrollY > 300) {
+            btn.classList.remove("opacity-0", "pointer-events-none", "translate-y-8");
+            btn.classList.add("opacity-100", "translate-y-0");
+        } else {
+            btn.classList.add("opacity-0", "pointer-events-none", "translate-y-8");
+            btn.classList.remove("opacity-100", "translate-y-0");
+        }
+    }
 
+    toggleButton();
+    window.addEventListener("scroll", toggleButton);
+    btn.addEventListener("click", function () {
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+    });
+});
+</script>
   
 </body>
 </html>
