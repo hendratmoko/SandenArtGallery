@@ -162,6 +162,30 @@ button,input,select,textarea{font-family:inherit;font-size:100%}
 /* =====================================================
 Back To Top
 ===================================================== */
+#backToTop:hover{
+background:linear-gradient(
+135deg,
+#22c55e,
+#16a34a,
+#15803d);
+}
+
+#backToTop::before{
+content:"";
+position:absolute;
+width:100%;
+height:100%;
+border-radius:50%;
+background:#22c55e;
+opacity:.25;
+transform:scale(0);
+transition:.45s;
+}
+#backToTop:active::before{
+transform:scale(2);
+opacity:0;
+}
+
 #backToTop{
 backdrop-filter:blur(12px);
 animation:pulseGlow 2.5s infinite;
