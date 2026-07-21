@@ -11,8 +11,8 @@ body{margin:0;font-family:'Libre Franklin',sans-serif;background:var(--bg);color
 .input-field{background:var(--bg);color:var(--text);border:1px solid var(--border);transition:border-color .2s}.input-field:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light)}
 
 .category-icon{
-    width: 100px;
-    height: 80px;
+    width: 300px;
+    height: 1200px;
     object-fit: contain;
     display: block;
     margin: 0 auto;
@@ -22,6 +22,7 @@ body{margin:0;font-family:'Libre Franklin',sans-serif;background:var(--bg);color
 48px → sedang
 64px → seperti icon aplikasi
 96px → besar
+100/80
 */
 /* HELP */
 .help-list{list-style:none;padding:0;margin:0;}
@@ -30,15 +31,10 @@ body{margin:0;font-family:'Libre Franklin',sans-serif;background:var(--bg);color
 
 
 .hero-gradient{background:linear-gradient(135deg,rgba(37,99,235,0.15),rgba(245,158,11,0.10))}.dark .hero-gradient{background:linear-gradient(135deg,rgba(96,165,250,0.18),rgba(251,191,36,0.08))}
-/*Zoom in 
-@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}.fade-up{animation:fadeUp .5s ease forwards}
-/*gambar bergerak dari kanan ke kiri
-@keyframes slideBackground{0%{transform:translateX(5%) scale(1.10);}100%{transform:translateX(-5%) scale(1.10);}}
+
 /* kanan → kiri + zoom (lebih sinematik) */
 @keyframes slideBackground{0%{transform:translateX(10%)scale(1);}50%{transform:translateX(0)scale(1.08);}100%{transform:translateX(-10%)scale(1.15);}}
-/*seperti video drone
-@keyframes slideBackground{0%{transform:translate(8%,0)scale(1.25);}100%{transform:translate(-8%,0)scale(1.25);}}
-*/
+
 
 .tab-active{border-bottom:3px solid var(--accent);color:var(--accent);font-weight:700}
 .tab-btn{padding:0.5rem 1rem;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;background:none;color:var(--muted);font-weight:600}
@@ -134,30 +130,7 @@ button,input,select,textarea{font-family:inherit;font-size:100%}
 
 #loading-banner{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;padding:8px 18px;border-radius:999px;font-size:13px;font-weight:600;z-index:60;box-shadow:0 8px 20px rgba(0,0,0,.25)}
 #offline-banner{position:fixed;top:0;left:0;right:0;background:var(--warm);color:#1a2332;text-align:center;font-size:13px;font-weight:700;padding:6px;z-index:70}
-/*
-#backToTop{
-    position:fixed;
-    right:25px;
-    bottom:25px;
-    width:55px;
-    height:55px;
-    border:none;
-    border-radius:50%;
-    background:linear-gradient(135deg,#2563eb,#1d4ed8);
-    color:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:22px;
-    cursor:pointer;
-   opacity:0;
-   visibility:hidden;
-   transition:.35s;
-   z-index:9999;
-   box-shadow:0 10px 25px rgba(0,0,0,.25);}
-#backToTop.show{opacity:1;visibility:visible;}
-#backToTop:hover{transform:translateY(-6px);}
-*/
+
 
 /* =====================================================
 Back To Top
@@ -215,48 +188,12 @@ transform:translateY(0);
 #backToTop.hide{
 opacity:0;
 pointer-events:none;
-transform:translateY(30px);
+transform:translateY(60px);
 }
 
 #histats_counter{display:flex;justify-content:center;align-items:center;margin:20px auto;}
 
-/* ==========================================================
-   FOOTER
-========================================================== 
-footer{
-    background: var(--surface, #1f2937);
-    color: var(--text, #ffffff);
-    border-top: 1px solid rgba(255,255,255,.08);}
-footer h5{
-    color: var(--text, #ffffff);
-    font-weight:700;
-    margin-bottom:1rem;}
-footer p{
-    color: var(--muted, #cbd5e1);
-    line-height:1.8;
-    font-size:.95rem;}
-footer ul{
-    padding-left:0;
-    margin-bottom:0;}
-footer ul li{
-    margin-bottom:.5rem;}
-footer a{
-    color: var(--muted, #cbd5e1);
-    transition:.3s;}
-footer a:hover{
-    color:#38bdf8;
-    text-decoration:none;
-    padding-left:5px;}
-footer hr{
-    opacity:.15;
-    margin:2rem 0 1rem;}
-footer .bi{
-    margin-right:6px;
-    color:#38bdf8;}
-footer .text-center{
-    font-size:.9rem;
-    color:var(--muted, #cbd5e1);}
-*/
+
 
 /*==========================
 FOOTER
