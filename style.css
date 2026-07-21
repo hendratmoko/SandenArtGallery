@@ -134,7 +134,7 @@ button,input,select,textarea{font-family:inherit;font-size:100%}
 
 #loading-banner{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:var(--accent);color:#fff;padding:8px 18px;border-radius:999px;font-size:13px;font-weight:600;z-index:60;box-shadow:0 8px 20px rgba(0,0,0,.25)}
 #offline-banner{position:fixed;top:0;left:0;right:0;background:var(--warm);color:#1a2332;text-align:center;font-size:13px;font-weight:700;padding:6px;z-index:70}
-
+/*
 #backToTop{
     position:fixed;
     right:25px;
@@ -157,6 +157,42 @@ button,input,select,textarea{font-family:inherit;font-size:100%}
    box-shadow:0 10px 25px rgba(0,0,0,.25);}
 #backToTop.show{opacity:1;visibility:visible;}
 #backToTop:hover{transform:translateY(-6px);}
+*/
+
+/* =====================================================
+Back To Top
+===================================================== */
+#backToTop{
+backdrop-filter:blur(12px);
+animation:pulseGlow 2.5s infinite;
+}
+@keyframes pulseGlow{
+0%{
+box-shadow:
+0 0 10px #22c55e,
+0 0 20px #22c55e;
+}
+50%{
+box-shadow:
+0 0 18px #22c55e,
+0 0 40px #4ade80;
+}
+100%{
+box-shadow:
+0 0 10px #22c55e,
+0 0 20px #22c55e;
+}
+}
+#backToTop.show{
+opacity:1;
+pointer-events:auto;
+transform:translateY(0);
+}
+#backToTop.hide{
+opacity:0;
+pointer-events:none;
+transform:translateY(30px);
+}
 
 #histats_counter{display:flex;justify-content:center;align-items:center;margin:20px auto;}
 
