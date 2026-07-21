@@ -11,8 +11,8 @@ body{margin:0;font-family:'Libre Franklin',sans-serif;background:var(--bg);color
 .input-field{background:var(--bg);color:var(--text);border:1px solid var(--border);transition:border-color .2s}.input-field:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light)}
 
 .category-icon{
-    max-width: 100%;
-    max-height: 100%;
+    max-width: 150%;
+    max-height: 90%;
     width: auto;
     height: auto;
     object-fit: contain;
