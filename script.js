@@ -672,32 +672,37 @@ behavior:"smooth"
 });
 
 // ======================================================
-// 5 tombol (Help, Mode, Filter, Login, Upload)
+// Floating Radial Menu 5 tombol (Help, Mode, Filter, Login, Upload)
 // ======================================================
+
 const fabMenu=document.getElementById("fabMenu");
 const fabToggle=document.getElementById("fabToggle");
-let timer;
-function closeFab(){
+const fabIcon=document.getElementById("fabIcon");
+let fabTimer=null;
+function closeFabMenu(){
     fabMenu.classList.remove("open");
-    fabToggle.innerHTML="+";
+    fabIcon.innerHTML="+";
 }
-function startTimer(){
-    clearTimeout(timer);
-    timer=setTimeout(closeFab,3000);
+function resetFabTimer(){
+    clearTimeout(fabTimer);
+    fabTimer=setTimeout(closeFabMenu,3000);
 }
-fabToggle.addEventListener("click",()=>{
+fabToggle.addEventListener("click",function(){
     fabMenu.classList.toggle("open");
-    fabToggle.innerHTML=
-        fabMenu.classList.contains("open")
-        ? "−"
-        : "+";
     if(fabMenu.classList.contains("open")){
-        startTimer();
+        fabIcon.innerHTML="−";
+        resetFabTimer();
+    }else{
+        closeFabMenu();
     }
 });
 document.querySelectorAll(".fab-item").forEach(btn=>{
-    btn.addEventListener("mouseenter",startTimer);
-    btn.addEventListener("click",()=>{
-        startTimer();
+    btn.addEventListener("mouseenter",resetFabTimer);
+    btn.addEventListener("click",function(){
+        resetFabTimer();
     });
 });
+// Render ulang icon Lucide
+if(window.lucide){
+    lucide.createIcons();
+}
