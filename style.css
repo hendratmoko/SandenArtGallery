@@ -303,20 +303,26 @@ border-color:var(--border);
     pointer-events:auto;
 }
 /* Membentuk lingkaran */
+/* Radius = 120px */
+
 .fab-menu.open .fab-item:nth-child(2){
-    transform:translate(-95px,-10px);
+    transform: translate(-120px, 0);
 }
+
 .fab-menu.open .fab-item:nth-child(3){
-    transform:translate(-70px,-75px);
+    transform: translate(-111px, 46px);
 }
+
 .fab-menu.open .fab-item:nth-child(4){
-    transform:translate(0,-105px);
+    transform: translate(-85px, 85px);
 }
+
 .fab-menu.open .fab-item:nth-child(5){
-    transform:translate(70px,-75px);
+    transform: translate(-46px, 111px);
 }
+
 .fab-menu.open .fab-item:nth-child(6){
-    transform:translate(95px,-10px);
+    transform: translate(0, 120px);
 }
 /* Efek Hover */
 .fab-item:hover{
