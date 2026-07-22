@@ -558,6 +558,7 @@ async function handleUpload(e) {
     certified: false, 
     quiz_score: 0, 
     submitted_at: new Date().toISOString(),
+    lama: document.getElementById('lama').value, 
     gambar: document.getElementById('gambar').value.trim(),
     guru: document.getElementById('guru').value, 
     mapel: document.getElementById('mapel').value
