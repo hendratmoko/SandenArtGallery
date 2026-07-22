@@ -445,11 +445,13 @@ function removeCards() { document.querySelectorAll('#gallery-grid article').forE
 function filterWorks(works) {
   const s = document.getElementById('search-input').value.toLowerCase();
   const st = document.getElementById('filter-status').value;
+  const kel = document.getElementById('filter-kelas').value;
   const cat = document.getElementById('filter-category').value;
   const yr = document.getElementById('filter-year').value;
   return works.filter(w => {
     if (s && !w.work_title.toLowerCase().includes(s) && !w.name.toLowerCase().includes(s)) return false;
     if (st && w.status !== st) return false;
+    if (kel && w.status !== kel) return false;
     if (cat && w.work_category !== cat) return false;
     if (yr && w.work_year !== yr) return false;
     return true;
