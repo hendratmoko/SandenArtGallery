@@ -244,3 +244,65 @@ border-color:var(--border);
 .stat-box p{font-size:12px;}
 .stat-box{transition:.25s;}
 .stat-box:hover{transform:translateY(-5px) scale(1.03);}}
+
+/* ===========================
+   Floating Menu
+=========================== */
+
+.fab-menu{
+position:fixed;
+right:25px;
+bottom:25px;
+width:70px;
+height:70px;
+z-index:9999;
+}
+.fab-main{
+position:absolute;
+width:65px;
+height:65px;
+border:none;
+border-radius:50%;
+background:#22c55e;
+color:white;
+font-size:34px;
+cursor:pointer;
+box-shadow:0 8px 20px rgba(0,0,0,.3);
+transition:.3s;
+}
+.fab-main:hover{
+transform:scale(1.1);
+}
+.fab-item{
+position:absolute;
+width:52px;
+height:52px;
+border:none;
+border-radius:50%;
+background:white;
+cursor:pointer;
+opacity:0;
+pointer-events:none;
+transition:.4s;
+box-shadow:0 6px 15px rgba(0,0,0,.25);
+}
+.fab-menu.open .fab-item{
+opacity:1;
+pointer-events:auto;
+}
+/* Posisi melingkar */
+.fab-menu.open .fab-item:nth-child(2){
+transform:translate(-80px,-10px);
+}
+.fab-menu.open .fab-item:nth-child(3){
+transform:translate(-55px,-70px);
+}
+.fab-menu.open .fab-item:nth-child(4){
+transform:translate(0,-90px);
+}
+.fab-menu.open .fab-item:nth-child(5){
+transform:translate(55px,-70px);
+}
+.fab-menu.open .fab-item:nth-child(6){
+transform:translate(80px,-10px);
+}
