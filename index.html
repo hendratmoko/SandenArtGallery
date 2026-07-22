@@ -29,15 +29,44 @@
     <div id="clock" class="text-sm font-medium" style="color:var(--muted)"></div>
     <nav class="flex items-center gap-1">
 
+<!-- Floating Radial Menu -->
 <div id="fabMenu" class="fab-menu">
-  <!-- Tombol utama -->
-  <button id="fabToggle" class="fab-main">+</button>
-  <!-- Kelima tombol lama dipindahkan ke sini -->
-  <button class="fab-item" id="btnHelp">❓</button>
-  <button class="fab-item" id="btnSearch">🔍</button>
-  <button class="fab-item" id="btnFilter">⚙️</button>
-  <button class="fab-item" id="btnLogin">👤</button>
-  <button class="fab-item" id="btnUpload">⬆️</button>
+
+    <!-- Tombol Utama -->
+    <button id="fabToggle" class="fab-main">
+        <span id="fabIcon">+</span>
+    </button>
+
+    <!-- Help -->
+    <button class="fab-item"
+        onclick="showHelp()"
+        title="Help">
+        <i data-lucide="help-circle"></i>
+    </button>
+    <!-- Theme -->
+    <button class="fab-item"
+        onclick="toggleTheme()"
+        title="Theme">
+        <i data-lucide="sun"></i>
+    </button>
+    <!-- Bahasa -->
+    <button class="fab-item"
+        onclick="toggleLang()"
+        id="lang-btn">
+        ID
+    </button>
+    <!-- Register -->
+    <button class="fab-item"
+        onclick="showModal('register')"
+        title="Register">
+        <i data-lucide="user-plus"></i>
+    </button>
+    <!-- Upload -->
+    <button class="fab-item"
+        onclick="showModal('upload')"
+        title="Upload">
+        <i data-lucide="upload"></i>
+    </button>
 </div>
       
     <!--  
