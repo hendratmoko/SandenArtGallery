@@ -540,12 +540,27 @@ async function handleUpload(e) {
   e.preventDefault();
   const wantQuiz = document.getElementById('up-quiz').checked;
   const work = {
-    name: currentUser.name, status: currentUser.status, department: currentUser.department, contact: currentUser.contact,
-    access_code: currentUser.access_code, publish_consent: currentUser.publish_consent, registered_at: currentUser.registered_at,
-    work_title: document.getElementById('up-title').value.trim(), work_description: document.getElementById('up-desc').value.trim(),
-    work_category: document.getElementById('up-category').value, work_class: document.getElementById('up-class').value.trim(),
-    work_year: document.getElementById('up-year').value.trim(), work_link: document.getElementById('up-link').value.trim(),
-    work_type: 'work', stars: 0, certified: false, quiz_score: 0, submitted_at: new Date().toISOString()
+    name: currentUser.name,
+    status: currentUser.status, 
+    department: currentUser.department, 
+    contact: currentUser.contact,
+    access_code: currentUser.access_code, 
+    publish_consent: currentUser.publish_consent, 
+    registered_at: currentUser.registered_at,
+    work_title: document.getElementById('up-title').value.trim(), 
+    work_description: document.getElementById('up-desc').value.trim(),
+    work_category: document.getElementById('up-category').value, 
+    work_class: document.getElementById('up-class').value.trim(),
+    work_year: document.getElementById('up-year').value.trim(), 
+    work_link: document.getElementById('up-link').value.trim(),
+    work_type: 'work', 
+    stars: 0, 
+    certified: false, 
+    quiz_score: 0, 
+    submitted_at: new Date().toISOString(),
+    gambar: document.getElementById('gambar').value.trim(),
+    guru: document.getElementById('guru').value, 
+    mapel: document.getElementById('mapel').value
   };
   if (wantQuiz) { pendingWork = work; startQuiz(work.work_category); } else { await submitWork(work); }
 }
