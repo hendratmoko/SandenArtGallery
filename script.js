@@ -451,7 +451,7 @@ function filterWorks(works) {
   return works.filter(w => {
     if (s && !w.work_title.toLowerCase().includes(s) && !w.name.toLowerCase().includes(s)) return false;
     if (st && w.status !== st) return false;
-    if (kel && w.status !== kel) return false;
+    if (kel && w.work_class !== kel) return false;
     if (cat && w.work_category !== cat) return false;
     if (yr && w.work_year !== yr) return false;
     return true;
