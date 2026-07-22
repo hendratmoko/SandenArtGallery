@@ -670,3 +670,34 @@ behavior:"smooth"
 });
 });
 });
+
+// ======================================================
+// 5 tombol (Help, Mode, Filter, Login, Upload)
+// ======================================================
+const fabMenu=document.getElementById("fabMenu");
+const fabToggle=document.getElementById("fabToggle");
+let timer;
+function closeFab(){
+    fabMenu.classList.remove("open");
+    fabToggle.innerHTML="+";
+}
+function startTimer(){
+    clearTimeout(timer);
+    timer=setTimeout(closeFab,3000);
+}
+fabToggle.addEventListener("click",()=>{
+    fabMenu.classList.toggle("open");
+    fabToggle.innerHTML=
+        fabMenu.classList.contains("open")
+        ? "−"
+        : "+";
+    if(fabMenu.classList.contains("open")){
+        startTimer();
+    }
+});
+document.querySelectorAll(".fab-item").forEach(btn=>{
+    btn.addEventListener("mouseenter",startTimer);
+    btn.addEventListener("click",()=>{
+        startTimer();
+    });
+});
