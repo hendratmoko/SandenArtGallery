@@ -374,6 +374,7 @@ function openWork(w) { if (w.work_link) window.open(w.work_link, '_blank', 'noop
 function showProfile(name) {
   const userWorks = allData.filter(d => d.name === name && d.work_type === 'work');
   const reg = allData.find(d => d.name === name && d.work_type === 'registration');
+  const userClass = userWorks.find(w => w.work_class)?.work_class || '';
   const bestScore = Math.max(0, ...userWorks.map(w => w.quiz_score || 0));
   const rank = getRank(bestScore);
   const el = document.getElementById('profile-content');
@@ -381,7 +382,15 @@ function showProfile(name) {
     <div class="text-center mb-6">
       <div class="rounded-full mx-auto mb-3 flex items-center justify-center text-3xl" style="background:var(--accent-light);width:80px;height:80px">👤</div>
       <h3 class="text-xl font-bold heading-display">${name}</h3>
-      <p class="text-sm" style="color:var(--muted)">${reg ? reg.status + ' • ' + reg.department + ' • ' + reg.work_class : 'Siswa'}</p>
+    <p class="text-sm" style="color:var(--muted)">
+  ${
+    [
+      reg?.status,
+      reg?.department,
+      userClass
+    ].filter(Boolean).join(' ')
+  }
+</p>
       ${rank ? `<span class="${rank.cls} ${rank.textCls} text-xs px-3 py-1 rounded-full font-bold inline-block mt-2">${rank.label}</span>` : ''}
       <p class="text-xs mt-2" style="color:var(--muted)">Total Karya: ${userWorks.length} • Best Score: ${bestScore}/10</p>
     </div>
