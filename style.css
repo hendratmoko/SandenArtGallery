@@ -408,7 +408,7 @@ border-color:var(--border);
 }
 /* Saat terbuka */
 .fab-menu.open .fab-item{
-    opacity:1; --radius:200px;
+    opacity:1; radius:300px;
     pointer-events:auto;
 }
 /* Membentuk lingkaran */
