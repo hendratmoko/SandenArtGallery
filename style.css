@@ -251,7 +251,7 @@ border-color:var(--border);
 .fab-menu{
     position:fixed;
     right:25px;
-    bottom:25px;
+    bottom:-25px;
     width:70px;
     height:70px;
     z-index:99999;
@@ -280,105 +280,63 @@ border-color:var(--border);
     color:#fff;
     font-size:34px;
     font-weight:bold;
-
     background:radial-gradient(circle,#ffd54f 5%,#ff9800 40%,#ff5722 70%,#b71c1c 100%);
-
     box-shadow:
         0 0 10px #ff9800,
         0 0 20px #ff5722,
         0 0 35px #ff9800;
-
     animation:
         firePulse 0.7s infinite alternate,
         fireRotate 3s linear infinite;
-
     overflow:hidden;
 }
-
 .fab-main::before{
-
     content:"";
-
     position:absolute;
-
     left:-30%;
-
     top:-40%;
-
     width:160%;
-
     height:160%;
-
     background:
     radial-gradient(circle,#fff6 0%,transparent 65%);
-
     animation:fireMove .8s infinite alternate;
 }
-
 @keyframes firePulse{
-
     from{
-
         transform:scale(1);
-
         box-shadow:
         0 0 8px orange,
         0 0 15px red;
-
     }
-
     to{
-
         transform:scale(1.08);
-
         box-shadow:
         0 0 18px yellow,
         0 0 35px red,
         0 0 50px orange;
-
     }
-
 }
-
 @keyframes fireMove{
-
     from{
-
         transform:
         translateY(8px)
         scale(1);
-
     }
-
     to{
-
         transform:
         translateY(-8px)
         scale(1.15);
-
     }
-
 }
-
 @keyframes fireRotate{
-
     from{
-
         filter:hue-rotate(0deg);
-
     }
-
     to{
-
         filter:hue-rotate(20deg);
-
     }
-
 }
-
 /* code akhir tombol utama */
-
-
 .fab-main:hover{
     transform:scale(1.1);
 }
