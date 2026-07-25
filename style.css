@@ -468,10 +468,12 @@ POSISI MENU UTAMA: */
     padding:8px 20px;
     min-height:60px;
 }
+/* 𝗚𝗔𝗟𝗘𝗥𝗜 𝗞𝗔𝗥𝗬𝗔 𝗦𝗠𝗞 𝗡𝗘𝗚𝗘𝗥𝗜 𝟭 𝗦𝗔𝗡𝗗𝗘𝗡*/
 #mainHeader.shrink #headerTitle{
-    font-size:20px;
+    font-size:12px;
     white-space:nowrap;
 }
+/* Tanggal Jam */
 #mainHeader.shrink #headerInfo{
     font-size:12px;
     display:inline-block;
