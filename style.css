@@ -250,7 +250,7 @@ border-color:var(--border);
 ========================================== */
 .fab-menu{
     position:fixed;
-    right:25px;
+    right:10px;
     bottom:25px;
     width:70px;
     height:70px;
