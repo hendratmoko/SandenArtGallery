@@ -466,7 +466,7 @@ POSISI MENU UTAMA: */
 /* Saat discroll */
 #mainHeader.shrink{
     padding:8px 20px;
-    min-height:60px;
+    min-height:40px;
 }
 /* 𝗚𝗔𝗟𝗘𝗥𝗜 𝗞𝗔𝗥𝗬𝗔 𝗦𝗠𝗞 𝗡𝗘𝗚𝗘𝗥𝗜 𝟭 𝗦𝗔𝗡𝗗𝗘𝗡*/
 #mainHeader.shrink #headerTitle{
