@@ -661,7 +661,7 @@ setInterval(()=>{
 // ======================================================
 // BACK TO TOP
 // ======================================================
-document.addEventListener("DOMContentLoaded",()=>{
+/*document.addEventListener("DOMContentLoaded",()=>{
 const btn=document.getElementById("backToTop");
 window.addEventListener("scroll",()=>{
 if(window.pageYOffset>350){
@@ -679,6 +679,7 @@ behavior:"smooth"
 });
 });
 });
+*/
 //=====================================================
 // SMART NAVIGATION BUTTON
 // =====================================================
