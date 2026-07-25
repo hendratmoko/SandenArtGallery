@@ -395,3 +395,31 @@ border-color:var(--border);
 .fab-item:hover{
     transform:scale(1.12);
 }
+
+/* EFEK HEADER 
+   Header normal 
+*/
+#mainHeader{
+    transition:all .35s ease;
+}
+/* Judul */
+#headerTitle{
+    transition:all .35s ease;
+}
+/* Info tanggal */
+#headerInfo{
+    transition:all .35s ease;
+}
+/* Saat discroll */
+#mainHeader.shrink{
+    padding:8px 20px;
+}
+#mainHeader.shrink #headerTitle{
+    font-size:20px;
+    white-space:nowrap;
+}
+#mainHeader.shrink #headerInfo{
+    font-size:12px;
+    display:inline-block;
+    margin-left:15px;
+}
