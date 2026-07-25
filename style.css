@@ -302,7 +302,7 @@ POSISI MENU UTAMA: */
 .fab-menu{
     position:fixed;
     right:0px;
-    bottom:25px;
+    bottom:-70px;
     width:70px;
     height:70px;
     z-index:99999;
