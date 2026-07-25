@@ -247,10 +247,11 @@ border-color:var(--border);
 
 /* ==========================================
    FLOATING RADIAL MENU
-========================================== */
+========================================== 
+POSISI MENU UTAMA: */
 .fab-menu{
     position:fixed;
-    right:10px;
+    right:68px;
     bottom:25px;
     width:70px;
     height:70px;
