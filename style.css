@@ -142,7 +142,7 @@ button,input,select,textarea{font-family:inherit;font-size:100%}
 
 /* =====================================================
 Back To Top
-===================================================== */
+===================================================== 
 #backToTop:hover{
 background:linear-gradient(
 135deg,
@@ -198,6 +198,7 @@ opacity:0;
 pointer-events:none;
 transform:translateY(60px);
 }
+*/
 /* Smart button back to top tengah */
 .nav-btn{
 position:fixed;
