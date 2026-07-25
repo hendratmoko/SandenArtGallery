@@ -715,3 +715,13 @@ document.querySelectorAll(".fab-item").forEach(btn=>{
 if(window.lucide){
     lucide.createIcons();
 }
+// EFEK HEADER
+const header=document.getElementById("mainHeader");
+window.addEventListener("scroll",()=>{
+    if(window.scrollY>80){
+        header.classList.add("shrink");
+    }else{
+        header.classList.remove("shrink");
+    }
+});
+
