@@ -401,6 +401,8 @@ POSISI MENU UTAMA: */
    Header normal 
 */
 #mainHeader{
+    padding:24px 20px;
+    min-height:120px;
     transition:all .35s ease;
 }
 /* Judul */
@@ -414,6 +416,7 @@ POSISI MENU UTAMA: */
 /* Saat discroll */
 #mainHeader.shrink{
     padding:8px 20px;
+    min-height:60px;
 }
 #mainHeader.shrink #headerTitle{
     font-size:20px;
