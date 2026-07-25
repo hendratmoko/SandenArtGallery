@@ -724,4 +724,49 @@ window.addEventListener("scroll",()=>{
         header.classList.remove("shrink");
     }
 });
-
+// =====================================================
+// SMART NAVIGATION BUTTON
+// =====================================================
+const navButton=document.getElementById("navButton");
+const navIcon=document.getElementById("navIcon");
+window.addEventListener("scroll",()=>{
+const gallery=document.getElementById("galleryStart");
+const galleryTop=gallery.offsetTop;
+const card=document.querySelector("#gallery-grid article");
+let switchPoint=galleryTop+800;
+if(card){
+switchPoint=card.offsetTop+card.offsetHeight*8;
+}
+if(window.scrollY<galleryTop){
+navButton.style.display="none";
+return;
+}
+navButton.style.display="flex";
+if(window.scrollY<switchPoint){
+navIcon.innerHTML=`
+<path stroke-linecap="round"
+stroke-linejoin="round"
+stroke-width="2.5"
+d="M12 5v14M5 12l7 7 7-7"/>
+`;
+navButton.onclick=()=>{
+document.getElementById("footer")
+.scrollIntoView({
+behavior:"smooth"
+});
+};
+}else{
+navIcon.innerHTML=`
+<path stroke-linecap="round"
+stroke-linejoin="round"
+stroke-width="2.5"
+d="M5 15l7-7 7 7"/>
+`;
+navButton.onclick=()=>{
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+};
+}
+});
