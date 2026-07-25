@@ -251,7 +251,7 @@ border-color:var(--border);
 POSISI MENU UTAMA: */
 .fab-menu{
     position:fixed;
-    right:68px;
+    right:100px;
     bottom:25px;
     width:70px;
     height:70px;
