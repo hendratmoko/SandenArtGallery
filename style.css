@@ -251,7 +251,7 @@ border-color:var(--border);
 .fab-menu{
     position:fixed;
     right:25px;
-    bottom:-25px;
+    bottom:25px;
     width:70px;
     height:70px;
     z-index:99999;
