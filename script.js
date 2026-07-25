@@ -679,52 +679,7 @@ behavior:"smooth"
 });
 });
 });
-
-// ======================================================
-// Floating Radial Menu 5 tombol (Help, Mode, Filter, Login, Upload)
-// ======================================================
-
-const fabMenu=document.getElementById("fabMenu");
-const fabToggle=document.getElementById("fabToggle");
-const fabIcon=document.getElementById("fabIcon");
-let fabTimer=null;
-function closeFabMenu(){
-    fabMenu.classList.remove("open");
-    fabIcon.innerHTML="+";
-}
-function resetFabTimer(){
-    clearTimeout(fabTimer);
-    fabTimer=setTimeout(closeFabMenu,3000);
-}
-fabToggle.addEventListener("click",function(){
-    fabMenu.classList.toggle("open");
-    if(fabMenu.classList.contains("open")){
-        fabIcon.innerHTML="−";
-        resetFabTimer();
-    }else{
-        closeFabMenu();
-    }
-});
-document.querySelectorAll(".fab-item").forEach(btn=>{
-    btn.addEventListener("mouseenter",resetFabTimer);
-    btn.addEventListener("click",function(){
-        resetFabTimer();
-    });
-});
-// Render ulang icon Lucide
-if(window.lucide){
-    lucide.createIcons();
-}
-// EFEK HEADER
-const header=document.getElementById("mainHeader");
-window.addEventListener("scroll",()=>{
-    if(window.scrollY>80){
-        header.classList.add("shrink");
-    }else{
-        header.classList.remove("shrink");
-    }
-});
-// =====================================================
+//=====================================================
 // SMART NAVIGATION BUTTON
 // =====================================================
 const navButton=document.getElementById("navButton");
@@ -769,4 +724,49 @@ behavior:"smooth"
 });
 };
 }
+});
+
+// ======================================================
+// Floating Radial Menu 5 tombol (Help, Mode, Filter, Login, Upload)
+// ======================================================
+
+const fabMenu=document.getElementById("fabMenu");
+const fabToggle=document.getElementById("fabToggle");
+const fabIcon=document.getElementById("fabIcon");
+let fabTimer=null;
+function closeFabMenu(){
+    fabMenu.classList.remove("open");
+    fabIcon.innerHTML="+";
+}
+function resetFabTimer(){
+    clearTimeout(fabTimer);
+    fabTimer=setTimeout(closeFabMenu,3000);
+}
+fabToggle.addEventListener("click",function(){
+    fabMenu.classList.toggle("open");
+    if(fabMenu.classList.contains("open")){
+        fabIcon.innerHTML="−";
+        resetFabTimer();
+    }else{
+        closeFabMenu();
+    }
+});
+document.querySelectorAll(".fab-item").forEach(btn=>{
+    btn.addEventListener("mouseenter",resetFabTimer);
+    btn.addEventListener("click",function(){
+        resetFabTimer();
+    });
+});
+// Render ulang icon Lucide
+if(window.lucide){
+    lucide.createIcons();
+}
+// EFEK HEADER
+const header=document.getElementById("mainHeader");
+window.addEventListener("scroll",()=>{
+    if(window.scrollY>80){
+        header.classList.add("shrink");
+    }else{
+        header.classList.remove("shrink");
+    }
 });
