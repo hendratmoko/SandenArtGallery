@@ -343,8 +343,8 @@ border-color:var(--border);
 /* Kelima tombol */
 .fab-item{
     position:absolute;
-    width:54px;
-    height:54px;
+    width:40px;
+    height:40px;
     border:none;
     border-radius:50%;
     background:white;
