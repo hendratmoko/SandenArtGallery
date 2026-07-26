@@ -658,6 +658,26 @@ setInterval(()=>{
     slides[current].classList.add("active");
 },8000);
 
+// MUSIK MUSIC BACKSOUND SOUNDTRACK 
+const music = document.getElementById("bgMusic");
+const muteBtn = document.getElementById("muteBtn");
+// Volume
+music.volume = 0.3;
+// Browser biasanya membutuhkan interaksi pertama
+document.addEventListener("click", function startMusic(){
+    music.play().catch(()=>{});
+    document.removeEventListener("click", startMusic);
+});
+// Tombol Mute
+muteBtn.addEventListener("click", function(e){
+    e.stopPropagation();
+    music.muted = !music.muted;
+    if(music.muted){
+        muteBtn.innerHTML = "🔇";
+    }else{
+        muteBtn.innerHTML = "🔊";
+    }
+});
 // MUSIK Backsound Ambil status sebelumnya
 const savedMute = localStorage.getItem("musicMuted");
 if(savedMute === "true"){
