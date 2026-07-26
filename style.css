@@ -140,7 +140,7 @@ button,input,select,textarea{font-family:inherit;font-size:100%}
 #offline-banner{position:fixed;top:0;left:0;right:0;background:var(--warm);color:#1a2332;text-align:center;font-size:13px;font-weight:700;padding:6px;z-index:70}
 
 
-/* =====================================================
+=====================================================
 Back To Top
 ===================================================== 
 #backToTop:hover{
@@ -198,8 +198,8 @@ opacity:0;
 pointer-events:none;
 transform:translateY(60px);
 }
-*/
-/* Smart button back to top tengah */
+
+/* Smart button back to top tengah 
 .nav-btn{
 position:fixed;
 left:50%;
@@ -246,7 +246,7 @@ box-shadow:
 0 0 20px #22c55e;
 }
 }
-
+*/
 
 
 #histats_counter{display:flex;justify-content:center;align-items:center;margin:20px auto;}
