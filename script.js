@@ -661,7 +661,7 @@ setInterval(()=>{
 // ======================================================
 // BACK TO TOP
 // ======================================================
-/*document.addEventListener("DOMContentLoaded",()=>{
+document.addEventListener("DOMContentLoaded",()=>{
 const btn=document.getElementById("backToTop");
 window.addEventListener("scroll",()=>{
 if(window.pageYOffset>350){
@@ -679,10 +679,11 @@ behavior:"smooth"
 });
 });
 });
-*/
+
 //=====================================================
 // SMART NAVIGATION BUTTON
-// =====================================================
+// ===================================================== 
+/*
 const navButton=document.getElementById("navButton");
 const navIcon=document.getElementById("navIcon");
 window.addEventListener("scroll",()=>{
@@ -726,7 +727,7 @@ behavior:"smooth"
 };
 }
 });
-
+*/
 // ======================================================
 // Floating Radial Menu 5 tombol (Help, Mode, Filter, Login, Upload)
 // ======================================================
