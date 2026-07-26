@@ -658,6 +658,19 @@ setInterval(()=>{
     slides[current].classList.add("active");
 },8000);
 
+// MUSIK Backsound Ambil status sebelumnya
+const savedMute = localStorage.getItem("musicMuted");
+if(savedMute === "true"){
+    music.muted = true;
+    muteBtn.innerHTML = "🔇";
+}
+muteBtn.addEventListener("click", function(e){
+    e.stopPropagation();
+    music.muted = !music.muted;
+    localStorage.setItem("musicMuted", music.muted);
+    muteBtn.innerHTML = music.muted ? "🔇" : "🔊";
+});
+
 // ======================================================
 // BACK TO TOP
 // ======================================================
