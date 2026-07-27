@@ -269,14 +269,14 @@ box-shadow:0 8px 24px rgba(0,0,0,.25);
 .mute-btn:hover{
     transform:scale(1.1);
 }
-/* Aang */
+/* Aang 
 .mute-btn img{
     width:22px;
     height:22px;
     object-fit:contain;
     pointer-events:none;
 }
-
+*/
 
 /*==========================
 FOOTER
