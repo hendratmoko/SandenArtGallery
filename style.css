@@ -252,7 +252,7 @@ box-shadow:
 #histats_counter{display:flex;justify-content:center;align-items:center;margin:20px auto;}
 
 /* Tombol Musik Mute */
-.mutebtn{
+.mute-btn{
     position:fixed;
     bottom:20px;
     left:20px;
@@ -268,7 +268,7 @@ box-shadow:
     z-index:9999;
     transition:.3s;
 }
-.mutebtn:hover{
+.mute-btn:hover{
     transform:scale(1.1);
 }
 
