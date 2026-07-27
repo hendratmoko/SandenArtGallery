@@ -205,7 +205,7 @@ transform:translateY(60px);
 .mute-btn{
     position:fixed;
     bottom:20px;
-    right:-20px;
+    right: 20px;
     width:42px;
     height:42px;
     border:none;
