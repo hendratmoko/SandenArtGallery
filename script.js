@@ -669,15 +669,11 @@ const savedMute = localStorage.getItem("musicMuted");
 
 if(savedMute === "true"){
     music.muted = true;
-  //  muteBtn.innerHTML = "🔇";
-const muteIcon = document.getElementById("muteIcon");
+    muteBtn.innerHTML = "🔇";
+//const muteIcon = document.getElementById("muteIcon");
+//const ICON_ON ="images/musikon.png";
+//const ICON_OFF ="images/mute.png";
 
-const ICON_ON =
-"images/musikon.png";
-
-const ICON_OFF =
-"images/mute.png";
-  
 }else{
     muteBtn.innerHTML = "🔊";
 }
@@ -701,10 +697,10 @@ muteBtn.addEventListener("click", function(e){
     music.muted = !music.muted;
 
     localStorage.setItem("musicMuted", music.muted);
-muteIcon.src = music.muted
-        ? ICON_OFF
-        : ICON_ON;
- //   muteBtn.innerHTML = music.muted ? "🔇" : "🔊";
+//muteIcon.src = music.muted
+//        ? ICON_OFF
+ //       : ICON_ON;
+muteBtn.innerHTML = music.muted ? "🔇" : "🔊";
 
 });
 
