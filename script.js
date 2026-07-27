@@ -661,34 +661,41 @@ setInterval(()=>{
 // MUSIK MUSIC BACKSOUND SOUNDTRACK 
 const music = document.getElementById("bgMusic");
 const muteBtn = document.getElementById("muteBtn");
-// Volume
+
 music.volume = 0.3;
-// Browser biasanya membutuhkan interaksi pertama
-document.addEventListener("click", function startMusic(){
-    music.play().catch(()=>{});
-    document.removeEventListener("click", startMusic);
-});
-// Tombol Mute
-muteBtn.addEventListener("click", function(e){
-    e.stopPropagation();
-    music.muted = !music.muted;
-    if(music.muted){
-        muteBtn.innerHTML = "🔇";
-    }else{
-        muteBtn.innerHTML = "🔊";
-    }
-});
-// MUSIK Backsound Ambil status sebelumnya
+
+// status sebelumnya
 const savedMute = localStorage.getItem("musicMuted");
+
 if(savedMute === "true"){
     music.muted = true;
     muteBtn.innerHTML = "🔇";
+}else{
+    muteBtn.innerHTML = "🔊";
 }
+
+// autoplay setelah klik pertama
+document.addEventListener("click", function startMusic(){
+
+    if(music.paused){
+        music.play().catch(()=>{});
+    }
+
+    document.removeEventListener("click", startMusic);
+
+});
+
 muteBtn.addEventListener("click", function(e){
+
+    e.preventDefault();
     e.stopPropagation();
+
     music.muted = !music.muted;
+
     localStorage.setItem("musicMuted", music.muted);
+
     muteBtn.innerHTML = music.muted ? "🔇" : "🔊";
+
 });
 
 // ======================================================
