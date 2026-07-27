@@ -669,7 +669,15 @@ const savedMute = localStorage.getItem("musicMuted");
 
 if(savedMute === "true"){
     music.muted = true;
-    muteBtn.innerHTML = "🔇";
+  //  muteBtn.innerHTML = "🔇";
+const muteIcon = document.getElementById("muteIcon");
+
+const ICON_ON =
+"https://raw.githubusercontent.com/USERNAME/REPOSITORY/main/icon/speaker-on.png";
+
+const ICON_OFF =
+"https://raw.githubusercontent.com/USERNAME/REPOSITORY/main/icon/speaker-off.png";
+  
 }else{
     muteBtn.innerHTML = "🔊";
 }
@@ -693,8 +701,10 @@ muteBtn.addEventListener("click", function(e){
     music.muted = !music.muted;
 
     localStorage.setItem("musicMuted", music.muted);
-
-    muteBtn.innerHTML = music.muted ? "🔇" : "🔊";
+muteIcon.src = music.muted
+        ? ICON_OFF
+        : ICON_ON;
+ //   muteBtn.innerHTML = music.muted ? "🔇" : "🔊";
 
 });
 
