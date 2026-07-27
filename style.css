@@ -199,56 +199,6 @@ pointer-events:none;
 transform:translateY(60px);
 }
 
-/* Smart button back to top tengah 
-.nav-btn{
-position:fixed;
-left:50%;
-bottom:25px;
-transform:translateX(-50%);
-width:60px;
-height:60px;
-border-radius:50%;
-border:none;
-cursor:pointer;
-display:none;
-align-items:center;
-justify-content:center;
-background:linear-gradient(135deg,#22c55e,#15803d);
-color:white;
-z-index:99999;
-transition:.35s;
-box-shadow:
-0 0 15px #22c55e,
-0 0 35px #22c55e;
-animation:glow 2s infinite;
-}
-.nav-btn:hover{
-transform:translateX(-50%) scale(1.1);
-}
-.nav-btn svg{
-width:30px;
-height:30px;
-}
-@keyframes glow{
-0%{
-box-shadow:
-0 0 10px #22c55e,
-0 0 20px #22c55e;
-}
-50%{
-box-shadow:
-0 0 25px #4ade80,
-0 0 50px #4ade80;
-}
-100%{
-box-shadow:
-0 0 10px #22c55e,
-0 0 20px #22c55e;
-}
-}
-*/
-
-
 #histats_counter{display:flex;justify-content:center;align-items:center;margin:20px auto;}
 
 /* Tombol Musik Mute */
@@ -260,8 +210,12 @@ box-shadow:
     height:42px;
     border:none;
     border-radius:50%;
-    background:#16a34a;
-    color:#fff;
+background: rgba(10,14,26,.45);
+backdrop-filter: blur(15px);
+-webkit-backdrop-filter: blur(15px);
+border:1px solid rgba(34,211,238,.25);
+color:#fff;
+box-shadow:0 8px 24px rgba(0,0,0,.25);
     font-size:18px;
     cursor:pointer;
     box-shadow:0 4px 10px rgba(0,0,0,.3);
