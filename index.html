@@ -35,57 +35,38 @@
 <!-- Floating Radial Menu -->
 <div id="fabMenu" class="fab-menu">
 
+    <!-- Panel Volume -->
+    <div class="volume-panel">
+        <div class="volume-header">
+            <span id="volumeIcon">🔊</span>
+            <span id="volumeText">30%</span>
+        </div>
+
+        <input
+            id="volumeSlider"
+            type="range"
+            min="0"
+            max="100"
+            value="30">
+    </div>
+
+  
     <!-- Tombol Utama -->
     <button id="fabToggle" class="fab-main">
         <span id="fabIcon">+</span>
     </button>
   
     <!-- Help -->
-    <button class="fab-item"
-        onclick="showHelp()"
-        title="Help">
-        <i data-lucide="help-circle"></i>
-    </button>
+    <button class="fab-item" onclick="showHelp()" title="Help"><i data-lucide="help-circle"></i></button>
     <!-- Theme -->
-    <button class="fab-item"
-        onclick="toggleTheme()"
-        title="Theme">
-        <i data-lucide="sun"></i>
-    </button>
+    <button class="fab-item" onclick="toggleTheme()" title="Theme"><i data-lucide="sun"></i></button>
     <!-- Bahasa -->
-    <button class="fab-item"
-        onclick="toggleLang()"
-        id="lang-btn">
-        ID
-    </button>
+    <button class="fab-item" onclick="toggleLang()" id="lang-btn"> ID </button>
     <!-- Register -->
-    <button class="fab-item"
-        onclick="showModal('register')"
-        title="Register">
-        <i data-lucide="user-plus"></i>
-    </button>
+    <button class="fab-item" onclick="showModal('register')" title="Register"><i data-lucide="user-plus"></i></button>
     <!-- Upload -->
-    <button class="fab-item"
-        onclick="showModal('upload')"
-        title="Upload">
-        <i data-lucide="upload"></i>
-    </button>
-  
-  <!-- Volume Panel -->
-<div id="volumePanel" class="volume-panel">
-   <!-- <div class="volume-header">
-        <span id="volumeIcon">🔊</span>
-        <span>Volume</span>
-        <span id="volumeValue">30%</span>
-    </div> -->
-    <input
-        type="range"
-        id="volumeSlider"
-        min="0"
-        max="100"
-        value="30">
-</div>
-  
+    <button class="fab-item" onclick="showModal('upload')" title="Upload"><i data-lucide="upload"></i></button>
+ 
 </div>
       
     <!--  
