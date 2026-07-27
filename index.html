@@ -39,7 +39,22 @@
     <button id="fabToggle" class="fab-main">
         <span id="fabIcon">+</span>
     </button>
-
+  
+<!-- Volume Panel -->
+<div id="volumePanel" class="volume-panel">
+    <div class="volume-header">
+        <span id="volumeIcon">🔊</span>
+        <span>Volume</span>
+        <span id="volumeValue">30%</span>
+    </div>
+    <input
+        type="range"
+        id="volumeSlider"
+        min="0"
+        max="100"
+        value="30">
+</div>
+  
     <!-- Help -->
     <button class="fab-item"
         onclick="showHelp()"
@@ -570,16 +585,18 @@ hs.src = ('//s10.histats.com/js15_as.js');
 </template>
 
 <div id="loading-banner" class="hidden">Memuat data...</div>
-
-<!-- Background Music -->
+  
+<!--
+<!-- BACKSOUND MUSIK --
 <audio id="bgMusic" loop autoplay>
     <source src="soundtrack/Avatar_The_Last_Airbender_-_Agni_Kai_(mp3.pm).mp3" type="audio/mpeg">
 </audio>
-<!-- Tombol Mute -->
+<!-- Tombol Mute --
 <button id="muteBtn" class="mute-btn" title="Mute / Unmute">
     🔊
 </button>  
-
+-->
+  
 <!-- =========================================================
  FUTURISTIC FOOTER
 ========================================================= --->
