@@ -673,10 +673,10 @@ if(savedMute === "true"){
 const muteIcon = document.getElementById("muteIcon");
 
 const ICON_ON =
-"https://raw.githubusercontent.com/USERNAME/REPOSITORY/main/icon/speaker-on.png";
+"https://github.com/hendratmoko/SandenArtGallery/blob/main/images/musikon.png";
 
 const ICON_OFF =
-"https://raw.githubusercontent.com/USERNAME/REPOSITORY/main/icon/speaker-off.png";
+"https://github.com/hendratmoko/SandenArtGallery/blob/main/images/mute.png";
   
 }else{
     muteBtn.innerHTML = "🔊";
