@@ -533,7 +533,7 @@ function getCategoryIcon(cat){
         GitHub: BASE+"Github.png",
         Quis: BASE+"Quis.png",
         Other: BASE+"Folder.png"
-    }[cat] || BASE+"Folder";
+    }[cat] || BASE+"Folder.png";
 }
 // Register
 async function handleRegister(e) {
