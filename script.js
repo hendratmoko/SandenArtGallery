@@ -119,8 +119,9 @@ function getWorkImage(item){
 
         return item.gambar.trim();
     }
-    // Jika kosong
-    return DEFAULT_WORK_IMAGE;
+  // Jika tidak ada gambar, gunakan icon kategori
+    return getCategoryIcon(item.work_category);
+  //  return DEFAULT_WORK_IMAGE;
 }
 
 /* ============================================================
