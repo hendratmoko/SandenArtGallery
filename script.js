@@ -438,6 +438,36 @@ function renderGallery() {
       badge.classList.add(rank.cls, rank.textCls);
       badge.textContent = rank.label;
     }
+
+    /* ganti karu jadi poster*/
+const media = card.querySelector('.card-media');
+const link = w.work_link || '';
+if (link.includes('youtu')) {
+   const vid = extractYT(link);
+    media.innerHTML = vid
+        ? `<img src="https://img.youtube.com/vi/${vid}/mqdefault.jpg"
+                class="w-full h-full object-cover"
+                loading="lazy">`
+        : '<i data-lucide="play-circle" style="width:48px;height:48px;color:#fff"></i>';
+} else {
+    // ambil gambar dari Spreadsheet
+    const img = getWorkImage(w);
+    media.innerHTML = `
+        <div class="text-center text-white">
+            <img
+                src="${img}"
+                class="category-icon mx-auto mb-2"
+                alt="${w.work_category}"
+                loading="lazy"
+                onerror="this.onerror=null;
+                         this.src='${DEFAULT_WORK_IMAGE}'">
+            <p class="text-xs opacity-70">
+                ${w.work_category}
+            </p>
+        </div>
+    `;
+}
+    /*
     const media = card.querySelector('.card-media');
     const link = w.work_link || '';
     if (link.includes('youtu')) {
@@ -447,6 +477,8 @@ function renderGallery() {
       const icon = getCategoryIcon(w.work_category);
       media.innerHTML = `<div class="text-center text-white"><img src="${icon}"class="category-icon mx-auto mb-2"alt="${w.work_category}"onerror="this.src='assets/icons/folder.png'"><p class="text-xs opacity-70">${w.work_category}</p></div>`;
     }
+*/
+    
     card.style.cursor = 'pointer';
     card.onclick = () => openWork(w);
     grid.appendChild(clone);
