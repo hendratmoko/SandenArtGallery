@@ -21,3 +21,6 @@ window.APP_CONFIG = {
   // Path file data contoh (dipakai kalau USE_LOCAL_FALLBACK = true)
   LOCAL_DATA_PATH: 'data.json'
 };
+//default icon kartu
+const DEFAULT_WORK_IMAGE =
+"https://hendratmoko.github.io/SandenArtGallery/images/default.png";
