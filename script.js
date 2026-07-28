@@ -37,13 +37,7 @@ window.dataSdk = (function () {
       throw new Error(json.error);
   return json.data || [];
 }
-/*  async function fetchFromGas() {
-    const res = await fetch(CFG.GAS_URL, { method: 'GET' });
-    const json = await res.json();
-    if (!json.isOk) throw new Error(json.error || 'Gagal memuat data dari server');
-    return json.data || [];
-  }
-*/
+
   async function fetchFromLocal() {
     const res = await fetch(CFG.LOCAL_DATA_PATH || 'data.json');
     if (!res.ok) throw new Error('data.json tidak ditemukan');
@@ -114,9 +108,20 @@ window.dataSdk = (function () {
       return { isOk: false, error: err.message };
     }
   }
-
   return { init, create };
 })();
+
+/* Ambil gambar kartu dari spreadsheet */
+function getWorkImage(item){
+    // Jika ada gambar
+    if(item.gambar &&
+       item.gambar.trim()!==""){
+
+        return item.gambar.trim();
+    }
+    // Jika kosong
+    return DEFAULT_WORK_IMAGE;
+}
 
 /* ============================================================
  *  LOGIKA GALERI
@@ -670,9 +675,6 @@ const savedMute = localStorage.getItem("musicMuted");
 if(savedMute === "true"){
     music.muted = true;
     muteBtn.innerHTML = "🔇";
-//const muteIcon = document.getElementById("muteIcon");
-//const ICON_ON ="images/musikon.png";
-//const ICON_OFF ="images/mute.png";
 
 }else{
     muteBtn.innerHTML = "🔊";
@@ -697,9 +699,6 @@ muteBtn.addEventListener("click", function(e){
     music.muted = !music.muted;
 
     localStorage.setItem("musicMuted", music.muted);
-//muteIcon.src = music.muted
-//        ? ICON_OFF
- //       : ICON_ON;
 muteBtn.innerHTML = music.muted ? "🔇" : "🔊";
 
 });
@@ -726,54 +725,7 @@ behavior:"smooth"
 });
 });
 
-//=====================================================
-// SMART NAVIGATION BUTTON
-// ===================================================== 
-/*
-const navButton=document.getElementById("navButton");
-const navIcon=document.getElementById("navIcon");
-window.addEventListener("scroll",()=>{
-const gallery=document.getElementById("galleryStart");
-const galleryTop=gallery.offsetTop;
-const card=document.querySelector("#gallery-grid article");
-let switchPoint=galleryTop+800;
-if(card){
-switchPoint=card.offsetTop+card.offsetHeight*8;
-}
-if(window.scrollY<galleryTop){
-navButton.style.display="none";
-return;
-}
-navButton.style.display="flex";
-if(window.scrollY<switchPoint){
-navIcon.innerHTML=`
-<path stroke-linecap="round"
-stroke-linejoin="round"
-stroke-width="2.5"
-d="M12 5v14M5 12l7 7 7-7"/>
-`;
-navButton.onclick=()=>{
-document.getElementById("footer")
-.scrollIntoView({
-behavior:"smooth"
-});
-};
-}else{
-navIcon.innerHTML=`
-<path stroke-linecap="round"
-stroke-linejoin="round"
-stroke-width="2.5"
-d="M5 15l7-7 7 7"/>
-`;
-navButton.onclick=()=>{
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
-};
-}
-});
-*/
+
 // ======================================================
 // Floating Radial Menu 5 tombol (Help, Mode, Filter, Login, Upload)
 // ======================================================
