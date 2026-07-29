@@ -493,7 +493,7 @@ function filterWorks(works) {
   const s = document.getElementById('search-input').value.toLowerCase();
   const st = document.getElementById('filter-status').value;
   const kel = document.getElementById('filter-kelas').value;
-  const kel = document.getElementById('filter-guru').value;
+  const gru = document.getElementById('filter-guru').value;
   const cat = document.getElementById('filter-category').value;
   const yr = document.getElementById('filter-year').value;
   return works.filter(w => {
