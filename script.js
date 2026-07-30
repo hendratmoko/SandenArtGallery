@@ -376,7 +376,7 @@ function renderTabs() {
 
 function openWork(w) { if (w.work_link) window.open(w.work_link, '_blank', 'noopener,noreferrer'); }
 
-// Profile
+// Profile  390-406 <div class="rounded-full mx-auto mb-3 flex items-center justify-center text-3xl" style="background:var(--accent-light);width:80px;height:80px">👤</div> 
 function showProfile(name) {
   const userWorks = allData.filter(d => d.name === name && d.work_type === 'work');
   const reg = allData.find(d => d.name === name && d.work_type === 'registration');
@@ -386,7 +386,21 @@ function showProfile(name) {
   const el = document.getElementById('profile-content');
   el.innerHTML = `
     <div class="text-center mb-6">
-      <div class="rounded-full mx-auto mb-3 flex items-center justify-center text-3xl" style="background:var(--accent-light);width:80px;height:80px">👤</div>
+
+  document.getElementById("profile-content").innerHTML = `
+<div class="text-center">
+    <img
+        src="${author.avatar || 'assets/avatar/default.png'}"
+        class="w-28 h-28 rounded-full mx-auto border-4 border-green-500 shadow-lg object-cover">
+    <h2 class="mt-4 text-xl font-bold">
+        ${author.name}
+    </h2>
+    <p class="text-gray-400">
+        ${author.class}
+    </p>
+</div>
+`;    
+      
       <h3 class="text-xl font-bold heading-display">${name}</h3>
     <p class="text-sm" style="color:var(--muted)">
   ${
