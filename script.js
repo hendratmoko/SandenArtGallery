@@ -563,7 +563,8 @@ async function handleRegister(e) {
     submitted_at: '',
     gambar: '',
     guru: '',
-    mapel: ''
+    mapel: '',
+    avatar: ''
   };
   const res = await window.dataSdk.create(record);
   if (res.isOk) {
@@ -610,7 +611,8 @@ async function handleUpload(e) {
     lama: document.getElementById('lama').value, 
     gambar: document.getElementById('gambar').value.trim(),
     guru: document.getElementById('guru').value, 
-    mapel: document.getElementById('mapel').value
+    mapel: document.getElementById('mapel').value,
+    avatar: document.getElementById('avatar').value
   };
   if (wantQuiz) { pendingWork = work; startQuiz(work.work_category); } else { await submitWork(work); }
 }
