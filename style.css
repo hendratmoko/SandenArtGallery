@@ -19,8 +19,8 @@ body{margin:0;font-family:'Libre Franklin',sans-serif;background:var(--bg);color
 
 */
 .category-icon{
-    width: 400px;
-    height: 100px;
+    width: 800px;
+    height: 150px;
     object-fit: contain; atau cover
     display: block;
     margin: 0 auto;
