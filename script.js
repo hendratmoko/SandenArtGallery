@@ -821,3 +821,80 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+// KECEPATAN INTERNET
+async function cekInternet() {
+
+    const imageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/3f/Fronalpstock_big.jpg?time=" + Date.now();
+
+    const fileSize = 14679474; // ukuran file dalam byte (≈14 MB)
+
+    const startTime = performance.now();
+
+    try {
+
+        const response = await fetch(imageUrl, { cache: "no-store" });
+
+        await response.blob();
+
+        const endTime = performance.now();
+
+        const duration = (endTime - startTime) / 1000;
+
+        const bitsLoaded = fileSize * 8;
+
+        const speedMbps = (bitsLoaded / duration / 1024 / 1024).toFixed(2);
+
+        document.getElementById("downloadSpeed").textContent =
+            speedMbps + " Mbps";
+
+        // Estimasi upload
+        document.getElementById("uploadSpeed").textContent =
+            (speedMbps * 0.35).toFixed(2) + " Mbps";
+
+        // Estimasi ping
+        const ping = Math.round(duration * 100);
+
+        document.getElementById("pingValue").textContent =
+            ping + " ms";
+
+        let kualitas = "";
+        let warna = "";
+
+        if (speedMbps >= 100) {
+            kualitas = "🟢 Koneksi Sangat Baik";
+            warna = "lime";
+        } else if (speedMbps >= 50) {
+            kualitas = "🟢 Koneksi Baik";
+            warna = "green";
+        } else if (speedMbps >= 20) {
+            kualitas = "🟡 Koneksi Sedang";
+            warna = "orange";
+        } else if (speedMbps >= 5) {
+            kualitas = "🟠 Koneksi Lambat";
+            warna = "darkorange";
+        } else {
+            kualitas = "🔴 Koneksi Sangat Lambat";
+            warna = "red";
+        }
+
+        const status = document.getElementById("internetQuality");
+        status.textContent = kualitas;
+        status.style.color = warna;
+
+    } catch (e) {
+
+        document.getElementById("downloadSpeed").textContent = "-";
+        document.getElementById("uploadSpeed").textContent = "-";
+        document.getElementById("pingValue").textContent = "-";
+        document.getElementById("internetQuality").textContent =
+            "❌ Gagal mengukur koneksi";
+
+    }
+
+}
+
+// Jalankan saat halaman dibuka
+cekInternet();
+// Perbarui setiap 60 detik x 60 menit = 1 jam
+setInterval(cekInternet, 3600000);
