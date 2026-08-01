@@ -807,3 +807,17 @@ window.addEventListener("scroll",()=>{
         header.classList.remove("shrink");
     }
 });
+
+//GOTO FOOTER
+document.addEventListener("DOMContentLoaded", () => {
+  const kerja = document.getElementById("goFooter");
+  const footer = document.getElementById("footer");
+  if (kerja && footer) {
+    kerja.addEventListener("click", () => {
+      footer.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    });
+  }
+});
