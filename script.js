@@ -897,4 +897,5 @@ async function cekInternet() {
 // Jalankan saat halaman dibuka
 cekInternet();
 // Perbarui setiap 60 detik x 60 menit = 1 jam
-setInterval(cekInternet, 3600000);
+// default 60000 = 60 detik
+setInterval(cekInternet, 60000);
