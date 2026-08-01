@@ -590,6 +590,27 @@ SMK NEGERI 1 SANDEN`;
     a.download = "Kode_Akses_Portofolio.txt";
     a.click();
 }
+//copas kode akses
+async function copyAccessCode(){
+    const code = document.getElementById("reg-code").innerText;
+    const text =
+`KODE AKSES PORTOFOLIO DIGITAL
+Kode Akses : ${code}
+Simpan kode ini dengan baik.
+SMK NEGERI 1 SANDEN`;
+    try{
+        await navigator.clipboard.writeText(text);
+        alert("✅ Kode Akses berhasil disalin.\nSilakan paste (Tempel) ke aplikasi yang diinginkan.");
+    }catch(e){
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+        alert("✅ Kode Akses berhasil disalin.");
+    }
+}
 //kirim ke 💌✍ *WhatsApp*
 function sendAccessCodeWA(){
     const code = document.getElementById("reg-code").innerText;
