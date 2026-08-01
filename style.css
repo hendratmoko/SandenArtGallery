@@ -20,7 +20,7 @@ body{margin:0;font-family:'Libre Franklin',sans-serif;background:var(--bg);color
 */
 .category-icon{
     width: 140px;
-    height: 100px;
+    height: 150px;
     object-fit: contain; atau cover
     display: block;
     margin: 0 auto;
