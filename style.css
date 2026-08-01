@@ -21,11 +21,12 @@ body{margin:0;font-family:'Libre Franklin',sans-serif;background:var(--bg);color
 .category-icon{
     width: 180px;
     height: 180px;
-    object-fit: contain; atau cover
+    object-fit: cover; 
     display: block;
     margin: 0 auto;
 }
 /*
+object-fit: contain; atau cover
 Anda juga bisa mengubah ukurannya:
 32px → kecil
 48px → sedang
