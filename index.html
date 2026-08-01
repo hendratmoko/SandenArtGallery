@@ -413,10 +413,14 @@ Sebenarnya web ini adalah game yang berisi kumpulan hasil karya Murid Siswa-sisw
         Simpan kode ini untuk upload karya. Kode dapat digunakan selamanya.
     </p>
     <div class="flex justify-center gap-3 flex-wrap">
-        <button onclick="saveAccessCode()"  class="px-4 py-2 rounded-xl bg-blue-600 text-white text-sm hover:bg-blue-700">
+        <button onclick="copyAccessCode()"
+        class="px-4 py-2 rounded-xl bg-orange-500 text-blue text-sm">
+        📋 Copy Kode
+        </button>
+		<button onclick="saveAccessCode()"  class="px-4 py-2 rounded-xl bg-blue-600 text-blue text-sm hover:bg-blue-700">
             💾 Simpan Kode
         </button>
-        <button onclick="sendAccessCodeWA()" class="px-4 py-2 rounded-xl bg-green-600 text-white text-sm hover:bg-green-700">
+        <button onclick="sendAccessCodeWA()" class="px-4 py-2 rounded-xl bg-green-600 text-blue text-sm hover:bg-green-700">
             📱 Kirim ke WhatsApp
         </button>
     </div>
