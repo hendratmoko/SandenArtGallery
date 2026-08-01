@@ -94,9 +94,17 @@
         <div class="overlay"></div>
     </div>
     <div class="hero-content">
-        <h1>
+      <!--  <h1>
             પกﻝપᛕ ᛕﻉɼﻝค & ρѻɼՇѻिѻɭٱѻ ɗٱﻭٱՇคɭ
         </h1>
+	  -->
+		<h1 class="text-4xl font-bold">
+  પกﻝપᛕ
+  <span id="goFooter"
+        class="cursor-pointer hover:text blue-500 transition duration-300">  ᛕﻉɼﻝค  
+  </span> & ρѻɼՇѻिѻɭٱѻ ɗٱﻭٱՇคɭ
+		</h1>
+
     </div>
 </section>
  
@@ -419,8 +427,14 @@ Sebenarnya web ini adalah game yang berisi kumpulan hasil karya Murid Siswa-sisw
       <p id="upload-user-name" class="text-sm mb-5" style="color:var(--muted)"></p>
       <form id="upload-form" onsubmit="handleUpload(event)" class="space-y-4">
         <input id="up-title" required placeholder="Judul Karya*" class="input-field w-full rounded-xl px-4 py-2.5 text-sm">
-        <textarea id="up-desc" required placeholder="Deskripsi* (100 kata), meliputi: Tujuan dibuatnya program digital ini, manfaat, fitur, teknologi/Software yang dipakai, cara penggunaan, target pengguna dan kata kunci untuk pencarian Google/tag line." rows="4" class="input-field w-full rounded-xl px-4 py-2.5 text-sm"></textarea>
-        <div class="grid grid-cols-2 gap-3">
+
+		  <textarea id="up-desc" required placeholder="Deskripsi* (100 kata), meliputi: Tujuan dibuatnya program digital ini, manfaat, fitur, teknologi/Software yang dipakai, cara penggunaan, target pengguna dan kata kunci untuk pencarian Google/tag line." rows="4" class="input-field w-full rounded-xl px-4 py-2.5 text-sm"></textarea>
+<!-- DESKRIPSI diatas usahakan agar:
+✅ Judul karya diisi.
+✅ Klik ✨ Buat Deskripsi AI.
+✅ AI mengisi deskripsi secara otomatis.
+✅ Siswa hanya perlu mengecek dan menyetujui atau mengedit bila diperlukan.	  -->
+		  <div class="grid grid-cols-2 gap-3">
           <select id="up-category" required class="input-field rounded-xl px-4 py-2.5 text-sm">
             <option value="">Kategori*</option>
             <option>Video</option>
@@ -543,7 +557,7 @@ Sebenarnya web ini adalah game yang berisi kumpulan hasil karya Murid Siswa-sisw
           
         </div>
         <div class="grid grid-cols-2 gap-3">
-          <input id="up-link" required placeholder="Link Karya (https://...)" class="input-field rounded-xl px-4 py-2.5 text-xs">
+          <input id="up-link" required placeholder="Link Karya*(https://...)" class="input-field rounded-xl px-4 py-2.5 text-xs">
           <input id="gambar" placeholder="Link Poster (https://...)" class="input-field rounded-xl px-4 py-2.5 text-xs">
           <input id="up-year" required placeholder="Tahun Pembuatan" class="input-field rounded-xl px-4 py-2.5 text-xs">
           <input id="lama" placeholder="Lama Pembuatan (Hari/Bulan)" class="input-field rounded-xl px-4 py-2.5 text-xs">
@@ -728,7 +742,6 @@ Sebenarnya web ini adalah game yang berisi kumpulan hasil karya Murid Siswa-sisw
 
 <div id="loading-banner" class="hidden">Memuat data...</div>
   
-
 <!-- BACKSOUND MUSIK -->
 <audio id="bgMusic" loop autoplay>
     <source src="soundtrack/Avatar_The_Last_Airbender_-_Agni_Kai_(mp3.pm).mp3" type="audio/mpeg">
@@ -736,68 +749,68 @@ Sebenarnya web ini adalah game yang berisi kumpulan hasil karya Murid Siswa-sisw
 <!-- Tombol Mute -->
 <button id="muteBtn" class="mute-btn" title="Mute / Unmute">
     🔊
-  
 </button>  
-  
+	
+<!-- KECEPATAN INTERNET -->
+<!-- Status Internet -->
+<div id="internet-status" class="surface-card rounded-xl p-3 mt-4 text-center text-xs">
+    <h3 class="font-bold text-lg mb-2">📶 Status Internet</h3>
+
+    <div>⬇ Download : <span id="downloadSpeed">Mengukur...</span></div>
+    <div>⬆ Upload : <span id="uploadSpeed">Estimasi...</span></div>
+    <div>📡 Ping : <span id="pingValue">Mengukur...</span></div>
+<div id="internetQuality" class="mt-2 mb-4 font-semibold">
+        Mengukur kualitas koneksi...
+    </div>
+</div>
+	
 <!-- =========================================================
  FUTURISTIC FOOTER
 ========================================================= --->
-<footer id="footer" class="bg-slate-900 text-slate-300 pt-12 pb-6 font-sans">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        
+<footer id="footer" class="text-center  bg-slate-900 text-slate-300 pt-12 pb-6 font-sans">
+	<!-- tambah jarak kosong -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><p class="text-sm text-slate-400 leading-relaxed"></p>      
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><p class="text-sm text-slate-400 leading-relaxed"></p>      
+		
         <!-- Bagian Utama Footer: Grid System -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-8 border-b border-slate-800">
-            
+        <div class="text-center  grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 pb-8 border-b border-slate-800">
+
             <!-- Col 1: Profil Sekolah & Media Sosial -->
-            <div class="space-y-4">
-                <div class="flex items-center space-x-3">
-	<!-- LOGO SEKOLAH KURANG KECIL 				
-                    <img src="images/IMG_20260731_014559_567.jpg" alt="Logo Sekolah" class="h-12 w-auto fallback-image" onerror="this.src='https://via.placeholder.com/50'">
-					-->
-                    <div>
-                        <h3 class="text-white font-bold text-lg leading-tight">SMK Negeri 1 Sanden</h3>
-                        <p class="text-xs text-slate-400">Unggul, Berkarakter, Berteknologi</p>
-                    </div>
-                </div>
-                <p class="text-sm text-slate-400 leading-relaxed">
-                    Jl. Samas No.KM. 11, Ngemplak, Srigading, Kecamatan Sanden, Kabupaten Bantul, Daerah Istimewa Yogyakarta
-                </p>
-                <p class="text-sm text-slate-400 leading-relaxed">
-                   Menyediakan pendidikan vokasi berkualitas untuk menciptakan generasi siap kerja dan berwirausaha.
-                </p>
-<p class="text-xs text-slate-400">
-Tag: brown v board of apple education store
-kumpulan game psp ppsspp ukuran kecil
-kalender Pendidikan, menteri Pendidikan rumah Pendidikan
-profil sekolah, libur sekolah lebaran
-</p>
-            </div>
+<div class="space-y-4">
+     <div class="flex items-center space-x-3">
+<div> 
 
-                <!-- Server Status 
-                <div class="bg-slate-800/70 p-3 rounded-xl flex items-center justify-between">
-                    <div class="flex items-center space-x-2">
-                        <span class="relative flex h-2.5 w-2.5">
-                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                            <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
-                        </span>
-                        <span class="text-xs text-slate-300 font-medium">Server Status</span>
-                    </div>
-                    <span class="text-[5px] bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded-full border border-emerald-500/20 font-mono">Operational (99.9%)</span>
-                </div>
-            </div>
-
-        </div>
--->
-
- 
+ </div>
+ </div>
+  <p class="text-sm text-slate-400 leading-relaxed">
+<div class="flex justify-center items-center gap-2 text-center">
+    <img src="images/IMG_20260731_014559_567.jpg"
+         alt="Logo"
+         style="height:16px; width:auto;"
+         onerror="this.src='https://via.placeholder.com/50'">
+    <span class="text-sm font-bold">
+        SMK NEGERI 1 SANDEN
+    </span>
+</div>
+	 <div class="mini-text" onclick="this.classList.toggle('zoom')">
+ Jl. Samas No.KM. 11, Ngemplak, Srigading, Kecamatan Sanden, Kabupaten Bantul, Daerah Istimewa Yogyakarta. https://smkn1sanden.sch.id/
+	 </div>
+	  <p>𝓤𝓷𝓰𝓰𝓾𝓵, 𝓑𝓮𝓻𝓴𝓪𝓻𝓪𝓴𝓽𝓮𝓻, 𝓑𝓮𝓻𝓽𝓮𝓴𝓷𝓸𝓵𝓸𝓰𝓲</p>
+	  Menyediakan pendidikan vokasi berkualitas untuk menciptakan generasi siap kerja dan berwirausaha.
+  </p>
+</div>
+									
+<div class="text-center  mini-text"  onclick="this.classList.toggle('zoom')">
+Tag line # brown v board of apple education store # kumpulan game psp ppsspp ukuran kecil # kalender Pendidikan, menteri Pendidikan rumah Pendidikan # profil sekolah, libur sekolah lebaran # profil karya siswa taruna terbaik SMKN1SANDEN # Moko Idea Production @ MOIDEA
+  <p>&copy; 2026 SMK Negeri 1 Sanden. All Rights Reserved by Moidea.</p>	
+</div>
         <!-- Bagian Bawah: Copyright -->
-        <div class="pt-6 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500 space-y-3 md:space-y-0">
-            <p>&copy; 2026 SMK Negeri 1 Sanden. All Rights Reserved by Moidea.</p>
-            <div class="flex space-x-4">
-                <a href="#" class="hover:underline">Kebijakan Privasi</a>
-                <a href="#" class="hover:underline">Syarat & Ketentuan</a>
-                <a href="#" class="hover:underline">Peta Situs</a>
-            </div>
+        <div class="pt-6 flex flex-col md:flex-row justify-between items-center text-center text-xs text-slate-500 space-y-3 md:space-y-0">
+          
+			<!--
+Kebijakan Privasi
+Syarat & Ketentuan
+			-->
         </div>
     </div>
 </footer>
