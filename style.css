@@ -11,8 +11,8 @@ body{margin:0;font-family:'Libre Franklin',sans-serif;background:var(--bg);color
 .input-field{background:var(--bg);color:var(--text);border:1px solid var(--border);transition:border-color .2s}.input-field:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light)}
 
 .category-icon{
-    width:100%;
-    height: 100%;
+    width:10%;
+    height: 80%;
     aspect-ratio:16/9;
     object-fit:contain;
     border-radius:12px 12px 0 0;
@@ -20,14 +20,13 @@ body{margin:0;font-family:'Libre Franklin',sans-serif;background:var(--bg);color
 
 /*
 .category-icon{
-    width: 320px;
-    height: 300px;
-    object-fit: cover; 
+    width: 320px; atau 100%;
+    height: 290px;
+    object-fit: cover; atau contain;
     display: block;
     margin: 0 auto;
 }
-/*
-object-fit: contain; atau cover
+
 Anda juga bisa mengubah ukurannya:
 32px → kecil
 48px → sedang
