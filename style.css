@@ -136,6 +136,17 @@ Anda juga bisa mengubah ukurannya:
     }
 }
 
+/* TULISAN SUPER KECIL ex: Tag line*/
+.mini-text{
+    font-size:4px;          /* super kecil */
+    line-height:1.2;
+    cursor:pointer;
+    transition:0.3s;
+    transform-origin:top left;
+}
+.mini-text.zoom{
+    font-size:16px;         /* ukuran normal */
+}
 
 /* utilities dasar yang dipakai markup */
 .fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}
