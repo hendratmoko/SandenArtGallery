@@ -575,6 +575,45 @@ async function handleRegister(e) {
   }
 }
 
+// fungsi setelah dapat kode akses
+function saveAccessCode() {
+    const code = document.getElementById("reg-code").innerText;
+    const text =
+`KODE AKSES PORTOFOLIO
+Kode Akses :
+${code}
+Simpan kode ini dengan baik.
+SMK NEGERI 1 SANDEN`;
+    const blob = new Blob([text], {type:"text/plain"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "Kode_Akses_Portofolio.txt";
+    a.click();
+}
+//kirim ke 💌✍ *WhatsApp*
+function sendAccessCodeWA(){
+    const code = document.getElementById("reg-code").innerText;
+    let phone = document.getElementById("reg-contact").value;
+    phone = phone.replace(/\D/g,'');
+    if(phone.startsWith("0")){
+        phone = "62" + phone.substring(1);
+    }
+    const pesan =
+`Halo,
+Registrasi Portofolio Digital berhasil.
+Kode Akses Anda:
+
+${code}
+
+Simpan kode ini dengan baik.
+Kode digunakan untuk Upload Karya.
+
+SMK NEGERI 1 SANDEN`;
+    const url =
+"https://wa.me/" + phone + "?text=" + encodeURIComponent(pesan);
+    window.open(url,"_blank");
+  }
+
 function handleUploadLogin(e) {
   e.preventDefault();
   const code = document.getElementById('upload-code').value.trim().toUpperCase();
