@@ -709,7 +709,19 @@ function generateQuizQuestions() {
     { q: 'Codec audio yang paling umum digunakan?', o: ['MP3/AAC', 'BMP', 'TIFF', 'RAW'], a: 0 },
     { q: 'Prinsip KISS dalam desain berarti?', o: ['Keep It Simple, Stupid', 'Keep It Super Smart', 'Keep In Same Style', 'Kill Irrelevant Stupid Stuff'], a: 0 },
     { q: 'Apa itu responsive design?', o: ['Desain yang menyesuaikan layar', 'Desain yang cepat', 'Desain yang mahal', 'Desain 3D'], a: 0 },
-    { q: 'Version control berguna untuk?', o: ['Melacak perubahan kode/file', 'Mempercepat internet', 'Menghapus virus', 'Membuat backup otomatis'], a: 0 }
+    { q: 'Version control berguna untuk?', o: ['Melacak perubahan kode/file', 'Mempercepat internet', 'Menghapus virus', 'Membuat backup otomatis'], a: 0 },
+
+{ q: 'Apa fungsi utama portofolio digital?', o: ['Menampilkan hasil karya dan kompetensi', 'Menghapus file lama', 'Mengganti sistem operasi', 'Mempercepat internet'], a: 0 },
+{ q: 'Format gambar yang paling cocok untuk foto adalah?', o: ['JPG', 'PNG', 'SVG', 'GIF'], a: 0 },
+{ q: 'Apa kepanjangan dari HTML?', o: ['HyperText Markup Language', 'High Transfer Machine Language', 'Hyper Tool Machine Link', 'Home Text Markup List'], a: 0 },
+{ q: 'Bahasa pemrograman yang digunakan untuk membuat halaman web menjadi interaktif adalah?', o: ['JavaScript', 'HTML', 'CSS', 'SQL'], a: 0 },
+{ q: 'Fungsi CSS dalam pengembangan web adalah?', o: ['Mengatur tampilan dan desain halaman', 'Menyimpan data', 'Menghubungkan database', 'Mengelola jaringan'], a: 0 },
+{ q: 'Platform yang umum digunakan untuk menyimpan kode proyek secara online adalah?', o: ['GitHub', 'Microsoft Excel', 'Adobe Photoshop', 'Canva'], a: 0 },
+{ q: 'Apa tujuan memberikan nama file yang jelas pada hasil karya?', o: ['Memudahkan pencarian dan pengelolaan', 'Membuat ukuran file lebih kecil', 'Menambah kualitas gambar', 'Mempercepat upload internet'], a: 0 },
+{ q: 'Apa manfaat menambahkan deskripsi pada portofolio karya?', o: ['Menjelaskan tujuan dan proses pembuatan', 'Mengurangi ukuran file', 'Mengubah format file', 'Menghapus metadata'], a: 0 },
+{ q: 'Lisensi yang memungkinkan karya digunakan kembali dengan syarat tertentu disebut?', o: ['Creative Commons', 'Windows License', 'OEM', 'GPL Office'], a: 0 },
+{ q: 'Sebelum mempublikasikan karya digital, hal yang paling penting dilakukan adalah?', o: ['Memeriksa kembali isi dan kualitas karya', 'Menghapus semua file', 'Mengganti nama komputer', 'Mematikan internet'], a: 0 }
+  
   ].sort(() => Math.random() - 0.5);
 }
 
