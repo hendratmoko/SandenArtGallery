@@ -710,7 +710,6 @@ function generateQuizQuestions() {
     { q: 'Prinsip KISS dalam desain berarti?', o: ['Keep It Simple, Stupid', 'Keep It Super Smart', 'Keep In Same Style', 'Kill Irrelevant Stupid Stuff'], a: 0 },
     { q: 'Apa itu responsive design?', o: ['Desain yang menyesuaikan layar', 'Desain yang cepat', 'Desain yang mahal', 'Desain 3D'], a: 0 },
     { q: 'Version control berguna untuk?', o: ['Melacak perubahan kode/file', 'Mempercepat internet', 'Menghapus virus', 'Membuat backup otomatis'], a: 0 },
-
 { q: 'Apa fungsi utama portofolio digital?', o: ['Menampilkan hasil karya dan kompetensi', 'Menghapus file lama', 'Mengganti sistem operasi', 'Mempercepat internet'], a: 0 },
 { q: 'Format gambar yang paling cocok untuk foto adalah?', o: ['JPG', 'PNG', 'SVG', 'GIF'], a: 0 },
 { q: 'Apa kepanjangan dari HTML?', o: ['HyperText Markup Language', 'High Transfer Machine Language', 'Hyper Tool Machine Link', 'Home Text Markup List'], a: 0 },
