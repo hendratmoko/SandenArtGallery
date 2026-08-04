@@ -516,6 +516,7 @@ function getCategoryIcon(cat){
     return {
         Video: BASE+"Video.png",
         PDF: BASE+"PDF.png",
+        AI: BASE+"AI.png",
         PPTX: BASE+"PPTX.png",
         Word: BASE+"Word.png",
         Excel: BASE+"Excel.png",
