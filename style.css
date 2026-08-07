@@ -40,7 +40,7 @@ body{margin:0;font-family:'Libre Franklin',sans-serif;background:var(--bg);color
     background-size:300% auto;
     -webkit-background-clip:text;
     background-clip:text;
-    animation:holoShift 5s linear infinite;
+    animation:holoShift 12s linear infinite;
     filter:drop-shadow(0 0 6px rgba(255,255,255,.4));
 }
 .hologram-text::after{
@@ -55,7 +55,7 @@ body{margin:0;font-family:'Libre Franklin',sans-serif;background:var(--bg);color
         transparent 55%
     );
     background-size:250% 100%;
-    animation:holoLight 2.8s linear infinite;
+    animation:holoLight 5s linear infinite;
     mix-blend-mode:screen;
     pointer-events:none;
 }
