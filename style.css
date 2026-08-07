@@ -18,6 +18,63 @@ body{margin:0;font-family:'Libre Franklin',sans-serif;background:var(--bg);color
     border-radius:12px 12px 0 0;
 }
 
+
+/* HOLOGRAM TEXT */
+.hologram-text{
+    position:relative;
+    display:inline-block;
+    font-weight:900;
+    color:transparent;
+    background:
+    linear-gradient(
+        90deg,
+        #ff0066 0%,
+        #ffae00 15%,
+        #ffff00 30%,
+        #00ff99 45%,
+        #00d5ff 60%,
+        #005dff 75%,
+        #a000ff 90%,
+        #ff0066 100%
+    );
+    background-size:300% auto;
+    -webkit-background-clip:text;
+    background-clip:text;
+    animation:holoShift 5s linear infinite;
+    filter:drop-shadow(0 0 6px rgba(255,255,255,.4));
+}
+.hologram-text::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+    linear-gradient(
+        120deg,
+        transparent 0%,
+        rgba(255,255,255,.9) 45%,
+        transparent 55%
+    );
+    background-size:250% 100%;
+    animation:holoLight 2.8s linear infinite;
+    mix-blend-mode:screen;
+    pointer-events:none;
+}
+@keyframes holoShift{
+    from{
+        background-position:0%;
+    }
+    to{
+        background-position:300%;
+    }
+}
+@keyframes holoLight{
+    from{
+        background-position:-250%;
+    }
+    to{
+        background-position:250%;
+    }
+}
 /*
 .category-icon{
     width: 320px; atau 100%;
