@@ -5,7 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>⚽ Galeri Karya|SMKN 1 Sanden</title>
 
-<!-- Font -->
+<!-- FAVICON -->
+<link rel="icon" type="images/favicon.png" sizes="32x32" href="images/favicon-32.png">
+<link rel="icon" type="images/favicon.png" sizes="16x16" href="images/favicon-16.png">
+<link rel="apple-touch-icon" href="images/favicon.png">
+
+	<!-- Font -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
 
@@ -402,11 +407,35 @@ Sebenarnya web ini adalah game yang berisi kumpulan hasil karya Murid Siswa-sisw
       <label class="flex items-center gap-3 text-sm cursor-pointer"><input type="checkbox" id="reg-consent" class="accent-blue-600"><span>Saya setuju karya saya dipublikasikan di galeri ini</span></label>
       <button type="submit" class="w-full py-3 rounded-xl font-semibold btn-primary">Daftar &amp; Dapatkan Kode Akses</button>
     </form>
+	  
+<div id="reg-result" class="hidden mt-5 p-5 rounded-2xl text-center" style="background:var(--bg)">
+    <p class="text-sm mb-1" style="color:var(--muted)">
+        Kode Akses Anda:
+    </p>
+    <p id="reg-code"  class="text-4xl font-bold tracking-widest"  style="color:var(--accent)">
+    </p>
+    <p class="text-xs mt-2 mb-4" style="color:var(--muted)">
+        Simpan kode ini untuk upload karya. Kode dapat digunakan selamanya.
+    </p>
+    <div class="flex justify-center gap-3 flex-wrap">
+        <button onclick="copyAccessCode()"
+        class="px-4 py-2 rounded-xl bg-orange-500 text-blue text-sm">
+        📋 Copy Kode
+        </button>
+		<button onclick="saveAccessCode()"  class="px-4 py-2 rounded-xl bg-blue-600 text-blue text-sm hover:bg-blue-700">
+            💾 Simpan Kode
+        </button>
+        <button onclick="sendAccessCodeWA()" class="px-4 py-2 rounded-xl bg-green-600 text-blue text-sm hover:bg-green-700">
+            📱 Kirim ke WhatsApp
+        </button>
+    </div>
+</div>	  
+<!--	  
     <div id="reg-result" class="hidden mt-5 p-5 rounded-2xl text-center" style="background:var(--bg)">
       <p class="text-sm mb-1" style="color:var(--muted)">Kode Akses Anda:</p>
       <p id="reg-code" class="text-4xl font-bold tracking-widest" style="color:var(--accent)"></p>
       <p class="text-xs mt-2" style="color:var(--muted)">Simpan kode ini untuk upload karya. Kode bisa digunakan selamanya. Hubungi Admin jika Lupa.</p>
-    </div>
+    </div> -->
   </div>
 </div>
 
@@ -639,19 +668,19 @@ Sebenarnya web ini adalah game yang berisi kumpulan hasil karya Murid Siswa-sisw
 <label class="flex items-center gap-3 text-xs cursor-pointer">
   <input required type="checkbox" class="accent-blue-600">
   <span class="text-[5px]">Saya setuju bahwa setiap karya yang diunggah ke Portofolio Hasil Karya Belajar harus memenuhi ketentuan berikut:
-1. Merupakan karya asli yang dibuat oleh saya dan tidak melanggar hak cipta.
-2. Judul karya diatas jelas dan sesuai dengan isi atau proyek yang dibuat.
-3. File dapat dibuka dan tidak rusak (tidak corrupt).
-4. Menggunakan format file yang umum, sesuai yang tercantum dalam pilihan.
-5. Isi karya lengkap, meliputi hasil akhir, dokumentasi, atau sumber pendukung yang diperlukan.
-6. Deskripsi karya berisi tujuan, proses pembuatan, teknologi/aplikasi yang digunakan, serta hasil yang diperoleh.
-7. Mencantumkan identitas pembuat, minimal: Nama, Kelas, Jurusan dan logo dalam karya yang dibuat.
-8. Media pendukung (gambar, video, audio) memiliki kualitas yang jelas sehingga mudah dipahami.
-9. Tautan eksternal (GitHub, Canva, YouTube, Google Drive, dan sebagainya) harus dapat diakses oleh guru tanpa memerlukan izin tambahan. Alamat Website/URL dapat diakses dengan baik.
-10. Tidak mengandung unsur yang melanggar norma, seperti SARA, pornografi, kekerasan, ujaran kebencian, malware, atau konten ilegal.
-11. Karya yang dipublikasikan diutamakan menggunakan tautan HTTPS yang aktif.
-12. Sebelum mengunggah, pastikan file telah diperiksa kembali agar tidak terdapat kesalahan penulisan, data yang tidak lengkap, maupun file yang tidak sesuai.
-13. Tunduk dan patuh terhadap ketentuan yang berlaku.</span></label>
+<p></p>1. Merupakan karya asli yang dibuat oleh saya dan tidak melanggar hak cipta.
+<p></p>2. Judul karya diatas jelas dan sesuai dengan isi atau proyek yang dibuat.
+<p></p>3. File dapat dibuka dan tidak rusak (tidak corrupt).
+<p></p>4. Menggunakan format file yang umum, sesuai yang tercantum dalam pilihan.
+<p></p>5. Isi karya lengkap, meliputi hasil akhir, dokumentasi, atau sumber pendukung yang diperlukan.
+<p></p>6. Deskripsi karya berisi tujuan, proses pembuatan, teknologi/aplikasi yang digunakan, serta hasil yang diperoleh.
+<p></p>7. Mencantumkan identitas pembuat, minimal: Nama, Kelas, Jurusan dan logo dalam karya yang dibuat.
+<p></p>8. Media pendukung (gambar, video, audio) memiliki kualitas yang jelas sehingga mudah dipahami.
+<p></p>9. Tautan eksternal (GitHub, Canva, YouTube, Google Drive, dan sebagainya) harus dapat diakses oleh guru tanpa memerlukan izin tambahan. 
+<p></p>10. Tidak mengandung unsur yang melanggar norma, seperti SARA, pornografi, kekerasan, ujaran kebencian, malware, atau konten ilegal.
+<p></p>11. Karya yang dipublikasikan diutamakan menggunakan tautan HTTPS yang aman & aktif. Alamat Website/URL dapat diakses dengan baik. Jika tidak sesuai, server akan menghapus otomatis apabila tidak aman & tidak aktif dalam 1 x 24 jam.
+<p></p>12. Sebelum mengunggah, pastikan file telah diperiksa kembali agar tidak terdapat kesalahan penulisan, data yang tidak lengkap, maupun file yang tidak sesuai.
+<p></p>13. Tunduk dan patuh terhadap ketentuan yang berlaku.</span></label>
         <label class="flex items-center gap-3 text-sm cursor-pointer"><input type="checkbox" id="up-quiz" class="accent-blue-600"><span>Ikuti Quiz untuk Sertifikat Skill Passport ⭐</span></label>
         <button type="submit" class="w-full py-3 rounded-xl font-semibold btn-primary" style="background:#10b981">Upload Karya</button>
       </form>
@@ -686,8 +715,8 @@ Sebenarnya web ini adalah game yang berisi kumpulan hasil karya Murid Siswa-sisw
 
 <div class="text-sm leading-relaxed" style="color:var(--muted)">
     <ul class="help-list">
-        <li>📝 <strong>Daftar</strong> – Klik ikon <strong>Daftar</strong> untuk mendapatkan <strong>Kode Akses</strong>, copy code tersebut!.</li>
-        <li>🔑 <strong>Upload Karya</strong> – Gunakan <strong>Kode Akses</strong> untuk mengunggah karya. Selain link Karya, siapkan link poster versi landscape. Link poster usahakan versi gitHub bentuk raw (contoh: https://raw.githubusercontent.com/.../tess.png</li>
+        <li>📝 <strong>Daftar</strong> – Klik ikon <strong>Daftar</strong> untuk mendapatkan <strong>Kode Akses</strong>, amankan code tersebut!.</li>
+        <li>🔑 <strong>Upload Karya</strong> – Gunakan <strong>Kode Akses</strong> untuk mengunggah karya. Selain <strong>link Karya</strong>, siapkan link poster versi <strong>landscape</strong>. Link poster usahakan versi <strong>gitHub</strong> bentuk raw (contoh: https://raw.githubusercontent.com/.../poster.png) atau upload ke https://id.<strong>imgbb</strong>.com/ kemudian paste hasilnya ke portofolio (contoh: https://i.ibb.co/abcd123/poster.png) atau upload ke https://<strong>cloudinary</strong>.com/ (https://res.cloudinary.com/xxxxx/image/upload/poster.png) dan hasilnya di paste ke portofolio</li>
         <li>🎓 <strong>Quiz</strong> – Ikuti <strong>Quiz</strong> untuk memperoleh <strong>Sertifikat Skill Passport</strong>.</li>
         <li>🌐 <strong>Publikasi</strong> – Setelah disubmit, karya akan tampil di <strong>Galeri Publik bagian terkini dan paling bawah</strong>.</li>
         <li>🏅 <strong>Sistem Pangkat</strong> – Klik <strong>Lencana</strong> untuk melihat sistem pangkat.</li>
@@ -796,7 +825,7 @@ Sebenarnya web ini adalah game yang berisi kumpulan hasil karya Murid Siswa-sisw
  Jl. Samas No.KM. 11, Ngemplak, Srigading, Kecamatan Sanden, Kabupaten Bantul, Daerah Istimewa Yogyakarta. https://smkn1sanden.sch.id/
 	 </div>
 	  <p>𝓤𝓷𝓰𝓰𝓾𝓵, 𝓑𝓮𝓻𝓴𝓪𝓻𝓪𝓴𝓽𝓮𝓻, 𝓑𝓮𝓻𝓽𝓮𝓴𝓷𝓸𝓵𝓸𝓰𝓲</p>
-	  Menyediakan pendidikan vokasi berkualitas untuk menciptakan generasi siap kerja dan berwirausaha.
+	  𝑴𝒆𝒏𝒚𝒆𝒅𝒊𝒂𝒌𝒂𝒏 𝒑𝒆𝒏𝒅𝒊𝒅𝒊𝒌𝒂𝒏 𝒗𝒐𝒌𝒂𝒔𝒊 𝒃𝒆𝒓𝒌𝒖𝒂𝒍𝒊𝒕𝒂𝒔 𝒖𝒏𝒕𝒖𝒌 𝒎𝒆𝒏𝒄𝒊𝒑𝒕𝒂𝒌𝒂𝒏 𝒈𝒆𝒏𝒆𝒓𝒂𝒔𝒊 𝒔𝒊𝒂𝒑 𝒌𝒆𝒓𝒋𝒂 𝒅𝒂𝒏 𝒃𝒆𝒓𝒘𝒊𝒓𝒂𝒖𝒔𝒂𝒉𝒂.
   </p>
 </div>
 									
