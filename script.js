@@ -813,28 +813,6 @@ muteBtn.innerHTML = music.muted ? "🔇" : "🔊";
 });
 
 // ======================================================
-// BACK TO TOP
-// ======================================================
-document.addEventListener("DOMContentLoaded",()=>{
-const btn=document.getElementById("backToTop");
-window.addEventListener("scroll",()=>{
-if(window.pageYOffset>350){
-btn.classList.remove("hide");
-btn.classList.add("show");
-}else{
-btn.classList.remove("show");
-btn.classList.add("hide");
-}
-});
-btn.addEventListener("click",()=>{
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
-});
-});
-
-// ======================================================
 // QR CODE
 // ======================================================
 function showHelp() {
