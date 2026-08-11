@@ -813,34 +813,6 @@ muteBtn.innerHTML = music.muted ? "🔇" : "🔊";
 });
 
 // ======================================================
-// QR CODE
-// ======================================================
-function showHelp() {
-    const modal = document.getElementById('helpImageModal');
-    if (!modal) return;
-    modal.classList.add('show');
-    // Refresh icon Lucide
-    if (typeof lucide !== 'undefined') {
-        lucide.createIcons();
-    }
-}
-function closeHelp(event) {
-    // Jika yang diklik adalah gambar/container,
-    // jangan tutup modal
-    if (
-        event &&
-        event.target.closest('.help-image-container') &&
-        !event.target.closest('.help-close')
-    ) {
-        return;
-    }
-    const modal = document.getElementById('helpImageModal');
-    if (modal) {
-        modal.classList.remove('show');
-    }
-}
-
-// ======================================================
 // Floating Radial Menu 5 tombol (Help, Mode, Filter, Login, Upload)
 // ======================================================
 
