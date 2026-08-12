@@ -815,24 +815,67 @@ muteBtn.innerHTML = music.muted ? "🔇" : "🔊";
 // ======================================================
 // BACK TO TOP
 // ======================================================
-document.addEventListener("DOMContentLoaded",()=>{
-const btn=document.getElementById("backToTop");
-window.addEventListener("scroll",()=>{
-if(window.pageYOffset>350){
-btn.classList.remove("hide");
-btn.classList.add("show");
-}else{
-btn.classList.remove("show");
-btn.classList.add("hide");
-}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const btn = document.getElementById("backToTop");
+
+    if (!btn) {
+        console.warn("Back to Top tidak ditemukan");
+        return;
+    }
+
+    const hero = document.querySelector(".hero");
+
+    function updateBackToTop() {
+
+        if (window.scrollY > 300) {
+
+            btn.style.opacity = "1";
+            btn.style.visibility = "visible";
+            btn.style.pointerEvents = "auto";
+
+        } else {
+
+            btn.style.opacity = "0";
+            btn.style.visibility = "hidden";
+            btn.style.pointerEvents = "none";
+
+        }
+
+    }
+
+    window.addEventListener("scroll", updateBackToTop, {
+        passive: true
+    });
+
+    updateBackToTop();
+
+    btn.addEventListener("click", function (e) {
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (hero) {
+
+            hero.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+        } else {
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+
+    });
+
 });
-btn.addEventListener("click",()=>{
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
-});
-});
+</script>
 
 
 // ======================================================
