@@ -18,6 +18,63 @@ body{margin:0;font-family:'Libre Franklin',sans-serif;background:var(--bg);color
     border-radius:12px 12px 0 0;
 }
 
+
+/* HOLOGRAM TEXT */
+.hologram-text{
+    position:relative;
+    display:inline-block;
+    font-weight:900;
+    color:transparent;
+    background:
+    linear-gradient(
+        90deg,
+        #ff0066 0%,
+        #ffae00 15%,
+        #ffff00 30%,
+        #00ff99 45%,
+        #00d5ff 60%,
+        #005dff 75%,
+        #a000ff 90%,
+        #ff0066 100%
+    );
+    background-size:300% auto;
+    -webkit-background-clip:text;
+    background-clip:text;
+    animation:holoShift 18s linear infinite;
+    filter:drop-shadow(0 0 6px rgba(255,255,255,.4));
+}
+.hologram-text::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:
+    linear-gradient(
+        120deg,
+        transparent 0%,
+        rgba(255,255,255,.3) 45%,
+        transparent 55%
+    );
+    background-size:250% 100%;
+    animation:holoLight 6s linear infinite;
+    mix-blend-mode:screen;
+    pointer-events:none;
+}
+@keyframes holoShift{
+    from{
+        background-position:0%;
+    }
+    to{
+        background-position:300%;
+    }
+}
+@keyframes holoLight{
+    from{
+        background-position:-250%;
+    }
+    to{
+        background-position:250%;
+    }
+}
 /*
 .category-icon{
     width: 320px; atau 100%;
@@ -38,6 +95,8 @@ Anda juga bisa mengubah ukurannya:
 .help-list{list-style:none;padding:0;margin:0;}
 .help-list li{padding:10px 0;border-bottom:1px solid rgba(255,255,255,.08);line-height:1.6;}
 .help-list li:last-child{border-bottom:none;}
+
+
 
 
 .hero-gradient{background:linear-gradient(135deg,rgba(37,99,235,0.15),rgba(245,158,11,0.10))}.dark .hero-gradient{background:linear-gradient(135deg,rgba(96,165,250,0.18),rgba(251,191,36,0.08))}
@@ -136,6 +195,17 @@ Anda juga bisa mengubah ukurannya:
     }
 }
 
+/* TULISAN SUPER KECIL ex: Tag line*/
+.mini-text{
+    font-size:4px;          /* super kecil */
+    line-height:1.2;
+    cursor:pointer;
+    transition:0.3s;
+    transform-origin:top left;
+}
+.mini-text.zoom{
+    font-size:16px;         /* ukuran normal */
+}
 
 /* utilities dasar yang dipakai markup */
 .fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}
@@ -266,8 +336,8 @@ transform:translateY(60px);
     position:fixed;
     bottom:20px;
     right: 20px;
-    width:42px;
-    height:42px;
+    width:60px;
+    height:60px;
     border:none;
     border-radius:50%;
 background: rgba(10,14,26,.45);
