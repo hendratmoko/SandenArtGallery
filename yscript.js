@@ -516,6 +516,7 @@ function getCategoryIcon(cat){
     return {
         Video: BASE+"Video.png",
         PDF: BASE+"PDF.png",
+        AI: BASE+"AI.png",
         PPTX: BASE+"PPTX.png",
         Word: BASE+"Word.png",
         Excel: BASE+"Excel.png",
@@ -574,6 +575,66 @@ async function handleRegister(e) {
     document.getElementById('register-form').classList.add('hidden');
   }
 }
+
+// fungsi setelah dapat kode akses
+function saveAccessCode() {
+    const code = document.getElementById("reg-code").innerText;
+    const text =
+`KODE AKSES PORTOFOLIO
+Kode Akses :
+${code}
+Simpan kode ini dengan baik.
+SMK NEGERI 1 SANDEN`;
+    const blob = new Blob([text], {type:"text/plain"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "Kode_Akses_Portofolio.txt";
+    a.click();
+}
+//copas kode akses
+async function copyAccessCode(){
+    const code = document.getElementById("reg-code").innerText;
+    const text =
+`KODE AKSES PORTOFOLIO DIGITAL
+Kode Akses : ${code}
+Simpan kode ini dengan baik.
+SMK NEGERI 1 SANDEN`;
+    try{
+        await navigator.clipboard.writeText(text);
+        alert("✅ Kode Akses berhasil disalin.\nSilakan paste (Tempel) ke aplikasi yang diinginkan.");
+    }catch(e){
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+        alert("✅ Kode Akses berhasil disalin.");
+    }
+}
+//kirim ke 💌✍ *WhatsApp*
+function sendAccessCodeWA(){
+    const code = document.getElementById("reg-code").innerText;
+    let phone = document.getElementById("reg-contact").value;
+    phone = phone.replace(/\D/g,'');
+    if(phone.startsWith("0")){
+        phone = "62" + phone.substring(1);
+    }
+    const pesan =
+`Halo,
+Registrasi Portofolio Digital berhasil.
+Kode Akses Anda:
+
+${code}
+
+Simpan kode ini dengan baik.
+Kode digunakan untuk Upload Karya.
+
+SMK NEGERI 1 SANDEN`;
+    const url =
+"https://wa.me/" + phone + "?text=" + encodeURIComponent(pesan);
+    window.open(url,"_blank");
+  }
 
 function handleUploadLogin(e) {
   e.preventDefault();
@@ -649,7 +710,18 @@ function generateQuizQuestions() {
     { q: 'Codec audio yang paling umum digunakan?', o: ['MP3/AAC', 'BMP', 'TIFF', 'RAW'], a: 0 },
     { q: 'Prinsip KISS dalam desain berarti?', o: ['Keep It Simple, Stupid', 'Keep It Super Smart', 'Keep In Same Style', 'Kill Irrelevant Stupid Stuff'], a: 0 },
     { q: 'Apa itu responsive design?', o: ['Desain yang menyesuaikan layar', 'Desain yang cepat', 'Desain yang mahal', 'Desain 3D'], a: 0 },
-    { q: 'Version control berguna untuk?', o: ['Melacak perubahan kode/file', 'Mempercepat internet', 'Menghapus virus', 'Membuat backup otomatis'], a: 0 }
+    { q: 'Version control berguna untuk?', o: ['Melacak perubahan kode/file', 'Mempercepat internet', 'Menghapus virus', 'Membuat backup otomatis'], a: 0 },
+{ q: 'Apa fungsi utama portofolio digital?', o: ['Menampilkan hasil karya dan kompetensi', 'Menghapus file lama', 'Mengganti sistem operasi', 'Mempercepat internet'], a: 0 },
+{ q: 'Format gambar yang paling cocok untuk foto adalah?', o: ['JPG', 'PNG', 'SVG', 'GIF'], a: 0 },
+{ q: 'Apa kepanjangan dari HTML?', o: ['HyperText Markup Language', 'High Transfer Machine Language', 'Hyper Tool Machine Link', 'Home Text Markup List'], a: 0 },
+{ q: 'Bahasa pemrograman yang digunakan untuk membuat halaman web menjadi interaktif adalah?', o: ['JavaScript', 'HTML', 'CSS', 'SQL'], a: 0 },
+{ q: 'Fungsi CSS dalam pengembangan web adalah?', o: ['Mengatur tampilan dan desain halaman', 'Menyimpan data', 'Menghubungkan database', 'Mengelola jaringan'], a: 0 },
+{ q: 'Platform yang umum digunakan untuk menyimpan kode proyek secara online adalah?', o: ['GitHub', 'Microsoft Excel', 'Adobe Photoshop', 'Canva'], a: 0 },
+{ q: 'Apa tujuan memberikan nama file yang jelas pada hasil karya?', o: ['Memudahkan pencarian dan pengelolaan', 'Membuat ukuran file lebih kecil', 'Menambah kualitas gambar', 'Mempercepat upload internet'], a: 0 },
+{ q: 'Apa manfaat menambahkan deskripsi pada portofolio karya?', o: ['Menjelaskan tujuan dan proses pembuatan', 'Mengurangi ukuran file', 'Mengubah format file', 'Menghapus metadata'], a: 0 },
+{ q: 'Lisensi yang memungkinkan karya digunakan kembali dengan syarat tertentu disebut?', o: ['Creative Commons', 'Windows License', 'OEM', 'GPL Office'], a: 0 },
+{ q: 'Sebelum mempublikasikan karya digital, hal yang paling penting dilakukan adalah?', o: ['Memeriksa kembali isi dan kualitas karya', 'Menghapus semua file', 'Mengganti nama komputer', 'Mematikan internet'], a: 0 }
+  
   ].sort(() => Math.random() - 0.5);
 }
 
@@ -743,24 +815,67 @@ muteBtn.innerHTML = music.muted ? "🔇" : "🔊";
 // ======================================================
 // BACK TO TOP
 // ======================================================
-document.addEventListener("DOMContentLoaded",()=>{
-const btn=document.getElementById("backToTop");
-window.addEventListener("scroll",()=>{
-if(window.pageYOffset>350){
-btn.classList.remove("hide");
-btn.classList.add("show");
-}else{
-btn.classList.remove("show");
-btn.classList.add("hide");
-}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const btn = document.getElementById("backToTop");
+
+    if (!btn) {
+        console.warn("Back to Top tidak ditemukan");
+        return;
+    }
+
+    const hero = document.querySelector(".hero");
+
+    function updateBackToTop() {
+
+        if (window.scrollY > 300) {
+
+            btn.style.opacity = "1";
+            btn.style.visibility = "visible";
+            btn.style.pointerEvents = "auto";
+
+        } else {
+
+            btn.style.opacity = "0";
+            btn.style.visibility = "hidden";
+            btn.style.pointerEvents = "none";
+
+        }
+
+    }
+
+    window.addEventListener("scroll", updateBackToTop, {
+        passive: true
+    });
+
+    updateBackToTop();
+
+    btn.addEventListener("click", function (e) {
+
+        e.preventDefault();
+        e.stopPropagation();
+
+        if (hero) {
+
+            hero.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+
+        } else {
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+        }
+
+    });
+
 });
-btn.addEventListener("click",()=>{
-window.scrollTo({
-top:0,
-behavior:"smooth"
-});
-});
-});
+</script>
 
 
 // ======================================================
