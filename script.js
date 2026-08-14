@@ -441,7 +441,6 @@ function renderGallery() {
       badge.classList.add(rank.cls, rank.textCls);
       badge.textContent = rank.label;
     }
-
     /* ganti karu jadi poster*/
 const media = card.querySelector('.card-media');
 const link = w.work_link || '';
