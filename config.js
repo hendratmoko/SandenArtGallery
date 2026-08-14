@@ -16,7 +16,7 @@ window.APP_CONFIG = {
   // Kalau true: saat GAS_URL belum diisi / fetch ke GAS gagal,
   // aplikasi otomatis memuat data contoh dari data.json supaya
   // UI tetap bisa dicoba tanpa backend aktif.
-  USE_LOCAL_FALLBACK: true,
+  USE_LOCAL_FALLBACK: false,
 
   // Path file data contoh (dipakai kalau USE_LOCAL_FALLBACK = true)
   LOCAL_DATA_PATH: 'data.json'
