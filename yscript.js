@@ -441,7 +441,6 @@ function renderGallery() {
       badge.classList.add(rank.cls, rank.textCls);
       badge.textContent = rank.label;
     }
-
     /* ganti karu jadi poster*/
 const media = card.querySelector('.card-media');
 const link = w.work_link || '';
@@ -815,67 +814,45 @@ muteBtn.innerHTML = music.muted ? "🔇" : "🔊";
 // ======================================================
 // BACK TO TOP
 // ======================================================
-<script>
+
 document.addEventListener("DOMContentLoaded", function () {
-
     const btn = document.getElementById("backToTop");
-
     if (!btn) {
         console.warn("Back to Top tidak ditemukan");
         return;
     }
-
     const hero = document.querySelector(".hero");
-
     function updateBackToTop() {
-
         if (window.scrollY > 300) {
-
             btn.style.opacity = "1";
             btn.style.visibility = "visible";
             btn.style.pointerEvents = "auto";
-
         } else {
-
             btn.style.opacity = "0";
             btn.style.visibility = "hidden";
             btn.style.pointerEvents = "none";
-
         }
-
     }
-
     window.addEventListener("scroll", updateBackToTop, {
         passive: true
     });
-
     updateBackToTop();
-
     btn.addEventListener("click", function (e) {
-
         e.preventDefault();
         e.stopPropagation();
-
         if (hero) {
-
             hero.scrollIntoView({
                 behavior: "smooth",
                 block: "start"
             });
-
         } else {
-
             window.scrollTo({
                 top: 0,
                 behavior: "smooth"
             });
-
         }
-
     });
-
 });
-</script>
 
 
 // ======================================================
