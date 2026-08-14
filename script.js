@@ -815,7 +815,7 @@ muteBtn.innerHTML = music.muted ? "🔇" : "🔊";
 // ======================================================
 // BACK TO TOP
 // ======================================================
-<script>
+
 document.addEventListener("DOMContentLoaded", function () {
 
     const btn = document.getElementById("backToTop");
