@@ -815,7 +815,7 @@ muteBtn.innerHTML = music.muted ? "🔇" : "🔊";
 // ======================================================
 // BACK TO TOP
 // ======================================================
-<script>
+
 document.addEventListener("DOMContentLoaded", function () {
     const btn = document.getElementById("backToTop");
     if (!btn) {
@@ -854,7 +854,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-</script>
+
 
 // ======================================================
 // Floating Radial Menu 5 tombol (Help, Mode, Filter, Login, Upload)
