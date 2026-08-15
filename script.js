@@ -70,7 +70,7 @@ window.dataSdk = (function () {
     try {
       const data = await fetchFromLocal();
       usingFallback = true;
-      showOfflineBanner(true, '⚠️ Mode demo: menampilkan data.json (belum tersambung ke Google Sheet)');
+      showOfflineBanner(true, '⚠️ Mode demo: menampilkan data template (belum tersambung ke database Lybra)');
       listener.onDataChanged(data);
       showLoading(false);
       return { isOk: true };
@@ -83,8 +83,8 @@ window.dataSdk = (function () {
 
   async function create(record) {
     if (usingFallback || !isConfigured()) {
-      alert('Belum tersambung ke Google Sheet (GAS_URL belum aktif). Data ini tidak akan tersimpan permanen — cek config.js.');
-      return { isOk: false, error: 'GAS belum dikonfigurasi' };
+      alert('Belum tersambung ke Lybra Database (Backend URL belum aktif). Data ini tidak akan tersimpan permanen — cek configurasi.');
+      return { isOk: false, error: 'Backend belum dikonfigurasi' };
     }
     try {
       showLoading(true);
