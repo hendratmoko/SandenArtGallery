@@ -22,5 +22,5 @@ window.APP_CONFIG = {
   LOCAL_DATA_PATH: 'data.json'
 };
 //default icon kartu
-const DEFAULT_WORK_IMAGE =
+window.DEFAULT_WORK_IMAGE =
 "https://hendratmoko.github.io/SandenArtGallery/images/default.png";
