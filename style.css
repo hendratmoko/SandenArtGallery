@@ -12,12 +12,26 @@ body{margin:0;font-family:'Libre Franklin',sans-serif;background:var(--bg);color
 
 .category-icon{
     width:100%;
-    height: 120%;
+    height: 100%;
     aspect-ratio:16/9;
     object-fit:contain;
     border-radius:12px 12px 0 0;
 }
-
+/*
+.category-icon{
+    width: 320px; atau 100%;
+    height: 290px;
+    object-fit: cover; atau contain;
+    display: block;
+    margin: 0 auto;
+}
+Anda juga bisa mengubah ukurannya:
+32px → kecil
+48px → sedang
+64px → seperti icon aplikasi
+96px → besar
+100/80
+*/
 
 /* HOLOGRAM TEXT */
 .hologram-text{
@@ -75,22 +89,7 @@ body{margin:0;font-family:'Libre Franklin',sans-serif;background:var(--bg);color
         background-position:250%;
     }
 }
-/*
-.category-icon{
-    width: 320px; atau 100%;
-    height: 290px;
-    object-fit: cover; atau contain;
-    display: block;
-    margin: 0 auto;
-}
 
-Anda juga bisa mengubah ukurannya:
-32px → kecil
-48px → sedang
-64px → seperti icon aplikasi
-96px → besar
-100/80
-*/
 /* HELP 
 .help-list{list-style:none;padding:0;margin:0;}
 .help-list li{padding:10px 0;border-bottom:1px solid rgba(255,255,255,.08);line-height:1.6;}
