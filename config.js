@@ -23,7 +23,7 @@ window.APP_CONFIG = {
 };
 //default icon kartu
 window.DEFAULT_WORK_IMAGE =
-"https://hendratmoko.github.io/SandenArtGallery/images/default.png";
+"https://hendratmoko.github.io/SandenArtGallery/Avatar/default.png";
 
 /**
  * ============================================================
