@@ -404,6 +404,15 @@ Sebenarnya web ini adalah game yang berisi kumpulan hasil karya Murid Siswa-sisw
       </div>
 
       <div><label class="text-sm font-medium block mb-1.5" for="reg-contact">No. HP (valid)</label><input id="reg-contact" required class="input-field w-full rounded-xl px-4 py-2.5 text-sm"></div>
+      <div>
+        <label class="text-sm font-medium block mb-1.5">Pilih Avatar</label>
+        <div class="avatar-preview-row">
+          <img id="reg-avatar-preview" class="avatar-preview-img" alt="Avatar terpilih">
+          <span id="reg-avatar-label" class="text-xs" style="color:var(--muted)">Belum memilih avatar (opsional)</span>
+        </div>
+        <div id="avatar-picker" class="avatar-picker"></div>
+        <input type="hidden" id="reg-avatar" value="">
+      </div>
       <label class="flex items-center gap-3 text-sm cursor-pointer"><input type="checkbox" id="reg-consent" class="accent-blue-600"><span>Saya setuju karya saya dipublikasikan di galeri ini</span></label>
       <button type="submit" class="w-full py-3 rounded-xl font-semibold btn-primary">Daftar &amp; Dapatkan Kode Akses</button>
     </form>
@@ -771,11 +780,13 @@ Sebenarnya web ini adalah game yang berisi kumpulan hasil karya Murid Siswa-sisw
         Semakin aktif berkarya dan berkontribusi, semakin banyak pencapaian yang dapat diperoleh.
     </li>
     <li>
-        👤 <strong>Profil Author</strong> – Klik <strong>Nama Author</strong> pada sebuah karya untuk melihat profil dan karya-karya lain dari kontributor tersebut.
+        🧑‍🚀 <strong>Pilih Avatar</strong> – Saat <strong>Registrasi</strong>, pilih salah satu avatar dari galeri avatar yang tersedia. Avatar ini akan tampil di <strong>Profil</strong> Anda.
     </li>
     <li>
-        👆 <strong>Klik Karya</strong> – Klik kartu atau judul <strong>Karya</strong> untuk melihat detail karya secara lebih lengkap.
-        Pada halaman detail, Anda dapat melihat informasi, deskripsi, poster, serta mengakses link karya jika tersedia.
+        👤 <strong>Profil Author</strong> – Klik <strong>Nama Author</strong> pada sebuah karya untuk melihat profil (termasuk avatar) dan karya-karya lain dari kontributor tersebut.
+    </li>
+    <li>
+        👆 <strong>Klik Judul Karya</strong> – Klik <strong>judul</strong> pada sebuah karya untuk membuka jendela detail berisi <strong>deskripsi lengkap</strong>, kategori, kelas, guru pembimbing, dan tautan karya.
     </li>
     <li>
         🔊 <strong>Sound / Musik</strong> – Gunakan tombol <strong>Sound</strong> pada area bawah To The Top untuk mengaktifkan atau menonaktifkan musik/latar suara.
@@ -836,6 +847,14 @@ Sebenarnya web ini adalah game yang berisi kumpulan hasil karya Murid Siswa-sisw
   </div>
 </div>
 
+<!-- Work Detail Modal (muncul saat judul karya diklik) -->
+<div id="modal-detail" class="fixed inset-0 z-50 hidden modal-overlay flex items-center justify-center p-4">
+  <div class="surface-card rounded-3xl w-full max-w-2xl p-7 relative fade-up" style="max-height:90vh;overflow-y:auto">
+    <button onclick="hideModal('detail')" class="absolute top-4 right-4 p-1.5 rounded-full hover:bg-black/10"><i data-lucide="x" style="width:20px;height:20px"></i></button>
+    <div id="detail-content"></div>
+  </div>
+</div>
+
 <template id="card-template">
   <article class="card-hover rounded-2xl overflow-hidden surface-card">
     <div class="aspect-video flex items-center justify-center relative overflow-hidden" style="background:#1e293b">
@@ -845,7 +864,7 @@ Sebenarnya web ini adalah game yang berisi kumpulan hasil karya Murid Siswa-sisw
       </div>
     </div>
     <div class="p-4">
-      <h3 class="font-semibold text-sm truncate card-title"></h3>
+      <h3 class="font-semibold text-sm truncate card-title cursor-pointer hover:underline"></h3>
       <p class="text-xs mt-1 card-author cursor-pointer hover:underline" style="color:var(--muted)"></p>
       <p class="text-xs truncate card-desc mt-1.5" style="color:var(--muted)"></p>
       <div class="flex items-center justify-between mt-3">
