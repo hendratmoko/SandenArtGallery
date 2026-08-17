@@ -1,0 +1,1131 @@
+/* ============================================================
+ *  ADAPTER DATA
+ *  - Mencoba ambil/simpan data lewat Google Apps Script (GAS_URL)
+ *  - Kalau gagal / belum dikonfigurasi & USE_LOCAL_FALLBACK=true,
+ *    otomatis pakai data.json sebagai data contoh (read-only demo)
+ * ============================================================ */
+window.dataSdk = (function () {
+  const CFG = window.APP_CONFIG || {};
+  let listener = null;
+  let usingFallback = false;
+
+  function isConfigured() {
+    return CFG.GAS_URL && CFG.GAS_URL.indexOf('GANTI_DENGAN') !== 0;
+  }
+
+  function showLoading(on) {
+    const el = document.getElementById('loading-banner');
+    if (el) el.classList.toggle('hidden', !on);
+  }
+
+  function showOfflineBanner(on, message) {
+    const el = document.getElementById('offline-banner');
+    if (!el) return;
+    if (message) el.textContent = message;
+    el.classList.toggle('hidden', !on);
+  }
+
+  async function fetchFromGas() {
+  console.log("URL =", CFG.GAS_URL);
+  const res = await fetch(CFG.GAS_URL);
+  console.log("status =", res.status);
+  console.log("ok =", res.ok);
+  const text = await res.text();
+  let json;
+  try {
+    json = JSON.parse(text);
+  } catch (parseErr) {
+    console.error('Respon GAS (GET) bukan JSON:', text.substring(0, 400));
+    throw new Error(
+      'Server GAS tidak mengembalikan JSON yang valid (HTTP ' + res.status + '). ' +
+      'Cek: deployment Apps Script sudah "Anyone" dan sudah versi terbaru.'
+    );
+  }
+  if (!json.isOk)
+      throw new Error(json.error || 'GAS mengembalikan isOk=false');
+  return json.data || [];
+}
+
+  async function fetchFromLocal() {
+    const res = await fetch(CFG.LOCAL_DATA_PATH || 'data.json');
+    if (!res.ok) throw new Error('data.json tidak ditemukan');
+    return await res.json();
+  }
+
+  async function init(handler) {
+    listener = handler;
+    showLoading(true);
+
+    if (isConfigured()) {
+      try {
+        const data = await fetchFromGas();
+        usingFallback = false;
+        showOfflineBanner(false);
+        listener.onDataChanged(data);
+        showLoading(false);
+        return { isOk: true };
+      } catch (err) {
+        console.error('Gagal mengambil data dari GAS:', err);
+        if (!CFG.USE_LOCAL_FALLBACK) {
+          showLoading(false);
+          return { isOk: false, error: err.message };
+        }
+        // lanjut ke fallback di bawah
+      }
+    }
+
+    // Mode fallback (GAS belum dikonfigurasi atau fetch gagal)
+    try {
+      const data = await fetchFromLocal();
+      usingFallback = true;
+      showOfflineBanner(true, '⚠️ Mode demo: menampilkan data template (belum tersambung ke database Lybra)');
+      listener.onDataChanged(data);
+      showLoading(false);
+      return { isOk: true };
+    } catch (err) {
+      showLoading(false);
+      console.error('Gagal memuat data fallback:', err);
+      return { isOk: false, error: err.message };
+    }
+  }
+
+  async function create(record) {
+    if (usingFallback || !isConfigured()) {
+      alert('Belum tersambung ke Lybra Database (Backend URL belum aktif). Data ini tidak akan tersimpan permanen — cek configurasi.');
+      return { isOk: false, error: 'Backend belum dikonfigurasi' };
+    }
+    try {
+      showLoading(true);
+      const res = await fetch(CFG.GAS_URL, {
+        method: 'POST',
+        // text/plain menghindari CORS preflight yang tidak didukung Apps Script
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ action: 'create', record })
+      });
+
+      // Ambil respon sebagai teks dulu, baru coba parse sebagai JSON.
+      // Kalau GAS mengembalikan halaman HTML (mis. karena akses ditolak,
+      // deployment belum "Anyone", atau versi deployment belum diperbarui),
+      // res.json() langsung akan gagal dengan pesan generik yang sulit dipahami.
+      const rawText = await res.text();
+      let json;
+      try {
+        json = JSON.parse(rawText);
+      } catch (parseErr) {
+        console.error('Respon GAS bukan JSON. HTTP status:', res.status, '\nIsi respon (potongan):', rawText.substring(0, 400));
+        throw new Error(
+          'Server GAS tidak mengembalikan JSON yang valid (HTTP ' + res.status + '). ' +
+          'Kemungkinan besar: deployment Apps Script belum di-update (perlu "Manage deployments > Edit > New version") ' +
+          'atau akses deployment bukan "Anyone".'
+        );
+      }
+
+      if (!json.isOk) throw new Error(json.error || 'Server GAS menolak permintaan (isOk=false)');
+
+      // Data berhasil disimpan di spreadsheet. Selanjutnya kita coba refresh
+      // daftar data dari GAS — tapi kalau langkah refresh ini gagal (mis.
+      // koneksi putus sesaat), JANGAN anggap penyimpanan gagal, karena baris
+      // sudah benar-benar tersimpan di GAS.
+      try {
+        const data = await fetchFromGas();
+        usingFallback = false;
+        showOfflineBanner(false);
+        if (listener) listener.onDataChanged(data);
+      } catch (refreshErr) {
+        console.warn('Data tersimpan di GAS, tapi gagal me-refresh daftar terbaru:', refreshErr);
+        if (listener) {
+          const merged = (typeof allData !== 'undefined' && Array.isArray(allData) ? allData : []).concat([record]);
+          listener.onDataChanged(merged);
+        }
+      }
+
+      showLoading(false);
+      return { isOk: true, data: json.data };
+    } catch (err) {
+      showLoading(false);
+      console.error('dataSdk.create error:', err);
+      alert(
+        'Gagal menyimpan data: ' + err.message +
+        '\n\nPeriksa:\n' +
+        '1) GAS_URL di config.js benar & diakhiri "/exec"\n' +
+        '2) Apps Script sudah di-Deploy ulang setelah Code.gs diubah (Manage deployments > Edit ✏️ > New version > Deploy)\n' +
+        '3) Setelan deployment "Who has access" = Anyone\n' +
+        '4) Nama sheet/tab pada spreadsheet sesuai dengan SHEET_NAME di Code.gs\n' +
+        '5) index.html dibuka via http/https, bukan file://'
+      );
+      return { isOk: false, error: err.message };
+    }
+  }
+  return { init, create };
+})();
+
+/* Ambil gambar kartu dari spreadsheet */
+function getWorkImage(item){
+    // Jika ada gambar
+    if(item.gambar &&
+       item.gambar.trim()!==""){
+
+        return item.gambar.trim();
+    }
+  // Jika tidak ada gambar, gunakan icon kategori
+    return getCategoryIcon(item.work_category);
+  //  return DEFAULT_WORK_IMAGE;
+}
+
+/* ============================================================
+ *  LOGIKA GALERI
+ * ============================================================ */
+let allData = [], currentUser = null, quizData = [], quizIndex = 0, quizCorrect = 0, pendingWork = null, lang = 'id', currentTab = 'terbaru';
+
+const i18n = {
+  id: { empty: 'Belum ada karya. Jadilah yang pertama mengupload!', search: 'Cari nama/judul...' },
+  en: { empty: 'No works yet. Be the first to upload!', search: 'Search name/title...' }
+};
+
+function updateClock() {
+  const n = new Date();
+  document.getElementById('clock').textContent = n.toLocaleDateString('id-ID', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }) + ' • ' + n.toLocaleTimeString('id-ID');
+}
+setInterval(updateClock, 1000);
+updateClock();
+
+function toggleTheme() {
+  document.body.classList.toggle('dark');
+  localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+}
+if (localStorage.getItem('theme') !== 'light') document.body.classList.add('dark');
+
+function toggleLang() {
+  lang = lang === 'id' ? 'en' : 'id';
+  document.getElementById('lang-btn').textContent = lang.toUpperCase();
+  document.getElementById('search-input').placeholder = i18n[lang].search;
+  renderGallery();
+  renderTabs();
+}
+
+function showModal(n) { document.getElementById('modal-' + n).classList.remove('hidden'); }
+function hideModal(n) { document.getElementById('modal-' + n).classList.add('hidden'); }
+function showHelp() { showModal('help'); }
+
+/* ============================================================
+ *  AVATAR PICKER
+ * ============================================================ */
+function avatarUrl(code) {
+  if (!code) return '';
+  const base = window.AVATAR_BASE || '';
+  const ext = window.AVATAR_EXT || '.png';
+  return base + code + ext;
+}
+
+function buildAvatarPicker() {
+  const wrap = document.getElementById('avatar-picker');
+  if (!wrap) return;
+  const count = window.AVATAR_COUNT || 22;
+  wrap.innerHTML = '';
+  for (let i = 1; i <= count; i++) {
+    const code = String(i).padStart(2, '0');
+    const opt = document.createElement('div');
+    opt.className = 'avatar-option';
+    opt.dataset.code = code;
+    opt.innerHTML = `<img src="${avatarUrl(code)}" alt="Avatar ${code}" loading="lazy" onerror="this.closest('.avatar-option').style.display='none'">`;
+    opt.onclick = () => selectAvatar(code);
+    wrap.appendChild(opt);
+  }
+}
+
+function selectAvatar(code) {
+  const hidden = document.getElementById('reg-avatar');
+  const preview = document.getElementById('reg-avatar-preview');
+  const label = document.getElementById('reg-avatar-label');
+  if (hidden) hidden.value = code;
+  if (preview) { preview.src = avatarUrl(code); preview.classList.add('show'); }
+  if (label) label.textContent = 'Avatar ' + code + ' terpilih';
+  document.querySelectorAll('#avatar-picker .avatar-option').forEach(el => {
+    el.classList.toggle('selected', el.dataset.code === code);
+  });
+}
+
+function resetAvatarPicker() {
+  const hidden = document.getElementById('reg-avatar');
+  const preview = document.getElementById('reg-avatar-preview');
+  const label = document.getElementById('reg-avatar-label');
+  if (hidden) hidden.value = '';
+  if (preview) { preview.src = ''; preview.classList.remove('show'); }
+  if (label) label.textContent = 'Belum memilih avatar (opsional)';
+  document.querySelectorAll('#avatar-picker .avatar-option').forEach(el => el.classList.remove('selected'));
+}
+document.addEventListener('DOMContentLoaded', buildAvatarPicker);
+
+function generateCode(name) {
+  const l = name.replace(/[^a-zA-Z]/g, '').substring(0, 3).toUpperCase() || 'USR';
+  return l + String(Math.floor(Math.random() * 900) + 100);
+}
+
+function getRank(score) {
+  if (score >= 9) return { label: 'Diamond', cls: 'rank-diamond', textCls: 'text-gray-800' };
+  if (score >= 6) return { label: 'Gold', cls: 'rank-gold', textCls: 'text-white' };
+  if (score >= 3) return { label: 'Silver', cls: 'rank-silver', textCls: 'text-white' };
+  if (score >= 1) return { label: 'Bronze', cls: 'rank-bronze', textCls: 'text-white' };
+  return null;
+}
+
+const dataHandler = {onDataChanged(data) {
+        // Menyimpan seluruh data
+        allData = data;
+        /* ===========================
+           DASHBOARD STATISTIK
+        =========================== */
+        const totalKarya = allData.length;
+        const totalGuru =allData.filter(x => x.status === "Guru").length;
+        const totalSiswa =allData.filter(x => x.status === "Siswa").length;
+        const totalMateri =allData.filter(x => x.status === "Guru").length;
+        const totalKaryaSiswa =allData.filter(x => x.status === "Siswa").length;
+        const totalKontributor =new Set(allData.map(x => x.name)).size;
+        const totalBintang =allData.reduce((a, b) => a + Number(b.stars || 0), 0);
+        const totalSertifikat =allData.filter(x => x.certified === true).length;
+        const rataQuiz =allData.length
+                ? (
+                    allData.reduce((a, b) => a + Number(b.quiz_score || 0), 0)
+                    / allData.length
+                  ).toFixed(1)
+                : 0;
+        document.getElementById("totalKarya").textContent = totalKarya;
+        document.getElementById("totalGuru").textContent = totalGuru;
+        document.getElementById("totalSiswa").textContent = totalSiswa;
+        document.getElementById("totalMateri").textContent = totalMateri;
+        document.getElementById("totalKaryaSiswa").textContent = totalKaryaSiswa;
+        document.getElementById("totalKontributor").textContent = totalKontributor;
+        // Jika nanti ditambahkan di HTML
+        if(document.getElementById("totalBintang"))
+            document.getElementById("totalBintang").textContent = totalBintang;
+        if(document.getElementById("totalSertifikat"))
+            document.getElementById("totalSertifikat").textContent = totalSertifikat;
+        if(document.getElementById("rataQuiz"))
+            document.getElementById("rataQuiz").textContent = rataQuiz;
+        /* ===========================
+           RENDER WEBSITE
+        =========================== */
+        renderGallery();
+        renderChart();
+        renderTabs();}};
+
+async function initApp() {
+  const r = await window.dataSdk.init(dataHandler);
+  if (!r.isOk) console.error('SDK init failed:', r.error);
+  if (window.lucide) lucide.createIcons();
+}
+initApp();
+
+// Chart
+
+let uploadChart = null;
+function renderChart() {
+    const works = allData.filter(item =>
+        item.work_type === "work" &&
+        item.submitted_at &&
+        item.work_class
+    );
+    //---------------------------------------------------
+    // Membuat label 30 hari terakhir
+    //---------------------------------------------------
+    const labels = [];
+    const dates = [];
+    for(let i=29;i>=0;i--){
+        const d = new Date();
+        d.setHours(0,0,0,0);
+        d.setDate(d.getDate()-i);
+        dates.push(new Date(d));
+        labels.push(
+            d.toLocaleDateString("id-ID",{
+                day:"2-digit",
+                month:"short"
+            })
+        );
+    }
+    //---------------------------------------------------
+    // Daftar kelas
+    //---------------------------------------------------
+    const classes = [...new Set(
+        works.map(item=>item.work_class)
+    )].sort();
+    //---------------------------------------------------
+    // Warna tiap kelas
+    //---------------------------------------------------
+    const colors = [
+        "#2563eb",
+        "#16a34a",
+        "#dc2626",
+        "#ea580c",
+        "#9333ea",
+        "#0891b2",
+        "#ca8a04",
+        "#be185d",
+        "#0f766e",
+        "#7c3aed",
+        "#65a30d",
+        "#1d4ed8"
+    ];
+    //---------------------------------------------------
+    // Dataset
+    //---------------------------------------------------
+    const datasets = classes.map((kelas,index)=>{
+        const values = [];
+        dates.forEach(day=>{
+            let total = 0;
+            works.forEach(work=>{
+                if(work.work_class!==kelas) return;
+                const upload=new Date(work.submitted_at);
+                upload.setHours(0,0,0,0);
+                if(upload.getTime()===day.getTime()){
+                    total++;
+                }
+            });
+            values.push(total);
+        });
+        return{
+            label:kelas,
+            data:values,
+            borderColor:colors[index%colors.length],
+            backgroundColor:colors[index%colors.length],
+            borderWidth:3,
+            tension:.35,
+            pointRadius:3,
+            pointHoverRadius:6,
+            fill:false
+        };
+    });
+    //---------------------------------------------------
+    const ctx=document
+        .getElementById("perf-chart")
+        .getContext("2d");
+    if(uploadChart){
+        uploadChart.destroy();
+    }
+    uploadChart=new Chart(ctx,{
+        type:"line",
+        data:{
+            labels,
+            datasets
+        },
+        options:{
+            responsive:true,
+            maintainAspectRatio:false,
+            interaction:{
+                mode:"nearest",
+                intersect:false
+            },
+            plugins:{
+                title:{
+                    display:true,
+                  //  text:"📈 Upload Karya Semua Kelas (30 Hari Terakhir)",
+                    font:{
+                        size:20,
+                        weight:"bold"
+                    }
+                },
+                legend:{
+                    position:"bottom"
+                }
+            },
+            scales:{
+                y:{
+                    beginAtZero:true,
+                    ticks:{
+                        precision:0
+                    }
+                }
+            }
+        }
+    });
+}
+
+
+
+// Tabs
+function switchTab(tab) {
+  currentTab = tab;
+  document.getElementById('tab-terbaru').classList.toggle('tab-active', tab === 'terbaru');
+  document.getElementById('tab-terpopuler').classList.toggle('tab-active', tab === 'terpopuler');
+  renderTabs();
+}
+
+function renderTabs() {
+  const works = allData.filter(d => d.work_type === 'work');
+  const now = new Date(); const curMonth = now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0');
+  let list;
+  if (currentTab === 'terbaru') {
+    list = [...works].filter(w => w.submitted_at && w.submitted_at.startsWith(curMonth)).sort((a, b) => b.submitted_at.localeCompare(a.submitted_at)).slice(0, 4);
+  } else {
+    list = [...works].filter(w => w.submitted_at && w.submitted_at.startsWith(curMonth)).sort((a, b) => (b.stars || 0) - (a.stars || 0)).slice(0, 4);
+  }
+  const container = document.getElementById('tab-content');
+  container.innerHTML = '';
+  if (list.length === 0) { container.innerHTML = '<p class="col-span-full text-center text-sm py-8" style="color:var(--muted)">Belum ada data bulan ini</p>'; return; }
+  list.forEach(w => {
+    const rank = getRank(w.quiz_score || 0);
+    const el = document.createElement('div');
+    el.className = 'surface-card rounded-xl p-4 card-hover cursor-pointer';
+    el.innerHTML = `<div class="flex items-center gap-2 mb-2">${rank ? `<span class="${rank.cls} ${rank.textCls} text-xs px-2 py-0.5 rounded-full font-bold">${rank.label}</span>` : ''}<span class="text-xs" style="color:var(--muted)">${w.work_category}</span></div><h4 class="font-semibold text-sm truncate hover:underline" data-role="title">${w.work_title}</h4><p class="text-xs mt-1" style="color:var(--muted)">${w.name} • ${'⭐'.repeat(w.stars || 0)}</p>`;
+    el.querySelector('[data-role="title"]').onclick = (e) => { e.stopPropagation(); showWorkDetail(w); };
+    el.onclick = () => openWork(w);
+    container.appendChild(el);
+  });
+}
+
+function openWork(w) { if (w.work_link) window.open(w.work_link, '_blank', 'noopener,noreferrer'); }
+
+// Detail Karya (muncul saat judul karya diklik)
+function showWorkDetail(w) {
+  const el = document.getElementById('detail-content');
+  const rank = getRank(w.quiz_score || 0);
+  const cover = getWorkImage(w);
+  const link = w.work_link || '';
+  const yt = link.includes('youtu') ? extractYT(link) : null;
+  const coverSrc = yt ? `https://img.youtube.com/vi/${yt}/hqdefault.jpg` : cover;
+  el.innerHTML = `
+    <img src="${coverSrc}" alt="${w.work_title || ''}" class="detail-cover"
+         onerror="this.onerror=null;this.src='${DEFAULT_WORK_IMAGE}'">
+    <h3 class="text-xl font-bold heading-display">${w.work_title || ''}</h3>
+    <p class="text-sm mt-1 cursor-pointer hover:underline" style="color:var(--muted)" id="detail-author-link">${w.name || ''} • ${w.status || ''}</p>
+    <div class="detail-meta-row">
+      ${w.work_category ? `<span class="detail-meta-pill">${w.work_category}</span>` : ''}
+      ${w.work_class ? `<span class="detail-meta-pill">${w.work_class}</span>` : ''}
+      ${w.work_year ? `<span class="detail-meta-pill">${w.work_year}</span>` : ''}
+      ${w.guru ? `<span class="detail-meta-pill">👨‍🏫 ${w.guru}</span>` : ''}
+      ${w.mapel ? `<span class="detail-meta-pill">📘 ${w.mapel}</span>` : ''}
+      ${w.lama ? `<span class="detail-meta-pill">⏱️ ${w.lama}</span>` : ''}
+      ${rank ? `<span class="detail-meta-pill ${rank.cls} ${rank.textCls}">${rank.label}</span>` : ''}
+      ${w.stars ? `<span class="detail-meta-pill">⭐ ${w.stars}</span>` : ''}
+    </div>
+    <h4 class="font-bold text-sm mb-2">📄 Deskripsi Lengkap</h4>
+    <p class="detail-desc-text">${(w.work_description || 'Belum ada deskripsi untuk karya ini.').replace(/</g, '&lt;')}</p>
+    ${link ? `<a href="${link}" target="_blank" rel="noopener noreferrer" class="detail-link-btn">🔗 Buka Karya</a>` : ''}
+  `;
+  const authorLink = document.getElementById('detail-author-link');
+  if (authorLink) authorLink.onclick = () => { hideModal('detail'); showProfile(w.name); };
+  showModal('detail');
+}
+
+// Profile  390-406 <div class="rounded-full mx-auto mb-3 flex items-center justify-center text-3xl" style="background:var(--accent-light);width:80px;height:80px">👤</div> 
+function showProfile(name) {
+  const userWorks = allData.filter(d => d.name === name && d.work_type === 'work');
+  const reg = allData.find(d => d.name === name && d.work_type === 'registration');
+  const userClass = userWorks.find(w => w.work_class)?.work_class || '';
+  const bestScore = Math.max(0, ...userWorks.map(w => w.quiz_score || 0));
+  const rank = getRank(bestScore);
+  const el = document.getElementById('profile-content');
+  const avaCode = reg?.avatar && String(reg.avatar).trim();
+  const avatarHtml = avaCode
+    ? `<img src="${avatarUrl(avaCode)}" alt="${name}" class="profile-avatar-img" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'rounded-full mx-auto mb-3 flex items-center justify-center text-3xl',style:'background:var(--accent-light);width:80px;height:80px',textContent:'👤'}))">`
+    : `<div class="rounded-full mx-auto mb-3 flex items-center justify-center text-3xl" style="background:var(--accent-light);width:80px;height:80px">👤</div>`;
+  el.innerHTML = `
+    <div class="text-center mb-6">
+
+  ${avatarHtml}
+
+      <h3 class="text-xl font-bold heading-display">${name}</h3>
+    <p class="text-sm" style="color:var(--muted)">
+  ${
+    [
+      reg?.status,
+      reg?.department,
+      userClass
+    ].filter(Boolean).join(' ')
+  }
+</p>
+      ${rank ? `<span class="${rank.cls} ${rank.textCls} text-xs px-3 py-1 rounded-full font-bold inline-block mt-2">${rank.label}</span>` : ''}
+      <p class="text-xs mt-2" style="color:var(--muted)">Total Karya: ${userWorks.length} • Best Score: ${bestScore}/10</p>
+    </div>
+    <h4 class="font-bold text-sm mb-3">Karya</h4>
+    <div class="space-y-3">${userWorks.length === 0 ? '<p class="text-sm" style="color:var(--muted)">Belum ada karya</p>' : userWorks.map(w => `
+      <div class="p-3 rounded-xl cursor-pointer" style="background:var(--bg)" data-link="${w.work_link || ''}">
+        <p class="font-semibold text-sm">${w.work_title}</p>
+        <p class="text-xs" style="color:var(--muted)">${w.work_category} • ${'⭐'.repeat(w.stars || 0)}</p>
+      </div>`).join('')}</div>`;
+  el.querySelectorAll('[data-link]').forEach(node => {
+    node.addEventListener('click', () => openWork({ work_link: node.getAttribute('data-link') }));
+  });
+  showModal('profile');
+}
+
+// Gallery
+function renderGallery() {
+  const works = allData.filter(d => d.work_type === 'work');
+  const grid = document.getElementById('gallery-grid');
+  const empty = document.getElementById('empty-gallery');
+  if (works.length === 0) { empty.classList.remove('hidden'); empty.textContent = i18n[lang].empty; removeCards(); return; }
+  empty.classList.add('hidden');
+  const filtered = filterWorks(works);
+  removeCards();
+  const tpl = document.getElementById('card-template');
+  filtered.forEach(w => {
+    const clone = tpl.content.cloneNode(true);
+    const card = clone.querySelector('article');
+    const titleEl = card.querySelector('.card-title');
+    titleEl.textContent = w.work_title;
+    titleEl.onclick = (e) => { e.stopPropagation(); showWorkDetail(w); };
+    const authorEl = card.querySelector('.card-author');
+    authorEl.textContent = w.name + ' • ' + w.status;
+    authorEl.onclick = (e) => { e.stopPropagation(); showProfile(w.name); };
+    card.querySelector('.card-desc').textContent = (w.work_description || '').substring(0, 80);
+    card.querySelector('.card-stars').textContent = '⭐'.repeat(w.stars || 0);
+    card.querySelector('.card-category').textContent = w.work_category;
+    const rank = getRank(w.quiz_score || 0);
+    if (rank) {
+      const badge = card.querySelector('.card-badge-btn');
+      badge.classList.remove('hidden');
+      badge.classList.add(rank.cls, rank.textCls);
+      badge.textContent = rank.label;
+    }
+    /* ganti karu jadi poster*/
+const media = card.querySelector('.card-media');
+const link = w.work_link || '';
+if (link.includes('youtu')) {
+   const vid = extractYT(link);
+    media.innerHTML = vid
+        ? `<img src="https://img.youtube.com/vi/${vid}/mqdefault.jpg"
+                class="w-full h-full object-cover"
+                loading="lazy">`
+        : '<i data-lucide="play-circle" style="width:48px;height:48px;color:#fff"></i>';
+} else {
+    // ambil gambar dari Spreadsheet
+    const img = getWorkImage(w);
+    media.innerHTML = `
+        <div class="text-center text-white">
+            <img
+                src="${img}"
+                class="category-icon mx-auto mb-2"
+                alt="${w.work_category}"
+                loading="lazy"
+                onerror="this.onerror=null;
+                         this.src='${DEFAULT_WORK_IMAGE}'">
+            <p class="text-xs opacity-70">
+                ${w.work_category}
+            </p>
+        </div>
+    `;
+}
+    /*
+    const media = card.querySelector('.card-media');
+    const link = w.work_link || '';
+    if (link.includes('youtu')) {
+      const vid = extractYT(link);
+      media.innerHTML = vid ? `<img src="https://img.youtube.com/vi/${vid}/mqdefault.jpg" class="w-full h-full object-cover" loading="lazy">` : '<i data-lucide="play-circle" style="width:48px;height:48px;color:#fff"></i>';
+    } else {
+      const icon = getCategoryIcon(w.work_category);
+      media.innerHTML = `<div class="text-center text-white"><img src="${icon}"class="category-icon mx-auto mb-2"alt="${w.work_category}"onerror="this.src='assets/icons/folder.png'"><p class="text-xs opacity-70">${w.work_category}</p></div>`;
+    }
+*/
+    
+    card.style.cursor = 'pointer';
+    card.onclick = () => openWork(w);
+    grid.appendChild(clone);
+  });
+  if (window.lucide) lucide.createIcons();
+}
+
+function removeCards() { document.querySelectorAll('#gallery-grid article').forEach(el => el.remove()); }
+
+function filterWorks(works) {
+  const s = document.getElementById('search-input').value.toLowerCase();
+  const st = document.getElementById('filter-status').value;
+  const kel = document.getElementById('filter-kelas').value;
+  const gru = document.getElementById('filter-guru').value;
+  const cat = document.getElementById('filter-category').value;
+  const yr = document.getElementById('filter-year').value;
+  return works.filter(w => {
+    if (s && !w.work_title.toLowerCase().includes(s) && !w.name.toLowerCase().includes(s)) return false;
+    if (st && w.status !== st) return false;
+    if (kel && w.work_class !== kel) return false;
+    if (gru && w.guru !== gru) return false;
+    if (cat && w.work_category !== cat) return false;
+    if (yr && w.work_year !== yr) return false;
+    return true;
+  });
+}
+function filterGallery() { renderGallery(); }
+function extractYT(url) { const m = url.match(/(?:youtu\.be\/|v=)([a-zA-Z0-9_-]{11})/); return m ? m[1] : null; }
+//function getCategoryIcon(cat) { return { Video: '🎬', PDF: '📄', PPTX: '📊', Word: '📝', Image: '🖼️', MP3: '🎵', App: '💻', Website: '💻', Game: '💻', Other: '📁' }[cat] || '📁'; }
+function getCategoryIcon(cat){
+    const BASE="https://hendratmoko.github.io/SandenArtGallery/icons/";
+    return {
+        Video: BASE+"Video.png",
+        PDF: BASE+"PDF.png",
+        AI: BASE+"AI.png",
+        PPTX: BASE+"PPTX.png",
+        Word: BASE+"Word.png",
+        Excel: BASE+"Excel.png",
+        Text: BASE+"Text.png",
+        Image: BASE+"Image.png",
+        MP3: BASE+"MP3.png",
+        App: BASE+"App.png",
+        Website: BASE+"Website.png",
+        Game: BASE+"Game.png",
+        Android: BASE+"Android.png",
+        Canva: BASE+"Canva.png",
+        Scratch: BASE+"Scratch.png",
+        Unity: BASE+"Unity.png",
+        Python: BASE+"Phyton.png",
+        HTML: BASE+"Html.png",
+        CSS: BASE+"CSS.png",
+        JavaScript: BASE+"Javascript.png",
+        Laravel: BASE+"Laravel.png",
+        GitHub: BASE+"Github.png",
+        Quis: BASE+"Quis.png",
+        Other: BASE+"Folder.png"
+    }[cat] || BASE+"Folder.png";
+}
+// Register
+async function handleRegister(e) {
+  e.preventDefault();
+  const name = document.getElementById('reg-name').value.trim();
+  const code = generateCode(name);
+  const record = {
+    name, 
+    status: document.getElementById('reg-status').value, 
+    department: document.getElementById('reg-dept').value.trim(),
+    contact: document.getElementById('reg-contact').value.trim(), 
+    access_code: code,
+    publish_consent: document.getElementById('reg-consent').checked, 
+    registered_at: new Date().toISOString(),
+    work_title: '', 
+    work_description: '',
+    work_category: '',
+    work_class: '',
+    work_year: '',
+    work_link: '',
+    work_type: 'registration',
+    stars: 0,
+    certified: false,
+    quiz_score: 0,
+    submitted_at: '',
+    gambar: '',
+    guru: '',
+    mapel: '',
+    avatar: document.getElementById('reg-avatar').value.trim()
+  };
+  const res = await window.dataSdk.create(record);
+  if (res.isOk) {
+    document.getElementById('reg-result').classList.remove('hidden');
+    document.getElementById('reg-code').textContent = code;
+    document.getElementById('register-form').classList.add('hidden');
+    resetAvatarPicker();
+  }
+}
+
+// fungsi setelah dapat kode akses
+function saveAccessCode() {
+    const code = document.getElementById("reg-code").innerText;
+    const text =
+`KODE AKSES PORTOFOLIO
+Kode Akses :
+${code}
+Simpan kode ini dengan baik.
+SMK NEGERI 1 SANDEN`;
+    const blob = new Blob([text], {type:"text/plain"});
+    const a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = "Kode_Akses_Portofolio.txt";
+    a.click();
+}
+//copas kode akses
+async function copyAccessCode(){
+    const code = document.getElementById("reg-code").innerText;
+    const text =
+`KODE AKSES PORTOFOLIO DIGITAL
+Kode Akses : ${code}
+Simpan kode ini dengan baik.
+SMK NEGERI 1 SANDEN`;
+    try{
+        await navigator.clipboard.writeText(text);
+        alert("✅ Kode Akses berhasil disalin.\nSilakan paste (Tempel) ke aplikasi yang diinginkan.");
+    }catch(e){
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+        alert("✅ Kode Akses berhasil disalin.");
+    }
+}
+//kirim ke 💌✍ *WhatsApp*
+function sendAccessCodeWA(){
+    const code = document.getElementById("reg-code").innerText;
+    let phone = document.getElementById("reg-contact").value;
+    phone = phone.replace(/\D/g,'');
+    if(phone.startsWith("0")){
+        phone = "62" + phone.substring(1);
+    }
+    const pesan =
+`Halo,
+Registrasi Portofolio Digital berhasil.
+Kode Akses Anda:
+
+${code}
+
+Simpan kode ini dengan baik.
+Kode digunakan untuk Upload Karya.
+
+SMK NEGERI 1 SANDEN`;
+    const url =
+"https://wa.me/" + phone + "?text=" + encodeURIComponent(pesan);
+    window.open(url,"_blank");
+  }
+
+function handleUploadLogin(e) {
+  e.preventDefault();
+  const code = document.getElementById('upload-code').value.trim().toUpperCase();
+  const user = allData.find(d => d.access_code === code && d.work_type === 'registration');
+  if (!user) { document.getElementById('code-error').classList.remove('hidden'); return; }
+  document.getElementById('code-error').classList.add('hidden');
+  currentUser = user;
+  document.getElementById('upload-login').classList.add('hidden');
+  document.getElementById('upload-form-wrap').classList.remove('hidden');
+  document.getElementById('upload-user-name').textContent = '👋 ' + user.name + ' (' + user.status + ')';
+}
+
+async function handleUpload(e) {
+  e.preventDefault();
+  const wantQuiz = document.getElementById('up-quiz').checked;
+  const work = {
+    name: currentUser.name,
+    status: currentUser.status, 
+    department: currentUser.department, 
+    contact: currentUser.contact,
+    access_code: currentUser.access_code, 
+    publish_consent: currentUser.publish_consent, 
+    registered_at: currentUser.registered_at,
+    work_title: document.getElementById('up-title').value.trim(), 
+    work_description: document.getElementById('up-desc').value.trim(),
+    work_category: document.getElementById('up-category').value, 
+    work_class: document.getElementById('up-class').value.trim(),
+    work_year: document.getElementById('up-year').value.trim(), 
+    work_link: document.getElementById('up-link').value.trim(),
+    work_type: 'work', 
+    stars: 0, 
+    certified: false, 
+    quiz_score: 0, 
+    submitted_at: new Date().toISOString(),
+    lama: document.getElementById('lama').value, 
+    gambar: document.getElementById('gambar').value.trim(),
+    guru: document.getElementById('guru').value, 
+    mapel: document.getElementById('mapel').value
+  };
+  if (wantQuiz) { pendingWork = work; startQuiz(work.work_category); } else { await submitWork(work); }
+}
+
+async function submitWork(work) {
+  const res = await window.dataSdk.create(work);
+  if (res.isOk) { hideModal('upload'); resetUploadForm(); }
+}
+function resetUploadForm() {
+  document.getElementById('upload-form').reset();
+  document.getElementById('upload-login').classList.remove('hidden');
+  document.getElementById('upload-form-wrap').classList.add('hidden');
+  currentUser = null;
+}
+
+// Quiz
+function startQuiz(category) {
+  hideModal('upload'); quizIndex = 0; quizCorrect = 0; quizData = generateQuizQuestions();
+  document.getElementById('quiz-result').classList.add('hidden');
+  document.getElementById('quiz-counter').classList.remove('hidden');
+  document.getElementById('quiz-question').classList.remove('hidden');
+  document.getElementById('quiz-options').classList.remove('hidden');
+  showModal('quiz'); renderQuizQuestion();
+}
+
+function generateQuizQuestions() {
+  return [
+    { q: 'Apa prinsip utama desain visual yang baik?', o: ['Keseimbangan & kontras', 'Warna acak', 'Tanpa margin', 'Font besar'], a: 0 },
+    { q: 'Format file apa yang mendukung transparansi?', o: ['PNG', 'JPG', 'BMP', 'TIFF'], a: 0 },
+    { q: 'Apa kepanjangan dari PDF?', o: ['Portable Document Format', 'Print Data File', 'Page Design Format', 'Public Doc File'], a: 0 },
+    { q: 'Resolusi standar video HD adalah?', o: ['1920x1080', '800x600', '1280x720', '640x480'], a: 0 },
+    { q: 'Software editing video profesional adalah?', o: ['Adobe Premiere Pro', 'Microsoft Word', 'Google Sheets', 'Notepad'], a: 0 },
+    { q: 'Apa fungsi metadata dalam file digital?', o: ['Menyimpan informasi tentang file', 'Menghapus file', 'Mengenkripsi konten', 'Memperbesar ukuran'], a: 0 },
+    { q: 'Codec audio yang paling umum digunakan?', o: ['MP3/AAC', 'BMP', 'TIFF', 'RAW'], a: 0 },
+    { q: 'Prinsip KISS dalam desain berarti?', o: ['Keep It Simple, Stupid', 'Keep It Super Smart', 'Keep In Same Style', 'Kill Irrelevant Stupid Stuff'], a: 0 },
+    { q: 'Apa itu responsive design?', o: ['Desain yang menyesuaikan layar', 'Desain yang cepat', 'Desain yang mahal', 'Desain 3D'], a: 0 },
+    { q: 'Version control berguna untuk?', o: ['Melacak perubahan kode/file', 'Mempercepat internet', 'Menghapus virus', 'Membuat backup otomatis'], a: 0 },
+{ q: 'Apa fungsi utama portofolio digital?', o: ['Menampilkan hasil karya dan kompetensi', 'Menghapus file lama', 'Mengganti sistem operasi', 'Mempercepat internet'], a: 0 },
+{ q: 'Format gambar yang paling cocok untuk foto adalah?', o: ['JPG', 'PNG', 'SVG', 'GIF'], a: 0 },
+{ q: 'Apa kepanjangan dari HTML?', o: ['HyperText Markup Language', 'High Transfer Machine Language', 'Hyper Tool Machine Link', 'Home Text Markup List'], a: 0 },
+{ q: 'Bahasa pemrograman yang digunakan untuk membuat halaman web menjadi interaktif adalah?', o: ['JavaScript', 'HTML', 'CSS', 'SQL'], a: 0 },
+{ q: 'Fungsi CSS dalam pengembangan web adalah?', o: ['Mengatur tampilan dan desain halaman', 'Menyimpan data', 'Menghubungkan database', 'Mengelola jaringan'], a: 0 },
+{ q: 'Platform yang umum digunakan untuk menyimpan kode proyek secara online adalah?', o: ['GitHub', 'Microsoft Excel', 'Adobe Photoshop', 'Canva'], a: 0 },
+{ q: 'Apa tujuan memberikan nama file yang jelas pada hasil karya?', o: ['Memudahkan pencarian dan pengelolaan', 'Membuat ukuran file lebih kecil', 'Menambah kualitas gambar', 'Mempercepat upload internet'], a: 0 },
+{ q: 'Apa manfaat menambahkan deskripsi pada portofolio karya?', o: ['Menjelaskan tujuan dan proses pembuatan', 'Mengurangi ukuran file', 'Mengubah format file', 'Menghapus metadata'], a: 0 },
+{ q: 'Lisensi yang memungkinkan karya digunakan kembali dengan syarat tertentu disebut?', o: ['Creative Commons', 'Windows License', 'OEM', 'GPL Office'], a: 0 },
+{ q: 'Sebelum mempublikasikan karya digital, hal yang paling penting dilakukan adalah?', o: ['Memeriksa kembali isi dan kualitas karya', 'Menghapus semua file', 'Mengganti nama komputer', 'Mematikan internet'], a: 0 }
+  
+  ].sort(() => Math.random() - 0.5);
+}
+
+function renderQuizQuestion() {
+  if (quizIndex >= 10) { finishQuiz(); return; }
+  const q = quizData[quizIndex];
+  document.getElementById('quiz-bar').style.width = ((quizIndex + 1) * 10) + '%';
+  document.getElementById('quiz-counter').textContent = `Soal ${quizIndex + 1}/10`;
+  document.getElementById('quiz-question').textContent = q.q;
+  const opts = document.getElementById('quiz-options');
+  opts.innerHTML = '';
+  q.o.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'w-full text-left px-5 py-3.5 rounded-xl text-sm font-medium input-field';
+    btn.style.display = 'block';
+    btn.textContent = opt;
+    btn.onclick = () => answerQuiz(i);
+    opts.appendChild(btn);
+  });
+}
+
+function answerQuiz(idx) { if (idx === quizData[quizIndex].a) quizCorrect++; quizIndex++; renderQuizQuestion(); }
+
+async function finishQuiz() {
+  document.getElementById('quiz-counter').classList.add('hidden');
+  document.getElementById('quiz-question').classList.add('hidden');
+  document.getElementById('quiz-options').classList.add('hidden');
+  document.getElementById('quiz-result').classList.remove('hidden');
+  document.getElementById('quiz-stars').textContent = '⭐'.repeat(quizCorrect);
+  document.getElementById('quiz-score-text').textContent = `Skor: ${quizCorrect}/10`;
+  document.getElementById('quiz-cert-msg').textContent = quizCorrect > 0 ? 'Selamat! Anda mendapatkan Sertifikat Skill Passport' : 'Coba lagi lain waktu';
+  if (pendingWork) {
+    pendingWork.stars = quizCorrect; pendingWork.certified = quizCorrect > 0; pendingWork.quiz_score = quizCorrect;
+    await submitWork(pendingWork);
+    pendingWork = null;
+  }
+}
+
+const slides=document.querySelectorAll(".slide");
+let current=0;
+setInterval(()=>{
+    slides[current].classList.remove("active");
+    current++;
+    if(current>=slides.length){
+        current=0;
+    }
+    slides[current].classList.add("active");
+},8000);
+
+// MUSIK MUSIC BACKSOUND SOUNDTRACK 
+const music = document.getElementById("bgMusic");
+const muteBtn = document.getElementById("muteBtn");
+
+music.volume = 0.3;
+
+// status sebelumnya
+const savedMute = localStorage.getItem("musicMuted");
+
+if(savedMute === "true"){
+    music.muted = true;
+    muteBtn.innerHTML = "🔇";
+
+}else{
+    muteBtn.innerHTML = "🔊";
+}
+
+// autoplay setelah klik pertama
+document.addEventListener("click", function startMusic(){
+
+    if(music.paused){
+        music.play().catch(()=>{});
+    }
+
+    document.removeEventListener("click", startMusic);
+
+});
+
+muteBtn.addEventListener("click", function(e){
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    music.muted = !music.muted;
+
+    localStorage.setItem("musicMuted", music.muted);
+muteBtn.innerHTML = music.muted ? "🔇" : "🔊";
+
+});
+
+// ======================================================
+// BACK TO TOP
+// ======================================================
+
+document.addEventListener("DOMContentLoaded", function () {
+    const btn = document.getElementById("backToTop");
+    if (!btn) {
+        console.warn("Back to Top tidak ditemukan");
+        return;
+    }
+    const hero = document.querySelector(".hero");
+    function updateBackToTop() {
+        if (window.scrollY > 300) {
+            btn.style.opacity = "1";
+            btn.style.visibility = "visible";
+            btn.style.pointerEvents = "auto";
+        } else {
+            btn.style.opacity = "0";
+            btn.style.visibility = "hidden";
+            btn.style.pointerEvents = "none";
+        }
+    }
+    window.addEventListener("scroll", updateBackToTop, {
+        passive: true
+    });
+    updateBackToTop();
+    btn.addEventListener("click", function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (hero) {
+            hero.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        } else {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+        }
+    });
+});
+
+
+// ======================================================
+// Floating Radial Menu 5 tombol (Help, Mode, Filter, Login, Upload)
+// ======================================================
+
+const fabMenu=document.getElementById("fabMenu");
+const fabToggle=document.getElementById("fabToggle");
+const fabIcon=document.getElementById("fabIcon");
+let fabTimer=null;
+function closeFabMenu(){
+    fabMenu.classList.remove("open");
+    fabIcon.innerHTML="+";
+}
+function resetFabTimer(){
+    clearTimeout(fabTimer);
+    fabTimer=setTimeout(closeFabMenu,3000);
+}
+fabToggle.addEventListener("click",function(){
+    fabMenu.classList.toggle("open");
+    if(fabMenu.classList.contains("open")){
+        fabIcon.innerHTML="−";
+        resetFabTimer();
+    }else{
+        closeFabMenu();
+    }
+});
+document.querySelectorAll(".fab-item").forEach(btn=>{
+    btn.addEventListener("mouseenter",resetFabTimer);
+    btn.addEventListener("click",function(){
+        resetFabTimer();
+    });
+});
+// Render ulang icon Lucide
+if(window.lucide){
+    lucide.createIcons();
+}
+// EFEK HEADER
+const header=document.getElementById("mainHeader");
+window.addEventListener("scroll",()=>{
+    if(window.scrollY>80){
+        header.classList.add("shrink");
+    }else{
+        header.classList.remove("shrink");
+    }
+});
+
+//GOTO FOOTER
+document.addEventListener("DOMContentLoaded", () => {
+  const kerja = document.getElementById("goFooter");
+  const footer = document.getElementById("footer");
+  if (kerja && footer) {
+    kerja.addEventListener("click", () => {
+      footer.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    });
+  }
+});
+
+// KECEPATAN INTERNET
+async function cekInternet() {
+
+    const imageUrl = "https://upload.wikimedia.org/wikipedia/commons/3/3f/Fronalpstock_big.jpg?time=" + Date.now();
+
+    const fileSize = 14679474; // ukuran file dalam byte (≈14 MB)
+
+    const startTime = performance.now();
+
+    try {
+
+        const response = await fetch(imageUrl, { cache: "no-store" });
+
+        await response.blob();
+
+        const endTime = performance.now();
+
+        const duration = (endTime - startTime) / 1000;
+
+        const bitsLoaded = fileSize * 8;
+
+        const speedMbps = (bitsLoaded / duration / 1024 / 1024).toFixed(2);
+
+        document.getElementById("downloadSpeed").textContent =
+            speedMbps + " Mbps";
+
+        // Estimasi upload
+        document.getElementById("uploadSpeed").textContent =
+            (speedMbps * 0.35).toFixed(2) + " Mbps";
+
+        // Estimasi ping
+        const ping = Math.round(duration * 100);
+
+        document.getElementById("pingValue").textContent =
+            ping + " ms";
+
+        let kualitas = "";
+        let warna = "";
+
+        if (speedMbps >= 100) {
+            kualitas = "🟢 Koneksi Sangat Baik";
+            warna = "lime";
+        } else if (speedMbps >= 50) {
+            kualitas = "🟢 Koneksi Baik";
+            warna = "green";
+        } else if (speedMbps >= 20) {
+            kualitas = "🟡 Koneksi Sedang";
+            warna = "orange";
+        } else if (speedMbps >= 5) {
+            kualitas = "🟠 Koneksi Lambat";
+            warna = "darkorange";
+        } else {
+            kualitas = "🔴 Koneksi Sangat Lambat";
+            warna = "red";
+        }
+
+        const status = document.getElementById("internetQuality");
+        status.textContent = kualitas;
+        status.style.color = warna;
+
+    } catch (e) {
+
+        document.getElementById("downloadSpeed").textContent = "-";
+        document.getElementById("uploadSpeed").textContent = "-";
+        document.getElementById("pingValue").textContent = "-";
+        document.getElementById("internetQuality").textContent =
+            "❌ Gagal mengukur koneksi";
+
+    }
+
+}
+
+// Jalankan saat halaman dibuka
+cekInternet();
+// Perbarui setiap 60 detik x 60 menit = 1 jam
+// default 60000 = 60 detik
+setInterval(cekInternet, 60000);
