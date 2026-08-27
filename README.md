@@ -14,10 +14,16 @@ SandenArtGallery
 
 Semua file (kecuali `Code.gs`) harus berada **dalam satu folder** dan dibuka lewat web server (bukan double-click file), karena saling memanggil satu sama lain.
 
+Link terkait
+Spreadsheet https://docs.google.com/spreadsheets/d/1A9zJC2ROfRCNz6FRONTM00xr3Ez-3V74H1S_-dcwtG8/edit?pli=1&gid=1799846856#gid=1799846856
+GAS https://script.google.com/u/1/home/projects/163YaWKr6GolC8EnV6sHQWiM8LViVC4Q1xyu22Jr0SEsFEwHNOZMvJAZi/edit
+Web https://portofolio.moidea.my.id/
+Moidea
+
 ## Langkah Setup
 
 ### 1. Backend (Google Apps Script)
-1. Buka spreadsheet: `https://docs.google.com/spreadsheets/d/1A9zJC2ROfRCNz6FRONTM00xr3Ez-3V74H1S_-dcwtG8/edit`
+1. Buka spreadsheet: `https://docs.google.com/spreadsheets/d/1A9zJC2ROfRCNz6FRONTM00xr3Ez-3V74H1S_-dcwtG8/edit` 'https://docs.google.com/spreadsheets/d/1A9zJC2ROfRCNz6FRONTM00xr3Ez-3V74H1S_-dcwtG8/edit?pli=1&gid=1799846856#gid=1799846856'
 2. **Extensions > Apps Script**
 3. Hapus isi default, tempel seluruh isi `Code.gs`
 4. **Deploy > New deployment**
