@@ -21,13 +21,17 @@ window.dataSdk = (function () {
   function showOfflineBanner(on, message) {
     const el = document.getElementById('offline-banner');
     if (!el) return;
-    if (message) el.textContent = message;
+    if (message) el.innerHTML = message;
     el.classList.toggle('hidden', !on);
   }
 
   async function fetchFromGas() {
-  console.log("URL =", CFG.GAS_URL);
-  const res = await fetch(CFG.GAS_URL);
+  // Tambahkan parameter cache-buster + cache:'no-store' supaya browser
+  // atau proxy tidak menyajikan respon GET yang sudah kedaluwarsa/cache
+  // (penyebab umum data terlihat "nyangkut" walau spreadsheet sudah berubah).
+  const url = CFG.GAS_URL + (CFG.GAS_URL.indexOf('?') === -1 ? '?' : '&') + '_ts=' + Date.now();
+  console.log("URL =", url);
+  const res = await fetch(url, { cache: 'no-store' });
   console.log("status =", res.status);
   console.log("ok =", res.ok);
   const text = await res.text();
@@ -55,6 +59,7 @@ window.dataSdk = (function () {
   async function init(handler) {
     listener = handler;
     showLoading(true);
+    let gasError = null;
 
     if (isConfigured()) {
       try {
@@ -65,6 +70,7 @@ window.dataSdk = (function () {
         showLoading(false);
         return { isOk: true };
       } catch (err) {
+        gasError = err;
         console.error('Gagal mengambil data dari GAS:', err);
         if (!CFG.USE_LOCAL_FALLBACK) {
           showLoading(false);
@@ -72,13 +78,21 @@ window.dataSdk = (function () {
         }
         // lanjut ke fallback di bawah
       }
+    } else {
+      gasError = new Error('GAS_URL belum diisi di config.js.');
     }
 
     // Mode fallback (GAS belum dikonfigurasi atau fetch gagal)
     try {
       const data = await fetchFromLocal();
       usingFallback = true;
-      showOfflineBanner(true, '⚠️ Mode demo: menampilkan data template (belum tersambung ke database Lybra)');
+      const reason = gasError ? gasError.message : 'GAS belum dikonfigurasi';
+      showOfflineBanner(
+        true,
+        '⚠️ Mode demo: menampilkan data template (belum tersambung ke spreadsheet). ' +
+        'Penyebab: ' + reason + ' ' +
+        '<button onclick="window.dataSdk.retry()" style="margin-left:8px;text-decoration:underline;background:none;border:none;color:inherit;cursor:pointer;font:inherit">🔄 Coba lagi</button>'
+      );
       listener.onDataChanged(data);
       showLoading(false);
       return { isOk: true };
@@ -87,6 +101,10 @@ window.dataSdk = (function () {
       console.error('Gagal memuat data fallback:', err);
       return { isOk: false, error: err.message };
     }
+  }
+
+  async function retry() {
+    if (listener) return init(listener);
   }
 
   async function create(record) {
@@ -156,7 +174,7 @@ window.dataSdk = (function () {
       return { isOk: false, error: err.message };
     }
   }
-  return { init, create };
+  return { init, create, retry };
 })();
 
 /* Ambil gambar kartu dari spreadsheet */
@@ -227,7 +245,7 @@ function buildAvatarPicker() {
     const opt = document.createElement('div');
     opt.className = 'avatar-option';
     opt.dataset.code = code;
-    opt.innerHTML = `<img src="${avatarUrl(code)}" alt="Avatar ${code}" loading="lazy" onerror="this.closest('.avatar-option').style.display='none'">`;
+    opt.innerHTML = `<img src="${avatarUrl(code)}" alt="Avatar ${code}" loading="lazy" onerror="this.onerror=null;this.replaceWith(Object.assign(document.createElement('span'),{className:'avatar-fallback-num',textContent:'${code}'}))">`;
     opt.onclick = () => selectAvatar(code);
     wrap.appendChild(opt);
   }
@@ -238,7 +256,7 @@ function selectAvatar(code) {
   const preview = document.getElementById('reg-avatar-preview');
   const label = document.getElementById('reg-avatar-label');
   if (hidden) hidden.value = code;
-  if (preview) { preview.src = avatarUrl(code); preview.classList.add('show'); }
+  if (preview) { preview.src = avatarUrl(code); preview.onerror = () => { preview.classList.remove('show'); }; preview.classList.add('show'); }
   if (label) label.textContent = 'Avatar ' + code + ' terpilih';
   document.querySelectorAll('#avatar-picker .avatar-option').forEach(el => {
     el.classList.toggle('selected', el.dataset.code === code);
@@ -514,7 +532,18 @@ function showProfile(name) {
   const bestScore = Math.max(0, ...userWorks.map(w => w.quiz_score || 0));
   const rank = getRank(bestScore);
   const el = document.getElementById('profile-content');
-  const avaCode = reg?.avatar && String(reg.avatar).trim();
+
+  // Cari kode avatar dari data registrasi dulu; kalau kosong/tidak ada
+  // baris registrasi (mis. data lama dari spreadsheet), coba ambil dari
+  // salah satu baris karya milik orang yang sama.
+  const allUserRows = allData.filter(d => d.name === name);
+  let avaCode = (reg && reg.avatar) || '';
+  if (!avaCode) {
+    const rowWithAvatar = allUserRows.find(d => d.avatar && String(d.avatar).trim());
+    avaCode = rowWithAvatar ? rowWithAvatar.avatar : '';
+  }
+  avaCode = String(avaCode || '').trim();
+
   const avatarHtml = avaCode
     ? `<img src="${avatarUrl(avaCode)}" alt="${name}" class="profile-avatar-img" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'rounded-full mx-auto mb-3 flex items-center justify-center text-3xl',style:'background:var(--accent-light);width:80px;height:80px',textContent:'👤'}))">`
     : `<div class="rounded-full mx-auto mb-3 flex items-center justify-center text-3xl" style="background:var(--accent-light);width:80px;height:80px">👤</div>`;
@@ -810,7 +839,8 @@ async function handleUpload(e) {
     lama: document.getElementById('lama').value, 
     gambar: document.getElementById('gambar').value.trim(),
     guru: document.getElementById('guru').value, 
-    mapel: document.getElementById('mapel').value
+    mapel: document.getElementById('mapel').value,
+    avatar: currentUser.avatar || ''
   };
   if (wantQuiz) { pendingWork = work; startQuiz(work.work_category); } else { await submitWork(work); }
 }
