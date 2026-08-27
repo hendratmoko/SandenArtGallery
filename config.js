@@ -11,7 +11,7 @@
  */
 window.APP_CONFIG = {
   // WAJIB DIISI — URL Web App Apps Script kamu
-  GAS_URL: 'https://script.google.com/macros/s/AKfycbxPTVOzLtpYorTlRwT0kKEWAv34eKGquSn_4c_0MwLEL_yYrV0GEFSPtzBytdxG3YJ6IQ/exec',
+  GAS_URL: 'https://script.google.com/macros/s/AKfycbyEjr-P8oFvg47fxPPQyKSEI3U0muVeBp59J-ZImLF7XCyL-ekZQ7RzJ8PFZqFIP6N0-w/exec',
 
   // Kalau true: saat GAS_URL belum diisi / fetch ke GAS gagal,
   // aplikasi otomatis memuat data contoh dari data.json supaya
