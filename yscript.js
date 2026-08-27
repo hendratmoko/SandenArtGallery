@@ -292,19 +292,45 @@ const dataHandler = {onDataChanged(data) {
         allData = data;
         /* ===========================
            DASHBOARD STATISTIK
+           (dihitung realistis — guru/siswa yang sama tidak dihitung
+           berkali-kali walau dia registrasi/upload beberapa kali)
         =========================== */
-        const totalKarya = allData.length;
-        const totalGuru =allData.filter(x => x.status === "Guru").length;
-        const totalSiswa =allData.filter(x => x.status === "Siswa").length;
-        const totalMateri =allData.filter(x => x.status === "Guru").length;
-        const totalKaryaSiswa =allData.filter(x => x.status === "Siswa").length;
-        const totalKontributor =new Set(allData.map(x => x.name)).size;
-        const totalBintang =allData.reduce((a, b) => a + Number(b.stars || 0), 0);
-        const totalSertifikat =allData.filter(x => x.certified === true).length;
-        const rataQuiz =allData.length
+        const workRows = allData.filter(x => x.work_type === 'work');
+
+        // Total Karya = jumlah seluruh karya yang pernah di-upload
+        // (siswa + guru), setiap baris karya dihitung satu kali.
+        const totalKarya = workRows.length;
+
+        // Total Materi = jumlah karya/materi yang di-upload oleh Guru.
+        const materiRows = workRows.filter(x => x.status === 'Guru');
+        const totalMateri = materiRows.length;
+
+        // Karya Siswa = jumlah karya yang di-upload oleh Siswa.
+        const karyaSiswaRows = workRows.filter(x => x.status === 'Siswa');
+        const totalKaryaSiswa = karyaSiswaRows.length;
+
+        // Kontributor = jumlah ORANG unik (nama unik) yang pernah
+        // meng-upload minimal satu karya. Nama yang sama (guru/siswa
+        // upload berkali-kali) hanya dihitung satu kali.
+        const totalKontributor = new Set(workRows.map(x => x.name)).size;
+
+        // Total Siswa & Total Guru = jumlah ORANG unik terdaftar
+        // berdasarkan nama (bukan jumlah baris), diambil dari seluruh
+        // baris (registrasi maupun karya) supaya tetap akurat walau
+        // ada data lama yang tidak punya baris registrasi terpisah.
+        const totalSiswa = new Set(
+            allData.filter(x => x.status === 'Siswa').map(x => x.name)
+        ).size;
+        const totalGuru = new Set(
+            allData.filter(x => x.status === 'Guru').map(x => x.name)
+        ).size;
+
+        const totalBintang = workRows.reduce((a, b) => a + Number(b.stars || 0), 0);
+        const totalSertifikat = workRows.filter(x => x.certified === true).length;
+        const rataQuiz = workRows.length
                 ? (
-                    allData.reduce((a, b) => a + Number(b.quiz_score || 0), 0)
-                    / allData.length
+                    workRows.reduce((a, b) => a + Number(b.quiz_score || 0), 0)
+                    / workRows.length
                   ).toFixed(1)
                 : 0;
         document.getElementById("totalKarya").textContent = totalKarya;
@@ -400,8 +426,11 @@ function renderChart() {
             });
             values.push(total);
         });
+        // Total karya kelas ini (semua waktu, bukan cuma 30 hari terakhir)
+        // ditampilkan di label legend, di bawah grafik, di samping warna kelas.
+        const totalKelas = works.filter(item => item.work_class === kelas).length;
         return{
-            label:kelas,
+            label:`${kelas} (${totalKelas} karya)`,
             data:values,
             borderColor:colors[index%colors.length],
             backgroundColor:colors[index%colors.length],
