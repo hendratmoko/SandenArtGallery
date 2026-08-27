@@ -31,10 +31,18 @@ window.dataSdk = (function () {
   console.log("status =", res.status);
   console.log("ok =", res.ok);
   const text = await res.text();
-  console.log(text);
-  const json = JSON.parse(text);
+  let json;
+  try {
+    json = JSON.parse(text);
+  } catch (parseErr) {
+    console.error('Respon GAS (GET) bukan JSON:', text.substring(0, 400));
+    throw new Error(
+      'Server GAS tidak mengembalikan JSON yang valid (HTTP ' + res.status + '). ' +
+      'Cek: deployment Apps Script sudah "Anyone" dan sudah versi terbaru.'
+    );
+  }
   if (!json.isOk)
-      throw new Error(json.error);
+      throw new Error(json.error || 'GAS mengembalikan isOk=false');
   return json.data || [];
 }
 
@@ -70,7 +78,7 @@ window.dataSdk = (function () {
     try {
       const data = await fetchFromLocal();
       usingFallback = true;
-      showOfflineBanner(true, '⚠️ Mode demo: menampilkan data.json (belum tersambung ke Google Sheet)');
+      showOfflineBanner(true, '⚠️ Mode demo: menampilkan data template (belum tersambung ke database Lybra)');
       listener.onDataChanged(data);
       showLoading(false);
       return { isOk: true };
@@ -83,8 +91,8 @@ window.dataSdk = (function () {
 
   async function create(record) {
     if (usingFallback || !isConfigured()) {
-      alert('Belum tersambung ke Google Sheet (GAS_URL belum aktif). Data ini tidak akan tersimpan permanen — cek config.js.');
-      return { isOk: false, error: 'GAS belum dikonfigurasi' };
+      alert('Belum tersambung ke Lybra Database (Backend URL belum aktif). Data ini tidak akan tersimpan permanen — cek configurasi.');
+      return { isOk: false, error: 'Backend belum dikonfigurasi' };
     }
     try {
       showLoading(true);
@@ -94,17 +102,57 @@ window.dataSdk = (function () {
         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
         body: JSON.stringify({ action: 'create', record })
       });
-      const json = await res.json();
-      if (!json.isOk) throw new Error(json.error || 'Gagal menyimpan data');
 
-      const data = await fetchFromGas();
-      if (listener) listener.onDataChanged(data);
+      // Ambil respon sebagai teks dulu, baru coba parse sebagai JSON.
+      // Kalau GAS mengembalikan halaman HTML (mis. karena akses ditolak,
+      // deployment belum "Anyone", atau versi deployment belum diperbarui),
+      // res.json() langsung akan gagal dengan pesan generik yang sulit dipahami.
+      const rawText = await res.text();
+      let json;
+      try {
+        json = JSON.parse(rawText);
+      } catch (parseErr) {
+        console.error('Respon GAS bukan JSON. HTTP status:', res.status, '\nIsi respon (potongan):', rawText.substring(0, 400));
+        throw new Error(
+          'Server GAS tidak mengembalikan JSON yang valid (HTTP ' + res.status + '). ' +
+          'Kemungkinan besar: deployment Apps Script belum di-update (perlu "Manage deployments > Edit > New version") ' +
+          'atau akses deployment bukan "Anyone".'
+        );
+      }
+
+      if (!json.isOk) throw new Error(json.error || 'Server GAS menolak permintaan (isOk=false)');
+
+      // Data berhasil disimpan di spreadsheet. Selanjutnya kita coba refresh
+      // daftar data dari GAS — tapi kalau langkah refresh ini gagal (mis.
+      // koneksi putus sesaat), JANGAN anggap penyimpanan gagal, karena baris
+      // sudah benar-benar tersimpan di GAS.
+      try {
+        const data = await fetchFromGas();
+        usingFallback = false;
+        showOfflineBanner(false);
+        if (listener) listener.onDataChanged(data);
+      } catch (refreshErr) {
+        console.warn('Data tersimpan di GAS, tapi gagal me-refresh daftar terbaru:', refreshErr);
+        if (listener) {
+          const merged = (typeof allData !== 'undefined' && Array.isArray(allData) ? allData : []).concat([record]);
+          listener.onDataChanged(merged);
+        }
+      }
+
       showLoading(false);
       return { isOk: true, data: json.data };
     } catch (err) {
       showLoading(false);
       console.error('dataSdk.create error:', err);
-      alert('Gagal menyimpan data: ' + err.message + '\n\nPeriksa: 1) GAS_URL benar & diakhiri /exec, 2) deployment Apps Script "Who has access" = Anyone, 3) index.html dibuka via http/https bukan file://.');
+      alert(
+        'Gagal menyimpan data: ' + err.message +
+        '\n\nPeriksa:\n' +
+        '1) GAS_URL di config.js benar & diakhiri "/exec"\n' +
+        '2) Apps Script sudah di-Deploy ulang setelah Code.gs diubah (Manage deployments > Edit ✏️ > New version > Deploy)\n' +
+        '3) Setelan deployment "Who has access" = Anyone\n' +
+        '4) Nama sheet/tab pada spreadsheet sesuai dengan SHEET_NAME di Code.gs\n' +
+        '5) index.html dibuka via http/https, bukan file://'
+      );
       return { isOk: false, error: err.message };
     }
   }
@@ -158,6 +206,55 @@ function toggleLang() {
 function showModal(n) { document.getElementById('modal-' + n).classList.remove('hidden'); }
 function hideModal(n) { document.getElementById('modal-' + n).classList.add('hidden'); }
 function showHelp() { showModal('help'); }
+
+/* ============================================================
+ *  AVATAR PICKER
+ * ============================================================ */
+function avatarUrl(code) {
+  if (!code) return '';
+  const base = window.AVATAR_BASE || '';
+  const ext = window.AVATAR_EXT || '.png';
+  return base + code + ext;
+}
+
+function buildAvatarPicker() {
+  const wrap = document.getElementById('avatar-picker');
+  if (!wrap) return;
+  const count = window.AVATAR_COUNT || 22;
+  wrap.innerHTML = '';
+  for (let i = 1; i <= count; i++) {
+    const code = String(i).padStart(2, '0');
+    const opt = document.createElement('div');
+    opt.className = 'avatar-option';
+    opt.dataset.code = code;
+    opt.innerHTML = `<img src="${avatarUrl(code)}" alt="Avatar ${code}" loading="lazy" onerror="this.closest('.avatar-option').style.display='none'">`;
+    opt.onclick = () => selectAvatar(code);
+    wrap.appendChild(opt);
+  }
+}
+
+function selectAvatar(code) {
+  const hidden = document.getElementById('reg-avatar');
+  const preview = document.getElementById('reg-avatar-preview');
+  const label = document.getElementById('reg-avatar-label');
+  if (hidden) hidden.value = code;
+  if (preview) { preview.src = avatarUrl(code); preview.classList.add('show'); }
+  if (label) label.textContent = 'Avatar ' + code + ' terpilih';
+  document.querySelectorAll('#avatar-picker .avatar-option').forEach(el => {
+    el.classList.toggle('selected', el.dataset.code === code);
+  });
+}
+
+function resetAvatarPicker() {
+  const hidden = document.getElementById('reg-avatar');
+  const preview = document.getElementById('reg-avatar-preview');
+  const label = document.getElementById('reg-avatar-label');
+  if (hidden) hidden.value = '';
+  if (preview) { preview.src = ''; preview.classList.remove('show'); }
+  if (label) label.textContent = 'Belum memilih avatar (opsional)';
+  document.querySelectorAll('#avatar-picker .avatar-option').forEach(el => el.classList.remove('selected'));
+}
+document.addEventListener('DOMContentLoaded', buildAvatarPicker);
 
 function generateCode(name) {
   const l = name.replace(/[^a-zA-Z]/g, '').substring(0, 3).toUpperCase() || 'USR';
@@ -368,13 +465,46 @@ function renderTabs() {
     const rank = getRank(w.quiz_score || 0);
     const el = document.createElement('div');
     el.className = 'surface-card rounded-xl p-4 card-hover cursor-pointer';
-    el.innerHTML = `<div class="flex items-center gap-2 mb-2">${rank ? `<span class="${rank.cls} ${rank.textCls} text-xs px-2 py-0.5 rounded-full font-bold">${rank.label}</span>` : ''}<span class="text-xs" style="color:var(--muted)">${w.work_category}</span></div><h4 class="font-semibold text-sm truncate">${w.work_title}</h4><p class="text-xs mt-1" style="color:var(--muted)">${w.name} • ${'⭐'.repeat(w.stars || 0)}</p>`;
+    el.innerHTML = `<div class="flex items-center gap-2 mb-2">${rank ? `<span class="${rank.cls} ${rank.textCls} text-xs px-2 py-0.5 rounded-full font-bold">${rank.label}</span>` : ''}<span class="text-xs" style="color:var(--muted)">${w.work_category}</span></div><h4 class="font-semibold text-sm truncate hover:underline" data-role="title">${w.work_title}</h4><p class="text-xs mt-1" style="color:var(--muted)">${w.name} • ${'⭐'.repeat(w.stars || 0)}</p>`;
+    el.querySelector('[data-role="title"]').onclick = (e) => { e.stopPropagation(); showWorkDetail(w); };
     el.onclick = () => openWork(w);
     container.appendChild(el);
   });
 }
 
 function openWork(w) { if (w.work_link) window.open(w.work_link, '_blank', 'noopener,noreferrer'); }
+
+// Detail Karya (muncul saat judul karya diklik)
+function showWorkDetail(w) {
+  const el = document.getElementById('detail-content');
+  const rank = getRank(w.quiz_score || 0);
+  const cover = getWorkImage(w);
+  const link = w.work_link || '';
+  const yt = link.includes('youtu') ? extractYT(link) : null;
+  const coverSrc = yt ? `https://img.youtube.com/vi/${yt}/hqdefault.jpg` : cover;
+  el.innerHTML = `
+    <img src="${coverSrc}" alt="${w.work_title || ''}" class="detail-cover"
+         onerror="this.onerror=null;this.src='${DEFAULT_WORK_IMAGE}'">
+    <h3 class="text-xl font-bold heading-display">${w.work_title || ''}</h3>
+    <p class="text-sm mt-1 cursor-pointer hover:underline" style="color:var(--muted)" id="detail-author-link">${w.name || ''} • ${w.status || ''}</p>
+    <div class="detail-meta-row">
+      ${w.work_category ? `<span class="detail-meta-pill">${w.work_category}</span>` : ''}
+      ${w.work_class ? `<span class="detail-meta-pill">${w.work_class}</span>` : ''}
+      ${w.work_year ? `<span class="detail-meta-pill">${w.work_year}</span>` : ''}
+      ${w.guru ? `<span class="detail-meta-pill">👨‍🏫 ${w.guru}</span>` : ''}
+      ${w.mapel ? `<span class="detail-meta-pill">📘 ${w.mapel}</span>` : ''}
+      ${w.lama ? `<span class="detail-meta-pill">⏱️ ${w.lama}</span>` : ''}
+      ${rank ? `<span class="detail-meta-pill ${rank.cls} ${rank.textCls}">${rank.label}</span>` : ''}
+      ${w.stars ? `<span class="detail-meta-pill">⭐ ${w.stars}</span>` : ''}
+    </div>
+    <h4 class="font-bold text-sm mb-2">📄 Deskripsi Lengkap</h4>
+    <p class="detail-desc-text">${(w.work_description || 'Belum ada deskripsi untuk karya ini.').replace(/</g, '&lt;')}</p>
+    ${link ? `<a href="${link}" target="_blank" rel="noopener noreferrer" class="detail-link-btn">🔗 Buka Karya</a>` : ''}
+  `;
+  const authorLink = document.getElementById('detail-author-link');
+  if (authorLink) authorLink.onclick = () => { hideModal('detail'); showProfile(w.name); };
+  showModal('detail');
+}
 
 // Profile  390-406 <div class="rounded-full mx-auto mb-3 flex items-center justify-center text-3xl" style="background:var(--accent-light);width:80px;height:80px">👤</div> 
 function showProfile(name) {
@@ -384,11 +514,15 @@ function showProfile(name) {
   const bestScore = Math.max(0, ...userWorks.map(w => w.quiz_score || 0));
   const rank = getRank(bestScore);
   const el = document.getElementById('profile-content');
+  const avaCode = reg?.avatar && String(reg.avatar).trim();
+  const avatarHtml = avaCode
+    ? `<img src="${avatarUrl(avaCode)}" alt="${name}" class="profile-avatar-img" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'rounded-full mx-auto mb-3 flex items-center justify-center text-3xl',style:'background:var(--accent-light);width:80px;height:80px',textContent:'👤'}))">`
+    : `<div class="rounded-full mx-auto mb-3 flex items-center justify-center text-3xl" style="background:var(--accent-light);width:80px;height:80px">👤</div>`;
   el.innerHTML = `
     <div class="text-center mb-6">
 
-  <div class="rounded-full mx-auto mb-3 flex items-center justify-center text-3xl" style="background:var(--accent-light);width:80px;height:80px">👤</div> 
-      
+  ${avatarHtml}
+
       <h3 class="text-xl font-bold heading-display">${name}</h3>
     <p class="text-sm" style="color:var(--muted)">
   ${
@@ -427,7 +561,9 @@ function renderGallery() {
   filtered.forEach(w => {
     const clone = tpl.content.cloneNode(true);
     const card = clone.querySelector('article');
-    card.querySelector('.card-title').textContent = w.work_title;
+    const titleEl = card.querySelector('.card-title');
+    titleEl.textContent = w.work_title;
+    titleEl.onclick = (e) => { e.stopPropagation(); showWorkDetail(w); };
     const authorEl = card.querySelector('.card-author');
     authorEl.textContent = w.name + ' • ' + w.status;
     authorEl.onclick = (e) => { e.stopPropagation(); showProfile(w.name); };
@@ -565,13 +701,15 @@ async function handleRegister(e) {
     submitted_at: '',
     gambar: '',
     guru: '',
-    mapel: ''
+    mapel: '',
+    avatar: document.getElementById('reg-avatar').value.trim()
   };
   const res = await window.dataSdk.create(record);
   if (res.isOk) {
     document.getElementById('reg-result').classList.remove('hidden');
     document.getElementById('reg-code').textContent = code;
     document.getElementById('register-form').classList.add('hidden');
+    resetAvatarPicker();
   }
 }
 
