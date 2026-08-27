@@ -617,21 +617,19 @@ if (link.includes('youtu')) {
                 loading="lazy">`
         : '<i data-lucide="play-circle" style="width:48px;height:48px;color:#fff"></i>';
 } else {
-    // ambil gambar dari Spreadsheet
+    // ambil gambar dari Spreadsheet — gambar mengisi penuh kotak media
+    // (object-fit:contain) supaya poster tidak terpotong. Label kategori
+    // tidak ditampilkan di atas poster (biar poster bersih tanpa teks
+    // menutupi gambar).
     const img = getWorkImage(w);
     media.innerHTML = `
-        <div class="text-center text-white">
-            <img
-                src="${img}"
-                class="category-icon mx-auto mb-2"
-                alt="${w.work_category}"
-                loading="lazy"
-                onerror="this.onerror=null;
-                         this.src='${DEFAULT_WORK_IMAGE}'">
-            <p class="text-xs opacity-70">
-                ${w.work_category}
-            </p>
-        </div>
+        <img
+            src="${img}"
+            class="category-icon"
+            alt="${w.work_category}"
+            loading="lazy"
+            onerror="this.onerror=null;
+                     this.src='${DEFAULT_WORK_IMAGE}'">
     `;
 }
     /*
