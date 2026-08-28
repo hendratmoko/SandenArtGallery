@@ -448,6 +448,21 @@ function renderChart() {
     if(uploadChart){
         uploadChart.destroy();
     }
+
+    // Lebar canvas dibuat proporsional dengan jumlah hari supaya titik-titik
+    // data tidak dipepetkan (squeeze) — grafik jadi lebih lebar dari layar
+    // dan bisa digeser (scroll) ke kiri untuk melihat bentuk grafik hari-hari
+    // sebelumnya, bukan cuma tampilan yang sudah dimampatkan.
+    const chartInner = document.getElementById('chart-scroll-inner');
+    if (chartInner) {
+        const pxPerDay = 32; // lebar per titik hari
+        const minWidth = chartInner.parentElement
+            ? chartInner.parentElement.clientWidth
+            : 600;
+        const wantedWidth = labels.length * pxPerDay;
+        chartInner.style.width = Math.max(minWidth, wantedWidth) + 'px';
+    }
+
     uploadChart=new Chart(ctx,{
         type:"line",
         data:{
@@ -483,6 +498,39 @@ function renderChart() {
                 }
             }
         }
+    });
+
+    // Setelah render, geser otomatis ke ujung kanan (hari terbaru) supaya
+    // data terkini tetap yang pertama terlihat; pengguna tinggal menggeser
+    // ke kiri untuk menelusuri riwayat sebelumnya.
+    const scrollOuter = document.querySelector('.chart-scroll-outer');
+    if (scrollOuter) {
+        requestAnimationFrame(() => {
+            scrollOuter.scrollLeft = scrollOuter.scrollWidth;
+        });
+        enableDragToScroll_(scrollOuter);
+    }
+}
+
+// Drag-to-scroll dengan mouse (touch/trackpad sudah bisa geser secara
+// native, tapi mouse biasa perlu bantuan ini).
+let _dragScrollBound = false;
+function enableDragToScroll_(el) {
+    if (el._dragScrollBound) return;
+    el._dragScrollBound = true;
+    let isDown = false, startX = 0, scrollStart = 0;
+    el.addEventListener('mousedown', (e) => {
+        isDown = true;
+        startX = e.pageX;
+        scrollStart = el.scrollLeft;
+    });
+    window.addEventListener('mouseup', () => { isDown = false; });
+    window.addEventListener('mouseleave', () => { isDown = false; });
+    el.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const dx = e.pageX - startX;
+        el.scrollLeft = scrollStart - dx;
     });
 }
 
