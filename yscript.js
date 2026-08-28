@@ -558,9 +558,20 @@ function renderTabs() {
   if (list.length === 0) { container.innerHTML = '<p class="col-span-full text-center text-sm py-8" style="color:var(--muted)">Belum ada data bulan ini</p>'; return; }
   list.forEach(w => {
     const rank = getRank(w.quiz_score || 0);
+    const img = getWorkImage(w);
     const el = document.createElement('div');
-    el.className = 'surface-card rounded-xl p-4 card-hover cursor-pointer';
-    el.innerHTML = `<div class="flex items-center gap-2 mb-2">${rank ? `<span class="${rank.cls} ${rank.textCls} text-xs px-2 py-0.5 rounded-full font-bold">${rank.label}</span>` : ''}<span class="text-xs" style="color:var(--muted)">${w.work_category}</span></div><h4 class="font-semibold text-sm truncate hover:underline" data-role="title">${w.work_title}</h4><p class="text-xs mt-1" style="color:var(--muted)">${w.name} • ${'⭐'.repeat(w.stars || 0)}</p>`;
+    el.className = 'tab-card rounded-xl card-hover cursor-pointer';
+    el.innerHTML = `
+      <div class="tab-card-media">
+        <img src="${img}" alt="${w.work_title || ''}" loading="lazy"
+             onerror="this.onerror=null;this.src='${DEFAULT_WORK_IMAGE}'">
+        <div class="tab-card-overlay"></div>
+      </div>
+      <div class="tab-card-content">
+        <div class="flex items-center gap-2 mb-2">${rank ? `<span class="${rank.cls} ${rank.textCls} text-xs px-2 py-0.5 rounded-full font-bold">${rank.label}</span>` : ''}<span class="text-xs tab-card-category">${w.work_category}</span></div>
+        <h4 class="font-semibold text-sm truncate hover:underline" data-role="title">${w.work_title}</h4>
+        <p class="text-xs mt-1 tab-card-author">${w.name} • ${'⭐'.repeat(w.stars || 0)}</p>
+      </div>`;
     el.querySelector('[data-role="title"]').onclick = (e) => { e.stopPropagation(); showWorkDetail(w); };
     el.onclick = () => openWork(w);
     container.appendChild(el);
