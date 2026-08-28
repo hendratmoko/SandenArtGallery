@@ -788,3 +788,38 @@ POSISI MENU UTAMA: */
     opacity:0;
     pointer-events:none;
 }
+
+/* ============================================================
+   GRAFIK BISA DIGESER (SCROLL) KE KIRI/KANAN
+   ============================================================
+   Canvas dibuat lebih lebar dari kontainernya (lebar dihitung dari
+   jumlah hari via JS), supaya seluruh bentuk grafik hari-hari
+   sebelumnya tetap bisa dilihat dengan menggeser/scroll horizontal,
+   bukan dipepetkan (squeeze) supaya muat semua dalam satu layar.
+*/
+.chart-scroll-outer{
+    width:100%;
+    overflow-x:auto;
+    overflow-y:hidden;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:thin;
+    scrollbar-color:var(--accent) transparent;
+    cursor:grab;
+    border-radius:12px;
+}
+.chart-scroll-outer:active{ cursor:grabbing; }
+.chart-scroll-outer::-webkit-scrollbar{ height:8px; }
+.chart-scroll-outer::-webkit-scrollbar-track{ background:transparent; }
+.chart-scroll-outer::-webkit-scrollbar-thumb{ background:var(--accent); border-radius:9999px; }
+.chart-scroll-inner{
+    height:100%;
+    min-width:100%;
+}
+.chart-scroll-hint{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    font-size:.72rem;
+    color:var(--muted);
+    margin:4px 2px 8px;
+}
