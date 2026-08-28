@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galeri Karya | SMKN 1 Sanden</title>
+
+<!-- FAVICON -->
+<link rel="icon" type="images/favicon.png" sizes="32x32" href="images/favicon.png">
+<link rel="icon" type="images/favicon.png" sizes="16x16" href="images/favicon.png">
+<link rel="apple-touch-icon" href="images/favicon.png">
+
+	<!-- Font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Ikon -->
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+<!-- Styling -->
+<link rel="stylesheet" href="style.css">
+
+<!-- Konfigurasi (isi GAS_URL di sini) -->
+<script src="config.js"></script>
+</head>
+<body class="min-h-screen dark">
+
+  <!-- ========================================================= -->
+    <!-- CANVAS TENTACLE -->
+    <!-- ========================================================= -->
+<script src="tentacle-cursor.js"></script>
+	
+<div id="offline-banner" class="hidden"></div>
+
+<header id="mainHeader" class="sticky top-0 z-40 surface-card">
+  <div class="max-w-7xl mx-auto px-5 py-4 flex items-center justify-between flex-wrap gap-3">
+    <h1 id="headerTitle" class="hologram-text"><!--
+      class="heading-display tracking-tight" style="color:var(--accent-dark);font-size:2rem"-->
+    [     𝗚𝗔𝗟𝗘𝗥𝗜 𝗞𝗔𝗥𝗬𝗔 𝗦𝗠𝗞 𝗡𝗘𝗚𝗘𝗥𝗜 𝟭 𝗦𝗔𝗡𝗗𝗘𝗡     ]</h1>
+    <div id="headerInfo">
+    <div id="clock" class="text-sm font-medium" style="color:var(--muted)"></div></div>
+    <nav class="flex items-center gap-1">
+
+<!-- Floating Radial Menu -->
+<div id="fabMenu" class="fab-menu">
+  
+    <!-- Tombol Utama -->
+    <button id="fabToggle" class="fab-main">
+        <span id="fabIcon">+</span>
+    </button>
+
+    <!-- Help -->
+    <button class="fab-item" onclick="showHelp()" title="Help"><i data-lucide="help-circle"></i></button>
+    <!-- Theme -->
+    <button class="fab-item" onclick="toggleTheme()" title="Theme"><i data-lucide="sun"></i></button>
+    <!-- Bahasa -->
+    <button class="fab-item" onclick="toggleLang()" id="lang-btn"> ID </button>
+    <!-- Register -->
+    <button class="fab-item" onclick="showModal('register')" title="Register"><i data-lucide="user-plus"></i></button>
+    <!-- Upload -->
+    <button class="fab-item" onclick="showModal('upload')" title="Upload"><i data-lucide="upload"></i></button>
+ 
+</div>
+
+    </nav>
+  </div>
+</header>
+<!-- SLIDE GAMBAR -->  
+<section class="hero">
+    <div class="hero-slider">
+        <div class="slide active"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="slide"></div>
+        <div class="overlay"></div>
+    </div>
+    <div class="hero-content">
+      <!--  <h1>
+            પกﻝપᛕ ᛕﻉɼﻝค & ρѻɼՇѻिѻɭٱѻ ɗٱﻭٱՇคɭ
+        </h1>
+	  -->
+		<h1 class="text-4xl font-bold">
+  પกﻝપᛕ
+  <span id="goFooter"
+        class="cursor-pointer hover:text blue-500 transition duration-300">  ᛕﻉɼﻝค  
+  </span> & ρѻɼՇѻिѻɭٱѻ ɗٱﻭٱՇคɭ
+		</h1>
+
+    </div>
+</section>
+ 
+<section class="max-w-7xl mx-auto px-5 pt-8 pb-4">
+
+  <!-- Kartu Grafik -->
+  <div class="surface-card rounded-2xl p-5 overflow-x-auto">
+
+      <!-- Histats.com  (div with counter) --><div id="histats_counter"></div>
+<!-- Histats.com  START  (aync)-->
+<script type="text/javascript">var _Hasync= _Hasync|| [];
+_Hasync.push(['Histats.start', '1,5039688,4,408,270,55,00011111']);
+_Hasync.push(['Histats.fasi', '1']);
+_Hasync.push(['Histats.track_hits', '']);
+(function() {
+var hs = document.createElement('script'); hs.type = 'text/javascript'; hs.async = true;
+hs.src = ('//s10.histats.com/js15_as.js'); 
+(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(hs);
+})();</script>
+<noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?5039688&101" alt="website free tracking" border="0"></a></noscript>
+<!-- Histats.com  END  -->
+
+  <!-- Grafik -->    
+    <p class="chart-scroll-hint">↔️ Geser grafik ke kiri/kanan untuk melihat tren hari-hari sebelumnya</p>
+    <div class="chart-scroll-outer" style="height:320px">
+      <div id="chart-scroll-inner" class="chart-scroll-inner" style="height:100%">
+        <canvas id="perf-chart"></canvas>
+      </div>
+  </div>   
+      </div>
+ 
+<div class="dashboard-stats">
+<div class="stat-box">📁<h2 id="totalKarya">0</h2><p>Total Karya</p></div>
+<div class="stat-box">📚<h2 id="totalMateri">0</h2><p>Total Materi</p></div>
+<div class="stat-box">👨‍🎓<h2 id="totalKaryaSiswa">0</h2><p>Karya Siswa</p></div>
+<div class="stat-box">👥<h2 id="totalKontributor">0</h2><p>Kontributor</p></div>
+<div class="stat-box">🧑‍🎓<h2 id="totalSiswa">0</h2><p>Total Siswa</p></div>
+<div class="stat-box">👨‍🏫<h2 id="totalGuru">0</h2><p>Total Guru</p></div>
+</div>
+</section>
+  
+<section id="galleryStart" class="max-w-7xl mx-auto px-5 pt-6 pb-2">
+  <div class="flex border-b">
+    <button class="tab-btn tab-active" id="tab-terbaru" onclick="switchTab('terbaru')"><span id="tab-terbaru-label">🆕 Terbaru Bulan Ini</span></button>
+    <button class="tab-btn" id="tab-terpopuler" onclick="switchTab('terpopuler')"><span id="tab-terpopuler-label">🔥 Terpopuler Bulan Ini</span></button>
+  </div>
+  <div id="tab-content" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 py-5"></div>
+<!-- RUNNING TEXT -->
+    <div class="running-text">
+        <div class="running-content">
+
+Sebenarnya web ini adalah game yang berisi kumpulan hasil karya Murid Siswa-siswi Taruna SMKN1SANDEN yang terbimbing oleh Bapak Ibu Guru yang terbukti handal dan berpengalaman di bidangnya. Mulailah dengan tekateki mute Avatar Aang untuk menghilangkan musik.           
+            💚 STRUKTUR WEB :
+            HTML5 • CSS3 • JavaScript • GAS MOIDEA • Lybra Rest API • GitHub Pages • Tailwind CSS • Lucide Icons • Chart.js • AI Assistant   
+            &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+            🙏 CREDIT :
+            Semua Guru • Guru RPL SMK Negeri 1 Sanden • All OpenAI & GPT
+            &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+            🌟 TERIMA KASIH :
+            Kepala Sekolah • Guru • Siswa • Alumni • Seluruh Kontributor Galeri Karya Digital SMKN 1 Sanden
+        </div>
+    </div>
+
+</section>
+
+<div class="max-w-7xl mx-auto px-5 py-5">
+  <div class="flex flex-wrap gap-3 items-center">
+    <input id="search-input" type="text" placeholder="Cari nama/judul..." class="input-field rounded-xl px-4 py-2.5 text-sm flex-1 min-w-[200px]" oninput="filterGallery()">
+    <select id="filter-status" class="input-field rounded-xl px-4 py-2.5 text-sm" onchange="filterGallery()">
+      <option value="">Semua Status</option>
+      <option value="Siswa">Siswa</option>
+      <option value="Kelompok">Kelompok</option>
+      <option value="Guru">Guru</option>
+    </select>
+     <select id="filter-kelas" class="input-field rounded-xl px-4 py-2.5 text-sm" onchange="filterGallery()">
+     <option value="">Semua Kelas</option>
+        <!-- NKPI -->
+        <optgroup label="NKPI">
+            <option value="XNKPI-1">XNKPI-1</option>
+            <option value="XNKPI-2">XNKPI-2</option>
+            <option value="XINKPI-1">XINKPI-1</option>
+            <option value="XINKPI-2">XINKPI-2</option>
+            <option value="XIINKPI-1">XIINKPI-1</option>
+            <option value="XIINKPI-2">XIINKPI-2</option>
+        </optgroup>
+
+        <!-- TKPI -->
+        <optgroup label="TKPI">
+            <option value="XTKPI-1">XTKPI-1</option>
+            <option value="XTKPI-2">XTKPI-2</option>
+            <option value="XITKPI-1">XITKPI-1</option>
+            <option value="XITKPI-2">XITKPI-2</option>
+            <option value="XIITKPI-1">XIITKPI-1</option>
+            <option value="XIITKPI-2">XIITKPI-2</option>
+        </optgroup>
+
+        <!-- APHPI -->
+        <optgroup label="APHPI">
+            <option value="XAPHPI-1">XAPHPI-1</option>
+            <option value="XAPHPI-2">XAPHPI-2</option>
+            <option value="XIAPHPI-1">XIAPHPI-1</option>
+            <option value="XIAPHPI-2">XIAPHPI-2</option>
+            <option value="XIIAPHPI-1">XIIAPHPI-1</option>
+            <option value="XIIAPHPI-2">XIIAPHPI-2</option>
+        </optgroup>
+
+        <!-- APAT -->
+        <optgroup label="APAT">
+            <option value="XAPAT-1">XAPAT-1</option>
+            <option value="XAPAT-2">XAPAT-2</option>
+            <option value="XIAPAT-1">XIAPAT-1</option>
+            <option value="XIAPAT-2">XIAPAT-2</option>
+            <option value="XIIAPAT-1">XIIAPAT-1</option>
+            <option value="XIIAPAT-2">XIIAPAT-2</option>
+        </optgroup>
+
+        <!-- RPL -->
+        <optgroup label="RPL">
+            <option value="XRPL-1">XRPL-1</option>
+            <option value="XRPL-2">XRPL-2</option>
+            <option value="XIRPL-1">XIRPL-1</option>
+            <option value="XIRPL-2">XIRPL-2</option>
+            <option value="XIIRPL-1">XIIRPL-1</option>
+            <option value="XIIRPL-2">XIIRPL-2</option>
+        </optgroup>
+
+        <!-- TKRO -->
+        <optgroup label="TKRO">
+            <option value="XTKRO-1">XTKRO-1</option>
+            <option value="XTKRO-2">XTKRO-2</option>
+            <option value="XITKRO-1">XITKRO-1</option>
+            <option value="XITKRO-2">XITKRO-2</option>
+            <option value="XIITKRO-1">XIITKRO-1</option>
+            <option value="XIITKRO-2">XIITKRO-2</option>
+        </optgroup>
+
+        <!-- TBO -->
+        <optgroup label="TBO">
+            <option value="XTBO-1">XTBO-1</option>
+            <option value="XTBO-2">XTBO-2</option>
+            <option value="XITBO-1">XITBO-1</option>
+            <option value="XITBO-2">XITBO-2</option>
+            <option value="XIITBO-1">XIITBO-1</option>
+            <option value="XIITBO-2">XIITBO-2</option>
+        </optgroup>
+
+        <!-- ALL -->
+        <optgroup label="Semua Siswa">
+            <option value="NKPI">NKPI</option>
+            <option value="TKPI">TKPI</option>
+		   <option value="APHP">APHP</option>
+            <option value="APAT">APAT</option>
+            <option value="RPL">RPL</option>
+            <option value="TKRO">TKRO</option>
+            <option value="TBO">TBO</option>
+		</optgroup>
+		 
+    </select>
+        <select id="filter-guru" class="input-field rounded-xl px-4 py-2.5 text-sm" onchange="filterGallery()">
+      <option value="">Semua Guru</option>
+	  <option value="ABURIYATI S.Pd">ABURIYATI S.Pd	</option>
+      <option value="AHMAD IRFANDA,S.Kom.">AHMAD IRFANDA,S.Kom.	</option>
+      <option value="AMIRUDIN, S.Kom">AMIRUDIN, S.Kom	</option>
+      <option value="ANDRARINI MAWARSIH S.Pd">ANDRARINI MAWARSIH S.Pd	</option>
+      <option value="ANISA TRIA AMANDA, S.Pd">ANISA TRIA AMANDA, S.Pd</option>
+      <option value="ANOM WULANSARI S.Pd">ANOM WULANSARI S.Pd	</option>
+      <option value="ARI CAHYANI, S.Pd">ARI CAHYANI, S.Pd	</option>
+      <option value="ARI DWI WAHYUNI S.Pd">ARI DWI WAHYUNI S.Pd	</option>
+      <option value="ARI WAHYU SAPTARINI, S.Kom">ARI WAHYU SAPTARINI, S.Kom	</option>
+      <option value="ASROFI S.Pi">ASROFI S.Pi	</option>
+      <option value="BUKHORI SULISTYANTO S.Kom.">BUKHORI SULISTYANTO S.Kom.	</option>
+      <option value="DENI RAHMA WARDANI">DENI RAHMA WARDANI	</option>
+      <option value="DIDIV WANDHA PRAHARDIKSAAJI, S.Pd">DIDIV WANDHA PRAHARDIKSAAJI, S.Pd	</option>
+      <option value="Drs GUNDAN BAHTERA">Drs GUNDAN BAHTERA	</option>
+      <option value="EKO PRASETYO HADI S.Pi., M.Si">EKO PRASETYO HADI S.Pi., M.Si	</option>
+      <option value="ENI SURYANTI S.Pd">ENI SURYANTI S.Pd	</option>
+      <option value="ETY PRASMAWATI, S.Pd">ETY PRASMAWATI, S.Pd	</option>
+      <option value="FARIDA NUR RAHMAWATI S.Pd">FARIDA NUR RAHMAWATI S.Pd	</option>
+      <option value="HENDRATMOKO">HENDRATMOKO</option>
+      <option value="HINDRIASIH TEGUH RAHAYU, S.TH I">HINDRIASIH TEGUH RAHAYU, S.TH I	</option>
+      <option value="IMAM BAKTI DARMAWAN, S.Kom">IMAM BAKTI DARMAWAN, S.Kom	</option>
+      <option value="INDAH SUSANTI S.E.">INDAH SUSANTI S.E.	</option>
+      <option value="ISTIASIH, S.Pd">ISTIASIH, S.Pd	</option>
+      <option value="ISTIYAH, S.Pi">ISTIYAH, S.Pi	</option>
+      <option value="JAJULI PANCA SAMBADA S.Pd., M.Pd.">JAJULI PANCA SAMBADA S.Pd., M.Pd.	</option>
+      <option value="KARLINA, S.Pd">KARLINA, S.Pd	</option>
+      <option value="KURNIAWAN SUDRAJAD, S.T">KURNIAWAN SUDRAJAD, S.T	</option>
+      <option value="LIA RUSMIYATI S.Pd.">LIA RUSMIYATI S.Pd.	</option>
+      <option value="MASDA RIZKI PRADEWA, S.Pd">MASDA RIZKI PRADEWA, S.Pd	</option>
+      <option value="MUHAMMAD SETYAWAN S.Pi">MUHAMMAD SETYAWAN S.Pi	</option>
+      <option value="NUR CAHYO SAPUTRO, S.Tr.Pi">NUR CAHYO SAPUTRO, S.Tr.Pi	</option>
+      <option value="NURANA PUJI LUKMIWIYATI S.Pi">NURANA PUJI LUKMIWIYATI S.Pi	</option>
+      <option value="RETNO BUDIARTI, S.Pd">RETNO BUDIARTI, S.Pd	</option>
+      <option value="RINA MEI KURNIAWATI, S,Pd.">RINA MEI KURNIAWATI, S,Pd.	</option>
+      <option value="ROJI S.Pd">ROJI S.Pd	</option>
+      <option value="RUSMAWAN, S.Pd">RUSMAWAN, S.Pd	</option>
+      <option value="SAIFUL KURNIA ADHY SETIAWAN S.Pd">SAIFUL KURNIA ADHY SETIAWAN S.Pd	</option>
+      <option value="SALSA BELLA PUTRI, S.Kom.">SALSA BELLA PUTRI, S.Kom.	</option>
+      <option value="SINUNG WAHYUDI, S.Pd">SINUNG WAHYUDI, S.Pd	</option>
+      <option value="SISWANTO, S.Pd. I">SISWANTO, S.Pd. I	</option>
+      <option value="SOLIHIN S.Pd.">SOLIHIN S.Pd.	</option>
+      <option value="SRI RUBIASTUTI, S.Pd">SRI RUBIASTUTI, S.Pd	</option>
+      <option value="SRI SUCIATI M.Pd">SRI SUCIATI M.Pd	</option>
+      <option value="SRI UTAMI S.Pd. (B.INDO)">SRI UTAMI S.Pd. (B.INDO) 	</option>
+      <option value="SRI UTAMI, S.Pd (IPAS)">SRI UTAMI, S.Pd (IPAS)	</option>
+      <option value="SUHARINI S.Pd">SUHARINI S.Pd	</option>
+      <option value="SUJODO, S.Pd">SUJODO, S.Pd	</option>
+      <option value="SUKA HARIYANA S.Pd">SUKA HARIYANA S.Pd	</option>
+      <option value="SUNARSIH S.Pd.">SUNARSIH S.Pd.	</option>
+      <option value="SUSI WIDYASTUTI, S.Pd">SUSI WIDYASTUTI, S.Pd	</option>
+      <option value="SUSMANDIYAH, S.Pd">SUSMANDIYAH, S.Pd	</option>
+      <option value="SUTAPA, S.Pd">SUTAPA, S.Pd	</option>
+      <option value="SUTRISNA S.P">SUTRISNA S.P	</option>
+      <option value="TITIN RUSLINAWATI S.Pd.">TITIN RUSLINAWATI S.Pd.	</option>
+      <option value="UTAMININGSIH, S.Pd">UTAMININGSIH, S.Pd	</option>
+      <option value="WINTOLO, S.Pd.">WINTOLO, S.Pd.	</option>
+      <option value="WIWIK WIDYASTUTI S.Pt">WIWIK WIDYASTUTI S.Pt	</option>
+      <option value="YANIKA RUDI, S.Pd">YANIKA RUDI, S.Pd	</option>
+      <option value="YUNITA MAHARANI S.Pd.">YUNITA MAHARANI S.Pd.	</option>
+    </select>
+    <select id="filter-category" class="input-field rounded-xl px-4 py-2.5 text-sm" onchange="filterGallery()">
+      <option value="">Semua Kategori</option>
+      <option value="Video">Video</option>
+      <option value="PDF">PDF</option>
+      <option value="PPTX">PPTX/Slide/Powerpoint</option>
+      <option value="Word">Word</option>
+      <option value="Excel">Excel</option>
+      <option value="Spreadsheet">Spreadsheet</option>
+      <option value="Text">Text</option>
+      <option value="Image">Image</option>
+      <option value="MP3">Audio</option>
+      <option value="App">Aplikasi</option>
+      <option value="Website">Website</option>
+      <option value="Game">Game</option>
+      <option value="Android">Android</option>
+      <option value="Canva">Canva</option>
+      <option value="IoT">IoT</option>
+      <option value="AI">AI</option>
+      <option value="Scratch">Scratch</option>
+      <option value="Unity">Unity</option>
+      <option value="Phyton">Phyton</option>
+      <option value="Html">Html</option>
+      <option value="CSS">CSS</option>
+      <option value="Javascript">Javascript</option>
+      <option value="Laravel">Laravel</option>
+      <option value="Github">Github</option>
+      <option value="Quis">Quis</option>
+      <option value="Folder">Folder</option>
+    </select>
+    <select id="filter-year" class="input-field rounded-xl px-4 py-2.5 text-sm" onchange="filterGallery()">
+      <option value="">Semua Tahun</option>
+      <option value="2026">2026</option>
+      <option value="2025">2025</option>
+      <option value="2024">2024</option>
+       <option value="2023">2023</option>
+       <option value="2022">2022</option>
+    </select>
+  </div>
+</div>
+
+<main class="max-w-7xl mx-auto px-5 pb-16">
+  <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+    <p id="empty-gallery" class="col-span-full text-center py-20 hidden" style="color:var(--muted);font-style:italic">Belum ada karya. Jadilah yang pertama mengupload!</p>
+  </div>
+</main>
+
+<!-- Register Modal -->
+<div id="modal-register" class="fixed inset-0 z-50 hidden modal-overlay flex items-center justify-center p-4">
+  <div class="surface-card rounded-3xl w-full max-w-md p-7 relative fade-up" style="max-height:90vh;overflow-y:auto">
+    <button onclick="hideModal('register')" class="absolute top-4 right-4 p-1.5 rounded-full hover:bg-black/10"><i data-lucide="x" style="width:20px;height:20px"></i></button>
+    <h2 class="heading-display mb-5" style="font-size:1.5rem">Registrasi Akun</h2>
+    <form id="register-form" onsubmit="handleRegister(event)" class="space-y-4">
+      <div><label class="text-sm font-medium block mb-1.5" for="reg-name">Nama Lengkap</label><input id="reg-name" required class="input-field w-full rounded-xl px-4 py-2.5 text-sm"></div>
+      <div><label class="text-sm font-medium block mb-1.5" for="reg-status">Status</label>
+        <select id="reg-status" required class="input-field w-full rounded-xl px-4 py-2.5 text-sm">
+          <option value="Siswa">Siswa</option>
+          <option value="Guru">Guru</option>
+		  <option value="Kelompok">Kelompok</option>
+        </select>
+        </div>
+      
+            <div><label class="text-sm font-medium block mb-1.5" for="reg-dept">Jurusan</label>
+        <select id="reg-dept" required class="input-field w-full rounded-xl px-4 py-2.5 text-sm">
+          <option value="NKPI">NKPI (Nautika Kapal Penangkap Ikan)</option>
+          <option value="TKPI">TKPI (Teknika Kapal Penangkap Ikan)</option>
+          <option value="APHPI">APHP (Agribisnis Pengolahan Hasil Perikanan)</option>
+          <option value="APAT">APAT (Agribisnis Perikanan Air Tawar)</option>
+          <option value="RPL">RPL (Rekayasa Perangkat Lunak)</option>
+          <option value="TKRO">TKRO (Teknik Kendaraan Ringan Otomotif)</option>
+          <option value="TBO">TBO (Teknik Bodi Otomotif)</option>
+           <option value="Guru Adaptif">Guru Adaptif</option>
+           <option value="Guru Normatif">Guru Normatif</option>
+        </select>
+      </div>
+
+      <div><label class="text-sm font-medium block mb-1.5" for="reg-contact">No. HP (valid)</label><input id="reg-contact" required class="input-field w-full rounded-xl px-4 py-2.5 text-sm"></div>
+      <div>
+        <label class="text-sm font-medium block mb-1.5">Pilih Avatar</label>
+        <div class="avatar-preview-row">
+          <img id="reg-avatar-preview" class="avatar-preview-img" alt="Avatar terpilih">
+          <span id="reg-avatar-label" class="text-xs" style="color:var(--muted)">Belum memilih avatar (opsional)</span>
+        </div>
+        <div id="avatar-picker" class="avatar-picker"></div>
+        <input type="hidden" id="reg-avatar" value="">
+      </div>
+      <label class="flex items-center gap-3 text-sm cursor-pointer"><input type="checkbox" id="reg-consent" class="accent-blue-600"><span>Saya setuju karya saya dipublikasikan di galeri ini</span></label>
+      <button type="submit" class="w-full py-3 rounded-xl font-semibold btn-primary">Daftar &amp; Dapatkan Kode Akses</button>
+    </form>
+	  
+<div id="reg-result" class="hidden mt-5 p-5 rounded-2xl text-center" style="background:var(--bg)">
+    <p class="text-sm mb-1" style="color:var(--muted)">
+        Kode Akses Anda:
+    </p>
+    <p id="reg-code"  class="text-4xl font-bold tracking-widest"  style="color:var(--accent)">
+    </p>
+    <p class="text-xs mt-2 mb-4" style="color:var(--muted)">
+        Simpan kode ini untuk upload karya. Kode dapat digunakan selamanya.
+    </p>
+    <div class="flex justify-center gap-3 flex-wrap">
+        <button onclick="copyAccessCode()"
+        class="px-4 py-2 rounded-xl bg-orange-500 text-blue text-sm">
+        📋 Copy Kode
+        </button>
+		<button onclick="saveAccessCode()"  class="px-4 py-2 rounded-xl bg-blue-600 text-blue text-sm hover:bg-blue-700">
+            💾 Simpan Kode
+        </button>
+        <button onclick="sendAccessCodeWA()" class="px-4 py-2 rounded-xl bg-green-600 text-blue text-sm hover:bg-green-700">
+            📱 Kirim ke WhatsApp
+        </button>
+    </div>
+</div>	  
+<!--	  
+    <div id="reg-result" class="hidden mt-5 p-5 rounded-2xl text-center" style="background:var(--bg)">
+      <p class="text-sm mb-1" style="color:var(--muted)">Kode Akses Anda:</p>
+      <p id="reg-code" class="text-4xl font-bold tracking-widest" style="color:var(--accent)"></p>
+      <p class="text-xs mt-2" style="color:var(--muted)">Simpan kode ini untuk upload karya. Kode bisa digunakan selamanya. Hubungi Admin jika Lupa.</p>
+    </div> -->
+  </div>
+</div>
+
+<!-- Upload Modal -->
+<div id="modal-upload" class="fixed inset-0 z-50 hidden modal-overlay flex items-center justify-center p-4">
+  <div class="surface-card rounded-3xl w-full max-w-lg p-7 relative fade-up" style="max-height:90vh;overflow-y:auto">
+    <button onclick="hideModal('upload')" class="absolute top-4 right-4 p-1.5 rounded-full hover:bg-black/10"><i data-lucide="x" style="width:20px;height:20px"></i></button>
+    <div id="upload-login">
+      <h2 class="heading-display mb-5" style="font-size:1.5rem">Masuk dengan Kode Akses</h2>
+      <form onsubmit="handleUploadLogin(event)" class="space-y-4">
+        <div><label class="text-sm font-medium block mb-1.5" for="upload-code">Kode Akses</label><input id="upload-code" required class="input-field w-full rounded-xl px-4 py-2.5 text-sm uppercase tracking-widest" maxlength="6"></div>
+        <p id="code-error" class="text-red-500 text-xs hidden">Kode tidak valid</p>
+        <button type="submit" class="w-full py-3 rounded-xl font-semibold btn-primary">Verifikasi</button>
+      </form>
+    </div>
+    <div id="upload-form-wrap" class="hidden">
+      <h2 class="text-xl font-bold heading-display mb-1">Upload Karya</h2>
+      <p id="upload-user-name" class="text-sm mb-5" style="color:var(--muted)"></p>
+      <form id="upload-form" onsubmit="handleUpload(event)" class="space-y-4">
+        <input id="up-title" required placeholder="Judul Karya*" class="input-field w-full rounded-xl px-4 py-2.5 text-sm">
+
+		  <textarea id="up-desc" required placeholder="Deskripsi* (100 kata), meliputi: Tujuan dibuatnya program digital ini, manfaat, fitur, teknologi/Software yang dipakai, cara penggunaan, target pengguna dan kata kunci untuk pencarian Google/tag line." rows="4" class="input-field w-full rounded-xl px-4 py-2.5 text-sm"></textarea>
+<!-- DESKRIPSI diatas usahakan agar:
+✅ Judul karya diisi.
+✅ Klik ✨ Buat Deskripsi AI.
+✅ AI mengisi deskripsi secara otomatis.
+✅ Siswa hanya perlu mengecek dan menyetujui atau mengedit bila diperlukan.	  -->
+		  <div class="grid grid-cols-2 gap-3">
+          <select id="up-category" required class="input-field rounded-xl px-4 py-2.5 text-sm">
+            <option value="">Kategori*</option>
+            <option>Video</option>
+            <option>PDF</option>
+            <option>PPTX</option>
+            <option>Word</option>
+            <option>Excel</option>
+            <option>Spreadsheet</option>
+            <option>Text</option>
+            <option>Image</option>
+            <option>MP3</option>
+            <option>App</option>
+            <option>Website</option>
+            <option>Game</option>
+            <option>Android</option>
+            <option>Canva</option>
+            <option>IoT</option>
+            <option>AI</option>
+            <option>Scratch</option>
+            <option>Unity</option>
+            <option>Phyton</option>
+            <option>Html</option>
+            <option>CSS</option>
+            <option>Javascript</option>
+            <option>Laravel</option>
+            <option>Github</option>
+            <option>Quis</option>
+            <option>Folder</option>
+            <option>Other</option>
+          </select>
+          <div>
+    <select
+        id="up-class"
+        required
+        class="input-field rounded-xl px-4 py-2.5 text-sm">
+
+        <option value="">Kelas*</option>
+
+        <!-- NKPI -->
+        <optgroup label="NKPI">
+            <option value="XNKPI-1">XNKPI-1</option>
+            <option value="XNKPI-2">XNKPI-2</option>
+            <option value="XINKPI-1">XINKPI-1</option>
+            <option value="XINKPI-2">XINKPI-2</option>
+            <option value="XIINKPI-1">XIINKPI-1</option>
+            <option value="XIINKPI-2">XIINKPI-2</option>
+        </optgroup>
+
+        <!-- TKPI -->
+        <optgroup label="TKPI">
+            <option value="XTKPI-1">XTKPI-1</option>
+            <option value="XTKPI-2">XTKPI-2</option>
+            <option value="XITKPI-1">XITKPI-1</option>
+            <option value="XITKPI-2">XITKPI-2</option>
+            <option value="XIITKPI-1">XIITKPI-1</option>
+            <option value="XIITKPI-2">XIITKPI-2</option>
+        </optgroup>
+
+        <!-- APHPI -->
+        <optgroup label="APHPI">
+            <option value="XAPHPI-1">XAPHPI-1</option>
+            <option value="XAPHPI-2">XAPHPI-2</option>
+            <option value="XIAPHPI-1">XIAPHPI-1</option>
+            <option value="XIAPHPI-2">XIAPHPI-2</option>
+            <option value="XIIAPHPI-1">XIIAPHPI-1</option>
+            <option value="XIIAPHPI-2">XIIAPHPI-2</option>
+        </optgroup>
+
+        <!-- APAT -->
+        <optgroup label="APAT">
+            <option value="XAPAT-1">XAPAT-1</option>
+            <option value="XAPAT-2">XAPAT-2</option>
+            <option value="XIAPAT-1">XIAPAT-1</option>
+            <option value="XIAPAT-2">XIAPAT-2</option>
+            <option value="XIIAPAT-1">XIIAPAT-1</option>
+            <option value="XIIAPAT-2">XIIAPAT-2</option>
+        </optgroup>
+
+        <!-- RPL -->
+        <optgroup label="RPL">
+            <option value="XRPL-1">XRPL-1</option>
+            <option value="XRPL-2">XRPL-2</option>
+            <option value="XIRPL-1">XIRPL-1</option>
+            <option value="XIRPL-2">XIRPL-2</option>
+            <option value="XIIRPL-1">XIIRPL-1</option>
+            <option value="XIIRPL-2">XIIRPL-2</option>
+        </optgroup>
+
+        <!-- TKRO -->
+        <optgroup label="TKRO">
+            <option value="XTKRO-1">XTKRO-1</option>
+            <option value="XTKRO-2">XTKRO-2</option>
+            <option value="XITKRO-1">XITKRO-1</option>
+            <option value="XITKRO-2">XITKRO-2</option>
+            <option value="XIITKRO-1">XIITKRO-1</option>
+            <option value="XIITKRO-2">XIITKRO-2</option>
+        </optgroup>
+
+        <!-- TBO -->
+        <optgroup label="TBO">
+            <option value="XTBO-1">XTBO-1</option>
+            <option value="XTBO-2">XTBO-2</option>
+            <option value="XITBO-1">XITBO-1</option>
+            <option value="XITBO-2">XITBO-2</option>
+            <option value="XIITBO-1">XIITBO-1</option>
+            <option value="XIITBO-2">XIITBO-2</option>
+        </optgroup>
+        <optgroup label="Semua Siswa">
+            <option value="Semua Kelas">Semua Kelas</option>
+			 <option value="NKPI">NKPI</option>
+			 <option value="TKPI">TKPI</option>
+			 <option value="APHP">APHP</option>
+			  <option value="APAT">APAT</option>
+			  <option value="RPL">RPL</option>
+		      <option value="TKRO">TKRO</option>
+			  <option value="TBO">TBO</option>
+		</optgroup>			
+    </select>
+</div>
+          
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <input id="up-link" required placeholder="Link Karya*(https://...)" class="input-field rounded-xl px-4 py-2.5 text-xs">
+          <input id="gambar" placeholder="Link Poster (https://...)" class="input-field rounded-xl px-4 py-2.5 text-xs">
+          <input id="up-year" required placeholder="Tahun Pembuatan" class="input-field rounded-xl px-4 py-2.5 text-xs">
+          <input id="lama" placeholder="Lama Pembuatan (Hari/Bulan)" class="input-field rounded-xl px-4 py-2.5 text-xs">
+		
+<div>
+ <select
+        id="guru"
+        required
+        class="input-field rounded-xl px-4 py-2.5 text-xs">
+        <option value="">Guru/Pembimbing
+		</option>
+ <option value="	ABURIYATI S.Pd	">	ABURIYATI S.Pd	</option>
+ <option value="	AHMAD IRFANDA,S.Kom.	">	AHMAD IRFANDA,S.Kom.	</option>
+ <option value="	AMIRUDIN, S.Kom	">	AMIRUDIN, S.Kom	</option>
+ <option value="	ANDRARINI MAWARSIH S.Pd	">	ANDRARINI MAWARSIH S.Pd	</option>
+ <option value="ANISA TRIA AMANDA, S.Pd">ANISA TRIA AMANDA, S.Pd</option>
+ <option value="	ANOM WULANSARI S.Pd	">	ANOM WULANSARI S.Pd	</option>
+ <option value="	ARI CAHYANI, S.Pd	">	ARI CAHYANI, S.Pd	</option>
+ <option value="	ARI DWI WAHYUNI S.Pd	">	ARI DWI WAHYUNI S.Pd	</option>
+ <option value="	ARI WAHYU SAPTARINI, S.Kom	">	ARI WAHYU SAPTARINI, S.Kom	</option>
+ <option value="	ASROFI S.Pi	">	ASROFI S.Pi	</option>
+ <option value="	BUKHORI SULISTYANTO S.Kom.	">	BUKHORI SULISTYANTO S.Kom.	</option>
+ <option value="	DEDI SETYAWAN, S.Pd, M.Pd	">	DEDI SETYAWAN, S.Pd, M.Pd	</option>
+ <option value="	DENI RAHMA WARDANI	">	DENI RAHMA WARDANI	</option>
+ <option value="	DIDIV WANDHA PRAHARDIKSAAJI, S.Pd	">	DIDIV WANDHA PRAHARDIKSAAJI, S.Pd	</option>
+ <option value="	Drs GUNDAN BAHTERA	">	Drs GUNDAN BAHTERA	</option>
+ <option value="	EKO PRASETYO HADI S.Pi., M.Si	">	EKO PRASETYO HADI S.Pi., M.Si	</option>
+ <option value="	ENI SURYANTI S.Pd	">	ENI SURYANTI S.Pd	</option>
+ <option value="	ETY PRASMAWATI, S.Pd	">	ETY PRASMAWATI, S.Pd	</option>
+ <option value="	FARIDA NUR RAHMAWATI S.Pd	">	FARIDA NUR RAHMAWATI S.Pd	</option>
+ <option value="HENDRATMOKO">HENDRATMOKO</option>
+ <option value="	HINDRIASIH TEGUH RAHAYU, S.TH I	">	HINDRIASIH TEGUH RAHAYU, S.TH I	</option>
+ <option value="	IMAM BAKTI DARMAWAN, S.Kom	">	IMAM BAKTI DARMAWAN, S.Kom	</option>
+ <option value="	INDAH SUSANTI S.E.	">	INDAH SUSANTI S.E.	</option>
+ <option value="	ISTIASIH, S.Pd	">	ISTIASIH, S.Pd	</option>
+ <option value="	ISTIYAH, S.Pi	">	ISTIYAH, S.Pi	</option>
+ <option value="	JAJULI PANCA SAMBADA S.Pd., M.Pd.	">	JAJULI PANCA SAMBADA S.Pd., M.Pd.	</option>
+ <option value="	KARLINA, S.Pd	">	KARLINA, S.Pd	</option>
+ <option value="	KURNIAWAN SUDRAJAD, S.T	">	KURNIAWAN SUDRAJAD, S.T	</option>
+ <option value="	LIA RUSMIYATI S.Pd.	">	LIA RUSMIYATI S.Pd.	</option>
+ <option value="	MASDA RIZKI PRADEWA, S.Pd	">	MASDA RIZKI PRADEWA, S.Pd	</option>
+ <option value="	MUHAMMAD SETYAWAN S.Pi	">	MUHAMMAD SETYAWAN S.Pi	</option>
+ <option value="	NUR CAHYO SAPUTRO, S.Tr.Pi	">	NUR CAHYO SAPUTRO, S.Tr.Pi	</option>
+ <option value="	NURANA PUJI LUKMIWIYATI S.Pi	">	NURANA PUJI LUKMIWIYATI S.Pi	</option>
+ <option value="	RETNO BUDIARTI, S.Pd	">	RETNO BUDIARTI, S.Pd	</option>
+ <option value="	RINA MEI KURNIAWATI, S,Pd.	">	RINA MEI KURNIAWATI, S,Pd.	</option>
+ <option value="	ROJI S.Pd	">	ROJI S.Pd	</option>
+ <option value="	RUSMAWAN, S.Pd	">	RUSMAWAN, S.Pd	</option>
+ <option value="	SAIFUL KURNIA ADHY SETIAWAN S.Pd	">	SAIFUL KURNIA ADHY SETIAWAN S.Pd	</option>
+ <option value="	SALSA BELLA PUTRI, S.Kom.	">	SALSA BELLA PUTRI, S.Kom.	</option>
+ <option value="	SINUNG WAHYUDI, S.Pd	">	SINUNG WAHYUDI, S.Pd	</option>
+ <option value="	SISWANTO, S.Pd. I	">	SISWANTO, S.Pd. I	</option>
+ <option value="	SOLIHIN S.Pd.	">	SOLIHIN S.Pd.	</option>
+ <option value="	SRI RUBIASTUTI, S.Pd	">	SRI RUBIASTUTI, S.Pd	</option>
+ <option value="	SRI SUCIATI M.Pd	">	SRI SUCIATI M.Pd	</option>
+ <option value="	SRI UTAMI S.Pd. (B.INDO) 	">	SRI UTAMI S.Pd. (B.INDO) 	</option>
+ <option value="	SRI UTAMI, S.Pd (IPAS)	">	SRI UTAMI, S.Pd (IPAS)	</option>
+ <option value="	SUHARINI S.Pd	">	SUHARINI S.Pd	</option>
+ <option value="	SUJODO, S.Pd	">	SUJODO, S.Pd	</option>
+ <option value="	SUKA HARIYANA S.Pd	">	SUKA HARIYANA S.Pd	</option>
+ <option value="	SUNARSIH S.Pd.	">	SUNARSIH S.Pd.	</option>
+ <option value="	SUSI WIDYASTUTI, S.Pd	">	SUSI WIDYASTUTI, S.Pd	</option>
+ <option value="	SUSMANDIYAH, S.Pd	">	SUSMANDIYAH, S.Pd	</option>
+ <option value="	SUTAPA, S.Pd	">	SUTAPA, S.Pd	</option>
+ <option value="	SUTRISNA S.P	">	SUTRISNA S.P	</option>
+ <option value="	TITIN RUSLINAWATI S.Pd.	">	TITIN RUSLINAWATI S.Pd.	</option>
+ <option value="	UTAMININGSIH, S.Pd	">	UTAMININGSIH, S.Pd	</option>
+ <option value="	WINTOLO, S.Pd.	">	WINTOLO, S.Pd.	</option>
+ <option value="	WIWIK WIDYASTUTI S.Pt	">	WIWIK WIDYASTUTI S.Pt	</option>
+ <option value="	YANIKA RUDI, S.Pd	">	YANIKA RUDI, S.Pd	</option>
+ <option value="	YUNITA MAHARANI S.Pd.	">	YUNITA MAHARANI S.Pd.	</option>
+    </select>
+</div>
+		
+			
+		 <input id="mapel" placeholder="Mata Pelajaran" class="input-field rounded-xl px-4 py-2.5 text-sm">
+         </div>
+
+<label class="flex items-center gap-3 text-xs cursor-pointer">
+  <input required type="checkbox" class="accent-blue-600">
+  <span class="text-[5px]">Saya setuju bahwa setiap karya yang diunggah ke Portofolio Hasil Karya Belajar harus memenuhi ketentuan berikut:
+<p></p>1. Merupakan karya asli yang dibuat oleh saya dan tidak melanggar hak cipta.
+<p></p>2. Judul karya diatas jelas dan sesuai dengan isi atau proyek yang dibuat.
+<p></p>3. File dapat dibuka dan tidak rusak (tidak corrupt).
+<p></p>4. Menggunakan format file yang umum, sesuai yang tercantum dalam pilihan.
+<p></p>5. Isi karya lengkap, meliputi hasil akhir, dokumentasi, atau sumber pendukung yang diperlukan.
+<p></p>6. Deskripsi karya berisi tujuan, proses pembuatan, teknologi/aplikasi yang digunakan, serta hasil yang diperoleh.
+<p></p>7. Mencantumkan identitas pembuat, minimal: Nama, Kelas, Jurusan dan logo dalam karya yang dibuat.
+<p></p>8. Media pendukung (gambar, video, audio) memiliki kualitas yang jelas sehingga mudah dipahami.
+<p></p>9. Tautan eksternal (GitHub, Canva, YouTube, Google Drive, dan sebagainya) harus dapat diakses oleh guru tanpa memerlukan izin tambahan. 
+<p></p>10. Tidak mengandung unsur yang melanggar norma, seperti SARA, pornografi, kekerasan, ujaran kebencian, malware, atau konten ilegal.
+<p></p>11. Karya yang dipublikasikan diutamakan menggunakan tautan HTTPS yang aman & aktif. Alamat Website/URL dapat diakses dengan baik. Jika tidak sesuai, server akan menghapus otomatis apabila tidak aman & tidak aktif dalam 1 x 24 jam.
+<p></p>12. Sebelum mengunggah, pastikan file telah diperiksa kembali agar tidak terdapat kesalahan penulisan, data yang tidak lengkap, maupun file yang tidak sesuai.
+<p></p>13. Tunduk dan patuh terhadap ketentuan yang berlaku.</span></label>
+        <label class="flex items-center gap-3 text-sm cursor-pointer"><input type="checkbox" id="up-quiz" class="accent-blue-600"><span>Ikuti Quiz untuk Sertifikat Skill Passport ⭐</span></label>
+        <button type="submit" class="w-full py-3 rounded-xl font-semibold btn-primary" style="background:#10b981">Upload Karya</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Quiz Modal -->
+<div id="modal-quiz" class="fixed inset-0 z-50 hidden modal-overlay flex items-center justify-center p-4">
+  <div class="surface-card rounded-3xl w-full max-w-lg p-7 relative fade-up" style="max-height:90vh;overflow-y:auto">
+    <h2 class="text-xl font-bold heading-display mb-3">🎯 Skill Passport Quiz</h2>
+    <div class="w-full rounded-full" style="background:var(--border);height:10px">
+      <div id="quiz-bar" style="width:10%;background:var(--accent);height:10px;border-radius:9999px;transition:width .3s"></div>
+    </div>
+    <p id="quiz-counter" class="text-sm mb-3 mt-3" style="color:var(--muted)">Soal 1/10</p>
+    <p id="quiz-question" class="font-semibold text-lg mb-5"></p>
+    <div id="quiz-options" class="space-y-3"></div>
+    <div id="quiz-result" class="hidden text-center py-8">
+      <p class="text-5xl mb-3" id="quiz-stars"></p>
+      <p class="text-xl font-bold" id="quiz-score-text"></p>
+      <p class="text-sm mt-2" style="color:var(--muted)" id="quiz-cert-msg"></p>
+      <button onclick="hideModal('quiz')" class="mt-5 px-8 py-2.5 rounded-xl font-semibold btn-primary">Selesai</button>
+    </div>
+  </div>
+</div>
+
+<!-- Help Modal -->
+<div id="modal-help" class="fixed inset-0 z-50 hidden modal-overlay flex items-center justify-center p-4">
+  <div class="surface-card rounded-3xl w-full max-w-md p-7 relative fade-up">
+    <button onclick="hideModal('help')" class="absolute top-4 right-4 p-1.5 rounded-full hover:bg-black/10"><i data-lucide="x" style="width:20px;height:20px"></i></button>
+
+        <!-- Judul -->
+        <h2 class="text-xl font-bold mb-4 pr-8">
+            📖 Panduan Portofolio
+        </h2>
+        <!-- HANYA BAGIAN INI YANG SCROLL -->
+        <div class="help-scroll">
+            <ul class="help-list">
+
+	   <!-- QR CODE -->
+	  <img src="images/qrcode.png"
+     alt="Cara Upload Karya"
+     style="
+       width:100%;
+       max-height:220px;
+       object-fit:contain;
+       border-radius:16px;
+       margin-bottom:16px;
+       box-shadow:0 8px 25px rgba(0,0,0,.12);
+     ">
+
+    <li>
+        📝 <strong>Daftar</strong> – Klik ikon <strong>Daftar</strong> untuk membuat akun kontributor dan mendapatkan <strong>Kode Akses</strong>. 
+        <strong>Simpan dan amankan Kode Akses</strong> karena kode ini digunakan untuk mengunggah dan mengelola karya Anda.
+    </li>
+    <li>
+        🔑 <strong>Upload Karya</strong> – Klik ikon <strong>Upload</strong>, kemudian masukkan <strong>Kode Akses</strong> untuk mengunggah karya.
+        Siapkan <strong>link karya</strong> dan <strong>poster landscape 16:9</strong> sebagai sampul karya.
+        <br><br>
+        💡 <strong>Tips Poster:</strong> Agar poster tampil dengan baik, gunakan link gambar langsung (<em>direct/raw image link</em>), misalnya:
+        <br>
+        • GitHub Raw:
+        <a href="https://github.com/" target="_blank">https://github.com/</a>
+        <br>
+        • ImgBB:
+        <a href="https://id.imgbb.com/" target="_blank">https://id.imgbb.com/</a>
+        <br>
+        • Cloudinary:
+        <a href="https://cloudinary.com/" target="_blank">https://cloudinary.com/</a>
+        <br><br>
+        Contoh link gambar yang benar:
+        <code>https://raw.githubusercontent.com/.../poster.png</code>
+        atau
+        <code>https://i.ibb.co/abcd123/poster.png</code>
+    </li>
+    <li>
+        🎓 <strong>Quiz & Skill Passport</strong> – Ikuti <strong>Quiz</strong> yang tersedia untuk menguji pemahaman dan memperoleh 
+        <strong>Sertifikat Skill Passport</strong>. Hasil quiz dapat menjadi bagian dari rekam jejak kompetensi Anda.
+    </li>
+    <li>
+        🌐 <strong>Publikasi Karya</strong> – Setelah karya berhasil disubmit, karya akan masuk ke 
+        <strong>Galeri Publik</strong>. Karya terbaru akan muncul pada bagian <strong>terkini</strong> dan berada di bagian bawah daftar karya.
+        <br>
+        💡 <strong>Tips:</strong> Gunakan fasilitas pencarian pada judul, deskripsi, dan kata kunci yang jelas agar karya lebih mudah ditemukan. Klik ᛕﻉɼﻝค untuk langsung ke bawah.
+    </li>
+    <li>
+        🏅 <strong>Sistem Pangkat</strong> – Klik <strong>Lencana/Pangkat</strong> untuk melihat sistem penghargaan dan perkembangan level kontribusi Anda.
+        Semakin aktif berkarya dan berkontribusi, semakin banyak pencapaian yang dapat diperoleh.
+    </li>
+    <li>
+        🧑‍🚀 <strong>Pilih Avatar</strong> – Saat <strong>Registrasi</strong>, pilih salah satu avatar dari galeri avatar yang tersedia. Avatar ini akan tampil di <strong>Profil</strong> Anda.
+    </li>
+    <li>
+        👤 <strong>Profil Author</strong> – Klik <strong>Nama Author</strong> pada sebuah karya untuk melihat profil (termasuk avatar) dan karya-karya lain dari kontributor tersebut.
+    </li>
+    <li>
+        👆 <strong>Klik Judul Karya</strong> – Klik <strong>judul</strong> pada sebuah karya untuk membuka jendela detail berisi <strong>deskripsi lengkap</strong>, kategori, kelas, guru pembimbing, dan tautan karya.
+    </li>
+    <li>
+        🔊 <strong>Sound / Musik</strong> – Gunakan tombol <strong>Sound</strong> pada area bawah To The Top untuk mengaktifkan atau menonaktifkan musik/latar suara.
+        Jika tidak ingin menggunakan musik, cukup klik ikon tersebut untuk melakukan <strong>mute</strong>.
+    </li>
+    <li>
+        ⬆️ <strong>To The Top</strong> – Saat berada di bagian bawah halaman, klik tombol <strong>⬆️ To The Top</strong> untuk kembali dengan cepat ke bagian atas halaman.
+        Fitur ini sangat membantu ketika sedang menjelajahi banyak karya.
+    </li>
+    <li>
+        🔍 <strong>Pencarian & Filter</strong> – Manfaatkan fitur <strong>Pencarian, Kategori, Status, Kelas, atau Pengurutan</strong> untuk menemukan karya yang diinginkan dengan lebih cepat.
+    </li>
+    <li>
+        🌓 <strong>Mode Tampilan</strong> – Gunakan tombol <strong>Theme/Mode</strong> untuk mengubah tampilan antara <strong>Mode Terang</strong> dan <strong>Mode Gelap</strong> sesuai kenyamanan Anda.
+    </li>
+    <li>
+        ⭐ <strong>Beri Apresiasi</strong> – Jika tersedia, gunakan fitur <strong>Bintang/Apresiasi</strong> untuk memberikan penghargaan kepada karya yang menurut Anda menarik, kreatif, atau bermanfaat.
+    </li>
+    <li>
+        💡 <strong>Tips Menjelajah</strong> – Jangan ragu untuk mencoba ikon-ikon yang tersedia.
+        Hampir setiap ikon memiliki fungsi tertentu untuk membantu Anda <strong>mencari, melihat, mengunggah, memberikan apresiasi, dan mengelola karya</strong>.
+    </li>
+	<li>
+		🌀 Scan qr code diatas untuk kasih teman
+
+		----
+	</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+	  
+</div>
+</div> 
+</div> 
+</div> 
+
+<!-- Rank Modal -->
+<div id="modal-rank" class="fixed inset-0 z-50 hidden modal-overlay flex items-center justify-center p-4">
+  <div class="surface-card rounded-3xl w-full max-w-md p-7 relative fade-up" style="max-height:90vh;overflow-y:auto">
+    <button onclick="hideModal('rank')" class="absolute top-4 right-4 p-1.5 rounded-full hover:bg-black/10"><i data-lucide="x" style="width:20px;height:20px"></i></button>
+    <h2 class="heading-display mb-5" style="font-size:1.5rem">🏅 Sistem Pangkat</h2>
+    <div class="space-y-4">
+      <div class="flex items-center gap-4 p-4 rounded-xl" style="background:var(--bg)"><span class="rank-bronze text-white text-xs px-3 py-1.5 rounded-full font-bold">Bronze</span><div><p class="font-semibold text-sm">Bronze</p><p class="text-xs" style="color:var(--muted)">Quiz Score 1-2 ⭐</p></div></div>
+      <div class="flex items-center gap-4 p-4 rounded-xl" style="background:var(--bg)"><span class="rank-silver text-white text-xs px-3 py-1.5 rounded-full font-bold">Silver</span><div><p class="font-semibold text-sm">Silver</p><p class="text-xs" style="color:var(--muted)">Quiz Score 3-5 ⭐</p></div></div>
+      <div class="flex items-center gap-4 p-4 rounded-xl" style="background:var(--bg)"><span class="rank-gold text-white text-xs px-3 py-1.5 rounded-full font-bold">Gold</span><div><p class="font-semibold text-sm">Gold</p><p class="text-xs" style="color:var(--muted)">Quiz Score 6-8 ⭐</p></div></div>
+      <div class="flex items-center gap-4 p-4 rounded-xl" style="background:var(--bg)"><span class="rank-diamond text-gray-800 text-xs px-3 py-1.5 rounded-full font-bold">Diamond</span><div><p class="font-semibold text-sm">Diamond</p><p class="text-xs" style="color:var(--muted)">Quiz Score 9-10 ⭐</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Profile Modal -->
+<div id="modal-profile" class="fixed inset-0 z-50 hidden modal-overlay flex items-center justify-center p-4">
+  <div class="surface-card rounded-3xl w-full max-w-lg p-7 relative fade-up" style="max-height:90vh;overflow-y:auto">
+    <button onclick="hideModal('profile')" class="absolute top-4 right-4 p-1.5 rounded-full hover:bg-black/10"><i data-lucide="x" style="width:20px;height:20px"></i></button>
+    <div id="profile-content"></div>
+  </div>
+</div>
+
+<!-- Work Detail Modal (muncul saat judul karya diklik) -->
+<div id="modal-detail" class="fixed inset-0 z-50 hidden modal-overlay flex items-center justify-center p-4">
+  <div class="surface-card rounded-3xl w-full max-w-2xl p-7 relative fade-up" style="max-height:90vh;overflow-y:auto">
+    <button onclick="hideModal('detail')" class="absolute top-4 right-4 p-1.5 rounded-full hover:bg-black/10"><i data-lucide="x" style="width:20px;height:20px"></i></button>
+    <div id="detail-content"></div>
+  </div>
+</div>
+
+<template id="card-template">
+  <article class="card-hover rounded-2xl overflow-hidden surface-card">
+    <div class="aspect-video flex items-center justify-center relative overflow-hidden" style="background:#1e293b">
+      <div class="card-media w-full h-full flex items-center justify-center"></div>
+      <div class="absolute top-3 right-3 flex gap-1">
+        <button class="card-badge-btn hidden text-white text-xs px-2.5 py-1 rounded-full font-bold shadow-lg cursor-pointer" onclick="event.stopPropagation();showModal('rank')"></button>
+      </div>
+    </div>
+    <div class="p-4">
+      <h3 class="font-semibold text-sm truncate card-title cursor-pointer hover:underline"></h3>
+      <p class="text-xs mt-1 card-author cursor-pointer hover:underline" style="color:var(--muted)"></p>
+      <p class="text-xs truncate card-desc mt-1.5" style="color:var(--muted)"></p>
+      <div class="flex items-center justify-between mt-3">
+        <span class="card-stars text-yellow-500 text-sm"></span>
+        <span class="card-category text-xs px-2.5 py-1 rounded-full font-medium" style="background:var(--accent-light);color:var(--accent)"></span>
+      </div>
+    </div>
+  </article>
+</template>
+
+<div id="loading-banner" class="hidden">Memuat data...</div>
+  
+<!-- BACKSOUND MUSIK -->
+<audio id="bgMusic" loop autoplay>
+    <source src="soundtrack/Avatar_The_Last_Airbender_-_Agni_Kai_(mp3.pm).mp3" type="audio/mpeg">
+</audio>
+<!-- Tombol Mute -->
+<button id="muteBtn" class="mute-btn" title="Mute / Unmute">
+    🔊
+</button>  
+	
+<!-- KECEPATAN INTERNET -->
+<!-- Status Internet -->
+<div id="internet-status" class="surface-card rounded-xl p-3 mt-4 text-center text-xs">
+    <h3 class="font-bold text-lg mb-2">📶 Status Internet</h3>
+
+    <div>⬇ Download : <span id="downloadSpeed">Mengukur...</span></div>
+    <div>⬆ Upload : <span id="uploadSpeed">Estimasi...</span></div>
+    <div>📡 Ping : <span id="pingValue">Mengukur...</span></div>
+<div id="internetQuality" class="mt-2 mb-4 font-semibold">
+        Mengukur kualitas koneksi...
+    </div>
+</div>
+	
+<!-- =========================================================
+ FUTURISTIC FOOTER
+========================================================= --->
+<footer id="footer" class="text-center  bg-slate-900 text-slate-300 pt-12 pb-6 font-sans">
+	<!-- tambah jarak kosong -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><p class="text-sm text-slate-400 leading-relaxed"></p>      
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"><p class="text-sm text-slate-400 leading-relaxed"></p>      
+		
+        <!-- Bagian Utama Footer -->
+        <div class="text-center pb-8 border-b border-slate-800 max-w-2xl mx-auto">
+
+            <!-- Col 1: Profil Sekolah & Media Sosial -->
+<div class="space-y-4">
+     <div class="flex items-center space-x-3">
+<div> 
+
+ </div>
+ </div>
+  <p class="text-sm text-slate-400 leading-relaxed">
+<div class="flex justify-center items-center gap-2 text-center">
+    <img src="images/IMG_20260731_014559_567.jpg"
+         alt="Logo"
+         style="height:16px; width:auto;"
+         onerror="this.src='https://via.placeholder.com/50'">
+    <span class="text-sm font-bold">
+        SMK NEGERI 1 SANDEN
+    </span>
+</div>
+	 <div class="mini-text" onclick="this.classList.toggle('zoom')">
+ Jl. Samas No.KM. 11, Ngemplak, Srigading, Kecamatan Sanden, Kabupaten Bantul, Daerah Istimewa Yogyakarta. https://smkn1sanden.sch.id/
+	 </div>
+	  <p>𝓤𝓷𝓰𝓰𝓾𝓵, 𝓑𝓮𝓻𝓴𝓪𝓻𝓪𝓴𝓽𝓮𝓻, 𝓑𝓮𝓻𝓽𝓮𝓴𝓷𝓸𝓵𝓸𝓰𝓲</p>
+	  𝑴𝒆𝒏𝒚𝒆𝒅𝒊𝒂𝒌𝒂𝒏 𝒑𝒆𝒏𝒅𝒊𝒅𝒊𝒌𝒂𝒏 𝒗𝒐𝒌𝒂𝒔𝒊 𝒃𝒆𝒓𝒌𝒖𝒂𝒍𝒊𝒕𝒂𝒔 𝒖𝒏𝒕𝒖𝒌 𝒎𝒆𝒏𝒄𝒊𝒑𝒕𝒂𝒌𝒂𝒏 𝒈𝒆𝒏𝒆𝒓𝒂𝒔𝒊 𝒔𝒊𝒂𝒑 𝒌𝒆𝒓𝒋𝒂 𝒅𝒂𝒏 𝒃𝒆𝒓𝒘𝒊𝒓𝒂𝒖𝒔𝒂𝒉𝒂.
+  </p>
+</div>
+									
+<div class="text-center  mini-text"  onclick="this.classList.toggle('zoom')">
+Tag line # brown v board of apple education store # kumpulan game psp ppsspp ukuran kecil # kalender Pendidikan, menteri Pendidikan rumah Pendidikan # profil sekolah, libur sekolah lebaran # profil karya siswa taruna terbaik SMKN1SANDEN # Moko Idea Production @ MOIDEA
+  <p>&copy; 2026 SMK Negeri 1 Sanden. All Rights Reserved by Moidea.</p>	
+</div>
+        <!-- Bagian Bawah: Copyright -->
+        <div class="pt-6 flex flex-col md:flex-row justify-between items-center text-center text-xs text-slate-500 space-y-3 md:space-y-0">
+          
+			<!--
+Kebijakan Privasi
+Syarat & Ketentuan
+			-->
+        </div>
+    </div>
+</footer>
+ 
+<!-- Logika aplikasi -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>  
+<script src="config.js"></script>
+<script src="script.js"></script>
+
+<!-- =======================================================
+BACK TO TOP
+======================================================= -->
+<button
+id="backToTop"
+style="
+position:fixed;
+bottom:20px;
+right:20px;
+width:60px;
+height:60px;
+background:#16a34a;
+color:white;
+border:none;
+border-radius:50%;
+font-size:28px;
+cursor:pointer;
+z-index:999999;
+">
+⬆
+</button>
+  
+</body>
+</html>
