@@ -825,16 +825,6 @@ POSISI MENU UTAMA: */
 }
 
 
-.description-web-link {
-  color: #3b82f6;
-  text-decoration: underline;
-  font-weight: 500;
-  word-break: break-word;
-}
-
-.description-web-link:hover {
-  opacity: 0.8;
-}
 
 /* ============================================================
    KARTU "TERBARU BULAN INI" & "TERPOPULER BULAN INI"
