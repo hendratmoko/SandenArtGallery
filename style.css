@@ -824,6 +824,18 @@ POSISI MENU UTAMA: */
     margin:4px 2px 8px;
 }
 
+
+.description-web-link {
+  color: #3b82f6;
+  text-decoration: underline;
+  font-weight: 500;
+  word-break: break-word;
+}
+
+.description-web-link:hover {
+  opacity: 0.8;
+}
+
 /* ============================================================
    KARTU "TERBARU BULAN INI" & "TERPOPULER BULAN INI"
    Poster karya ditampilkan sebagai background di belakang tulisan,
