@@ -588,21 +588,11 @@ function showWorkDetail(w) {
   const link = w.work_link || '';
   const yt = link.includes('youtu') ? extractYT(link) : null;
   const coverSrc = yt ? `https://img.youtube.com/vi/${yt}/hqdefault.jpg` : cover;
-
   el.innerHTML = `
     <img src="${coverSrc}" alt="${w.work_title || ''}" class="detail-cover"
          onerror="this.onerror=null;this.src='${DEFAULT_WORK_IMAGE}'">
-
-    <h3 class="text-xl font-bold heading-display">
-      ${w.work_title || ''}
-    </h3>
-
-    <p class="text-sm mt-1 cursor-pointer hover:underline"
-       style="color:var(--muted)"
-       id="detail-author-link">
-      ${w.name || ''} • ${w.status || ''}
-    </p>
-
+    <h3 class="text-xl font-bold heading-display">${w.work_title || ''}</h3>
+    <p class="text-sm mt-1 cursor-pointer hover:underline" style="color:var(--muted)" id="detail-author-link">${w.name || ''} • ${w.status || ''}</p>
     <div class="detail-meta-row">
       ${w.work_category ? `<span class="detail-meta-pill">${w.work_category}</span>` : ''}
       ${w.work_class ? `<span class="detail-meta-pill">${w.work_class}</span>` : ''}
@@ -613,30 +603,12 @@ function showWorkDetail(w) {
       ${rank ? `<span class="detail-meta-pill ${rank.cls} ${rank.textCls}">${rank.label}</span>` : ''}
       ${w.stars ? `<span class="detail-meta-pill">⭐ ${w.stars}</span>` : ''}
     </div>
-
     <h4 class="font-bold text-sm mb-2">📄 Deskripsi Lengkap</h4>
-
-    <p class="detail-desc-text">
-      ${linkifyDescription(w.work_description)}
-    </p>
-
-    ${link ? `
-      <a href="${link}" target="_blank" rel="noopener noreferrer"
-         class="detail-link-btn">
-        🔗 Buka Karya
-      </a>
-    ` : ''}
+    <p class="detail-desc-text">${(w.work_description || 'Belum ada deskripsi untuk karya ini.').replace(/</g, '&lt;')}</p>
+    ${link ? `<a href="${link}" target="_blank" rel="noopener noreferrer" class="detail-link-btn">🔗 Buka Karya</a>` : ''}
   `;
-
   const authorLink = document.getElementById('detail-author-link');
-
-  if (authorLink) {
-    authorLink.onclick = () => {
-      hideModal('detail');
-      showProfile(w.name);
-    };
-  }
-
+  if (authorLink) authorLink.onclick = () => { hideModal('detail'); showProfile(w.name); };
   showModal('detail');
 }
 
