@@ -89,7 +89,7 @@ window.dataSdk = (function () {
       const reason = gasError ? gasError.message : 'GAS belum dikonfigurasi';
       showOfflineBanner(
         true,
-        '⚠️ Mode demo: menampilkan data template (belum tersambung ke spreadsheet). ' +
+        '⚠️ Mode demo: menampilkan data template (belum tersambung ke Database Lybra). ' +
         'Penyebab: ' + reason + ' ' +
         '<button onclick="window.dataSdk.retry()" style="margin-left:8px;text-decoration:underline;background:none;border:none;color:inherit;cursor:pointer;font:inherit">🔄 Coba lagi</button>'
       );
@@ -130,15 +130,15 @@ window.dataSdk = (function () {
       try {
         json = JSON.parse(rawText);
       } catch (parseErr) {
-        console.error('Respon GAS bukan JSON. HTTP status:', res.status, '\nIsi respon (potongan):', rawText.substring(0, 400));
+        console.error('Respon Moidea bukan JSON. HTTP status:', res.status, '\nIsi respon (potongan):', rawText.substring(0, 400));
         throw new Error(
-          'Server GAS tidak mengembalikan JSON yang valid (HTTP ' + res.status + '). ' +
-          'Kemungkinan besar: deployment Apps Script belum di-update (perlu "Manage deployments > Edit > New version") ' +
+          'Server Moidea tidak mengembalikan JSON yang valid (HTTP ' + res.status + '). ' +
+          'Kemungkinan besar: deployment Moidea belum di-update (perlu "Manage deployments > Edit > New version") ' +
           'atau akses deployment bukan "Anyone".'
         );
       }
 
-      if (!json.isOk) throw new Error(json.error || 'Server GAS menolak permintaan (isOk=false)');
+      if (!json.isOk) throw new Error(json.error || 'Server Moidea menolak permintaan (isOk=false)');
 
       // Data berhasil disimpan di spreadsheet. Selanjutnya kita coba refresh
       // daftar data dari GAS — tapi kalau langkah refresh ini gagal (mis.
@@ -150,7 +150,7 @@ window.dataSdk = (function () {
         showOfflineBanner(false);
         if (listener) listener.onDataChanged(data);
       } catch (refreshErr) {
-        console.warn('Data tersimpan di GAS, tapi gagal me-refresh daftar terbaru:', refreshErr);
+        console.warn('Data tersimpan di Moidea, tapi gagal me-refresh daftar terbaru:', refreshErr);
         if (listener) {
           const merged = (typeof allData !== 'undefined' && Array.isArray(allData) ? allData : []).concat([record]);
           listener.onDataChanged(merged);
@@ -165,10 +165,10 @@ window.dataSdk = (function () {
       alert(
         'Gagal menyimpan data: ' + err.message +
         '\n\nPeriksa:\n' +
-        '1) GAS_URL di config.js benar & diakhiri "/exec"\n' +
-        '2) Apps Script sudah di-Deploy ulang setelah Code.gs diubah (Manage deployments > Edit ✏️ > New version > Deploy)\n' +
+        '1) Moidea di config.js benar & diakhiri "/exec"\n' +
+        '2) Moidea sudah di-Deploy ulang setelah Server diubah (Manage deployments > Edit ✏️ > New version > Deploy)\n' +
         '3) Setelan deployment "Who has access" = Anyone\n' +
-        '4) Nama sheet/tab pada spreadsheet sesuai dengan SHEET_NAME di Code.gs\n' +
+        '4) Nama Database Lybra belum sesuai dengan Code.gs\n' +
         '5) index.html dibuka via http/https, bukan file://'
       );
       return { isOk: false, error: err.message };
