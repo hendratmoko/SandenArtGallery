@@ -1029,7 +1029,7 @@ Syarat & Ketentuan
     if (/\s/.test(v)) return label + ' tidak boleh mengandung spasi.';
     if (/^http:\/\//i.test(v)) return label + ' harus memakai https://, bukan http://.';
     if (/^www\./i.test(v)) return label + ' harus diawali https:// (contoh: https://' + v + ').';
-    if (!/^https:\/\//i.test(v)) return label + ' harus diawali https:// (teks biasa tidak diterima).';
+    if (!/^https:\/\//i.test(v)) return label + ' harus diawali https:// (tanpa protokol yang benar, file tidak diterima).';
     var u;
     try { u = new URL(v); } catch (e) { return label + ' bukan alamat URL yang valid.'; }
     if (u.protocol !== 'https:') return label + ' harus memakai https://.';
